@@ -1,0 +1,918 @@
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+import { HiCamera as HiCameraIcon, HiCloudUpload as HiCloudUploadIcon, HiCheckCircle, HiArrowRight } from "react-icons/hi";
+
+const Form = () => {
+  const router = useRouter();
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [formData, setFormData] = useState({
+    photos: "",
+    beforeImages: [],
+    afterImages: [],
+    fullName: "",
+    phoneNo: "",
+    visitMode: "",
+    sex: "",
+    address: "",
+    purpose: "",
+    subPurpose: "",
+    customPurpose: "",
+    customSubPurpose: "",
+  });
+
+  const [errors, setErrors] = useState({});
+
+  // Revisit Lookup States
+  const [searchPhone, setSearchPhone] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+  const [foundVisitorName, setFoundVisitorName] = useState("");
+
+  const [activeCameraField, setActiveCameraField] = useState(null);
+  const [cameraStream, setCameraStream] = useState(null);
+  const [facingMode, setFacingMode] = useState("user");
+  const [cameraError, setCameraError] = useState("");
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const userRole = localStorage.getItem("userRole");
+    if (userRole !== "user" && userRole !== "admin") {
+      router.push("/login");
+    }
+  }, [router]);
+
+  const handleChange = useCallback((e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => {
+      const updated = { ...prev, [name]: value };
+      if (name === "purpose") {
+        updated.subPurpose = "";
+        updated.customPurpose = "";
+        updated.customSubPurpose = "";
+      } else if (name === "subPurpose") {
+        updated.customSubPurpose = "";
+      }
+      return updated;
+    });
+    setErrors((prev) => ({ ...prev, [name]: "" }));
+  }, []);
+
+  const processGeotagImage = useCallback((dataUrl, currentAddress = "") => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = img.width || 640;
+        canvas.height = img.height || 480;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        const applyWatermark = (lat, lng) => {
+          const width = canvas.width;
+          const height = canvas.height;
+          const bannerHeight = Math.max(65, Math.round(height * 0.16));
+
+          // Dark background banner
+          const gradient = ctx.createLinearGradient(0, height - bannerHeight, 0, height);
+          gradient.addColorStop(0, "rgba(15, 23, 42, 0.85)");
+          gradient.addColorStop(1, "rgba(15, 23, 42, 0.95)");
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, height - bannerHeight, width, bannerHeight);
+
+          // Accent orange bar
+          ctx.fillStyle = "#F97316";
+          ctx.fillRect(0, height - bannerHeight, Math.max(6, Math.round(width * 0.01)), bannerHeight);
+
+          // Text styling
+          const fontSize = Math.max(12, Math.round(bannerHeight * 0.22));
+          ctx.font = `bold ${fontSize}px sans-serif`;
+          ctx.fillStyle = "#FFFFFF";
+
+          const now = new Date();
+          const timeStr = now.toLocaleString("en-IN", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: true,
+          });
+
+          const line1 = lat && lng 
+            ? `📍 LAT: ${Number(lat).toFixed(6)}°  |  LON: ${Number(lng).toFixed(6)}°`
+            : `📍 GEOTAG RECORDED`;
+          const line2 = `📅 DATE: ${timeStr}`;
+          const line3 = currentAddress ? `🏠 LOC: ${currentAddress.slice(0, 55)}` : "";
+
+          const paddingLeft = Math.max(14, Math.round(width * 0.03));
+          let startY = height - bannerHeight + Math.round(bannerHeight * 0.3);
+          const lineGap = Math.round(bannerHeight * 0.28);
+
+          ctx.fillText(line1, paddingLeft, startY);
+          ctx.fillText(line2, paddingLeft, startY + lineGap);
+          if (line3) {
+            ctx.fillStyle = "#FDBA74";
+            ctx.fillText(line3, paddingLeft, startY + lineGap * 2);
+          }
+
+          resolve(canvas.toDataURL("image/jpeg", 0.92));
+        };
+
+        if (typeof window !== "undefined" && "geolocation" in navigator) {
+          navigator.geolocation.getCurrentPosition(
+            (pos) => applyWatermark(pos.coords.latitude, pos.coords.longitude),
+            () => applyWatermark(null, null),
+            { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 }
+          );
+        } else {
+          applyWatermark(null, null);
+        }
+      };
+      img.src = dataUrl;
+    });
+  }, []);
+
+  const handleBeforeImagesChange = async (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
+
+    for (const file of files) {
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const geotagged = await processGeotagImage(reader.result, formData.address || "");
+        setFormData((prev) => ({
+          ...prev,
+          beforeImages: [...(prev.beforeImages || []), geotagged],
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removeBeforeImage = (index) => {
+    setFormData((prev) => ({
+      ...prev,
+      beforeImages: (prev.beforeImages || []).filter((_, i) => i !== index),
+    }));
+  };
+
+  const stopCamera = useCallback(() => {
+    if (cameraStream) {
+      cameraStream.getTracks().forEach((track) => track.stop());
+      setCameraStream(null);
+    }
+    setActiveCameraField(null);
+  }, [cameraStream]);
+
+  const startCamera = async (fieldName, mode = "user") => {
+    if (cameraStream) {
+      cameraStream.getTracks().forEach((track) => track.stop());
+    }
+    setActiveCameraField(fieldName);
+    setFacingMode(mode);
+    setCameraError("");
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: mode, width: { ideal: 1280 }, height: { ideal: 720 } },
+        audio: false
+      });
+      setCameraStream(stream);
+    } catch (err) {
+      console.error("Error accessing camera:", err);
+      setCameraError("Could not access camera. Please check permissions.");
+    }
+  };
+
+  const toggleCamera = () => {
+    const nextMode = facingMode === "user" ? "environment" : "user";
+    startCamera(activeCameraField, nextMode);
+  };
+
+  const handleSinglePhotoChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const geotagged = await processGeotagImage(reader.result, formData.address || "");
+        setFormData((prev) => ({ ...prev, photos: geotagged }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const capturePhoto = async () => {
+    if (videoRef.current && activeCameraField) {
+      const video = videoRef.current;
+      const canvas = document.createElement("canvas");
+      canvas.width = video.videoWidth || 640;
+      canvas.height = video.videoHeight || 480;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const rawDataUrl = canvas.toDataURL("image/jpeg", 0.92);
+      const geotagged = await processGeotagImage(rawDataUrl, formData.address || "");
+      if (activeCameraField === "photos") {
+        setFormData((prev) => ({ ...prev, photos: geotagged }));
+      } else {
+        setFormData((prev) => ({
+          ...prev,
+          beforeImages: [...(prev.beforeImages || []), geotagged],
+        }));
+      }
+      stopCamera();
+    }
+  };
+
+  useEffect(() => {
+    if (cameraStream && videoRef.current) {
+      videoRef.current.srcObject = cameraStream;
+    }
+  }, [cameraStream, activeCameraField]);
+
+  useEffect(() => {
+    return () => {
+      if (cameraStream) {
+        cameraStream.getTracks().forEach((track) => track.stop());
+      }
+    };
+  }, [cameraStream]);
+
+  // Revisit Lookup
+  const handleRevisitLookup = async () => {
+    if (!searchPhone) {
+      toast.warning("Please enter a phone number to search.");
+      return;
+    }
+    
+    setIsSearching(true);
+    try {
+      const response = await fetch(`/api/lookup-visitor?phone=${encodeURIComponent(searchPhone)}`);
+      const data = await response.json();
+
+      if (response.ok) {
+        setFormData((prev) => ({
+          ...prev,
+          fullName: data.fullName || "",
+          phoneNo: data.phoneNo || searchPhone,
+          sex: data.sex || "",
+          address: data.address || "",
+          photos: data.photos || "",
+          purpose: "",
+          subPurpose: "",
+          customPurpose: "",
+          customSubPurpose: "",
+        }));
+
+        setFoundVisitorName(data.fullName || "");
+        setErrors({});
+        toast.success(`Welcome back, ${data.fullName}! Your details have been filled. Please select the purpose of this visit.`);
+      } else {
+        setFormData({
+          photos: "",
+          fullName: "",
+          phoneNo: searchPhone,
+          sex: "",
+          address: "",
+          purpose: "",
+          subPurpose: "",
+          customPurpose: "",
+          customSubPurpose: "",
+        });
+        setFoundVisitorName("");
+        toast.error(data.error || "No record found. Please register as a new visitor.");
+      }
+    } catch (error) {
+      console.error("Error looking up returning visitor:", error);
+      setFormData({
+        photos: "",
+        fullName: "",
+        phoneNo: searchPhone,
+        sex: "",
+        address: "",
+        purpose: "",
+        subPurpose: "",
+        customPurpose: "",
+        customSubPurpose: "",
+      });
+      setFoundVisitorName("");
+      toast.error("Error looking up details. Please fill details manually.");
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
+  const handleClearForm = () => {
+    setFormData({
+      photos: "",
+      fullName: "",
+      phoneNo: "",
+      visitMode: "",
+      sex: "",
+      address: "",
+      purpose: "",
+      subPurpose: "",
+      customPurpose: "",
+      customSubPurpose: "",
+    });
+    setSearchPhone("");
+    setFoundVisitorName("");
+    setErrors({});
+    toast.info("Form cleared.");
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.fullName || !formData.fullName.trim()) {
+      newErrors.fullName = "Full name is required.";
+    } else if (formData.fullName.trim().length < 3) {
+      newErrors.fullName = "Full name must be at least 3 characters.";
+    } else if (!/^[A-Za-z\s]+$/.test(formData.fullName.trim())) {
+      newErrors.fullName = "Name must only contain English letters and spaces.";
+    }
+
+    if (!formData.phoneNo || !formData.phoneNo.trim()) {
+      newErrors.phoneNo = "Phone number is required.";
+    } else if (!/^\d{10}$/.test(formData.phoneNo.trim())) {
+      newErrors.phoneNo = "Phone number must be exactly 10 digits.";
+    }
+
+    if (!formData.address || !formData.address.trim()) {
+      newErrors.address = "Address is required.";
+    }
+
+    if (!formData.purpose) {
+      newErrors.purpose = "Nature of work is required.";
+    } else {
+      if (formData.purpose === "DRAINAGE" && !formData.subPurpose) {
+        newErrors.subPurpose = "Drainage sub-type is required.";
+      }
+      if ((formData.purpose === "Other" || formData.purpose === "OTHER") && (!formData.customPurpose || !formData.customPurpose.trim())) {
+        newErrors.customPurpose = "Please specify nature of work.";
+      }
+      if (formData.purpose === "DRAINAGE" && formData.subPurpose === "Other" && (!formData.customSubPurpose || !formData.customSubPurpose.trim())) {
+        newErrors.customSubPurpose = "Please specify drainage details.";
+      }
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      toast.error("Please fill in all required fields correctly.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const addedBy = localStorage.getItem("username") || "";
+      const payload = { ...formData, addedBy };
+      const res = await fetch("/api/addform", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const result = await res.json();
+      if (res.ok) {
+        toast.success("Visitor registered successfully!");
+        setIsSubmitted(true);
+      } else {
+        toast.error(result.error || "Failed to submit registration.");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error("An error occurred while submitting the form.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const inputClass =
+    "w-full bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 p-3 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all duration-300";
+
+  const labelClass = "block text-slate-700 text-sm font-medium mb-1.5";
+
+  return (
+    <>
+      <div className="min-h-screen bg-gradient-to-br from-orange-50/40 via-slate-50 to-orange-100/20 p-5 md:p-8">
+        <div className="max-w-2xl mx-auto space-y-6">
+          <div className="text-center">
+            <h1 className="text-3xl pt-3 md:text-4xl font-bold bg-gradient-to-r from-orange-600 to-orange-500 bg-clip-text text-transparent">
+              Visitor Registration
+            </h1>
+            <p className="text-slate-500 mt-2">Fill the details below to register a visitor</p>
+          </div>
+
+          {/* Lookup Panel */}
+          {!isSubmitted && (
+            <div className="bg-orange-50/50 border border-orange-100 rounded-2xl p-4 md:p-5 shadow-sm space-y-3">
+              <div>
+                <h4 className="text-slate-800 font-bold text-sm">Returning Visitor?</h4>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Quickly fill details using a registered phone number.
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-2">
+                <input
+                  type="tel"
+                  placeholder="Enter registered phone number..."
+                  value={searchPhone}
+                  onChange={(e) => {
+                    setSearchPhone(e.target.value);
+                    if (foundVisitorName) setFoundVisitorName("");
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      handleRevisitLookup();
+                    }
+                  }}
+                  className="flex-1 px-4 py-2.5 bg-white border border-slate-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/10 rounded-xl text-slate-800 placeholder-slate-400 outline-none text-sm transition-all"
+                />
+                <button
+                  type="button"
+                  onClick={handleRevisitLookup}
+                  disabled={isSearching || !searchPhone}
+                  className="px-5 py-2.5 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 disabled:opacity-50 text-white text-sm font-semibold rounded-xl transition-all shadow-md shadow-orange-500/10 flex items-center justify-center gap-1.5 whitespace-nowrap w-full sm:w-auto"
+                >
+                  {isSearching ? "Searching..." : "Find Details"}
+                </button>
+              </div>
+              {foundVisitorName && (
+                <div className="mt-3 p-3.5 bg-green-50 border border-green-200 rounded-xl flex items-center gap-2.5 shadow-sm">
+                  <HiCheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                  <div className="text-sm">
+                    <span className="text-slate-600">Found Name: </span>
+                    <strong className="text-slate-800 font-bold">{foundVisitorName}</strong>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {isSubmitted ? (
+            <div className="bg-white border border-orange-100 rounded-3xl p-6 md:p-8 shadow-sm space-y-6">
+              <div className="bg-green-50 border border-green-200 rounded-2xl p-5 shadow-sm flex items-start gap-4">
+                <HiCheckCircle className="w-8 h-8 text-green-600 flex-shrink-0" />
+                <div>
+                  <h4 className="text-green-800 font-bold text-base">Visitor Registered Successfully!</h4>
+                  <p className="text-xs text-green-600 mt-1 leading-relaxed">
+                    The registration entry has been added to the database.
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-orange-50/30 border border-orange-100 rounded-xl p-5 space-y-3">
+                <h4 className="text-slate-800 font-bold text-sm mb-3">Registration Summary</h4>
+                {formData.photos && (
+                  <div className="flex justify-center mb-4">
+                    <img src={formData.photos} alt="Visitor" className="w-20 h-20 rounded-full object-cover border-2 border-orange-500" />
+                  </div>
+                )}
+                <div className="grid grid-cols-1 gap-y-2 text-sm">
+                  {[
+                    ["Name", formData.fullName],
+                    ["Phone Number", formData.phoneNo],
+                    ["Gender", formData.sex === "male" ? "Male" : formData.sex === "female" ? "Female" : formData.sex === "other" ? "Other" : formData.sex],
+                    ["Address", formData.address],
+                    ["Purpose of Visit", formData.purpose],
+                  ].map(([label, value]) =>
+                    value ? (
+                      <div key={label} className="flex justify-between py-1 border-b border-orange-100/30">
+                        <span className="text-slate-500 font-medium">{label}</span>
+                        <span className="text-slate-800 font-semibold truncate max-w-[250px]">{value}</span>
+                      </div>
+                    ) : null
+                  )}
+                </div>
+              </div>
+
+              <div className="flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setFormData({
+                      photos: "",
+                      fullName: "",
+                      phoneNo: "",
+                      sex: "",
+                      address: "",
+                      purpose: "",
+                    });
+                    setSearchPhone("");
+                    setFoundVisitorName("");
+                    setErrors({});
+                    setIsSubmitted(false);
+                  }}
+                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-white font-semibold hover:from-orange-600 hover:to-amber-600 transition-all shadow-md shadow-orange-500/20"
+                >
+                  Register Another Visitor
+                </button>
+              </div>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="bg-white border border-orange-100 rounded-3xl p-6 md:p-8 shadow-sm space-y-5">
+                {/* 1. Full Name & Visitor Photo */}
+                <div>
+                  <label className={labelClass}>Full Name *</label>
+                  <div className="flex items-center gap-3">
+                    <div className="flex-1">
+                      <input
+                        type="text"
+                        name="fullName"
+                        value={formData.fullName}
+                        onChange={handleChange}
+                        placeholder="e.g. Rahul Sharma"
+                        className={`${inputClass} ${errors.fullName ? "border-red-500 focus:ring-red-500/20" : ""}`}
+                      />
+                    </div>
+
+                    {/* Visitor Photo Camera Button / Preview */}
+                    <div className="flex-shrink-0">
+                      {formData.photos ? (
+                        <div className="relative group w-12 h-12">
+                          <img
+                            src={formData.photos}
+                            alt="Visitor Photo"
+                            className="w-12 h-12 rounded-2xl object-cover border-2 border-orange-500 shadow-sm"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setFormData((prev) => ({ ...prev, photos: "" }))}
+                            className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-red-600 text-white flex items-center justify-center text-[10px] font-bold shadow hover:bg-red-700 transition-colors"
+                            title="Remove photo"
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-1.5">
+                          <button
+                            type="button"
+                            onClick={() => startCamera("photos")}
+                            className="w-12 h-12 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white flex items-center justify-center shadow-md shadow-orange-500/20 transition-all"
+                            title="Take Visitor Photo with Camera"
+                          >
+                            <HiCameraIcon className="w-6 h-6" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => document.getElementById("file-personal-photo").click()}
+                            className="w-12 h-12 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 flex items-center justify-center transition-all"
+                            title="Upload Visitor Photo"
+                          >
+                            <HiCloudUploadIcon className="w-5 h-5 text-slate-600" />
+                          </button>
+                          <input
+                            id="file-personal-photo"
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={handleSinglePhotoChange}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  {errors.fullName && <p className="text-xs text-red-500 mt-1">{errors.fullName}</p>}
+                </div>
+
+                {/* 2. Phone */}
+                <div>
+                  <label className={labelClass}>Phone Number *</label>
+                  <input
+                    type="tel"
+                    name="phoneNo"
+                    value={formData.phoneNo}
+                    onChange={handleChange}
+                    placeholder="e.g. 9876543210"
+                    className={`${inputClass} ${errors.phoneNo ? "border-red-500 focus:ring-red-500/20" : ""}`}
+                  />
+                  {errors.phoneNo && <p className="text-xs text-red-500 mt-1">{errors.phoneNo}</p>}
+                </div>
+
+                {/* Mode of Interaction Dropdown */}
+                <div>
+                  <label className={labelClass}>Mode of Visit / Interaction</label>
+                  <select
+                    name="visitMode"
+                    value={formData.visitMode}
+                    onChange={handleChange}
+                    className={inputClass}
+                  >
+                    <option value="">Select</option>
+                    <option value="In the office">In the office</option>
+                    <option value="On Field">On Field</option>
+                    <option value="Phone">Phone</option>
+                    <option value="WhatsApp">WhatsApp</option>
+                  </select>
+                </div>
+
+                {/* 3. Purpose / Nature of Work */}
+                <div>
+                  <label className={labelClass}>Nature of Work *</label>
+                  <select
+                    name="purpose"
+                    value={formData.purpose}
+                    onChange={handleChange}
+                    className={`${inputClass} ${errors.purpose ? "border-red-500 focus:ring-red-500/20" : ""}`}
+                  >
+                    <option value="">Select </option>
+                    <option value="MEET WITH DADA">MEET WITH DADA</option>
+                    <option value="ROAD">ROAD</option>
+                    <option value="FOOTPATH">FOOTPATH</option>
+                    <option value="DRAINAGE">DRAINAGE</option>
+                    <option value="WATER">WATER</option>
+                    <option value="STORM WATER CRISIS">STORM WATER CRISIS</option>
+                    <option value="WASTE MANAGEMENT">WASTE MANAGEMENT</option>
+                    <option value="FOLLIAGE MANAGEMENT">FOLLIAGE MANAGEMENT</option>
+                    <option value="DEBRIS MANAGEMENT">DEBRIS MANAGEMENT</option>
+                    <option value="TREE CUTTING">TREE CUTTING</option>
+                    <option value="STREET LIGHTS">STREET LIGHTS</option>
+                    <option value="DEATH INTIMATION LETTER">DEATH INTIMATION LETTER</option>
+                    <option value="JOB REFERENCE LETTER">JOB REFERENCE LETTER</option>
+                    <option value="MSEB">MSEB</option>
+                    <option value="BIRTH & DEATH CERTIFICATE CORRECTION">BIRTH & DEATH CERTIFICATE CORRECTION</option>
+                    <option value="RECOMONDATION LETTER">RECOMONDATION LETTER</option>
+                    <option value="ADMISSION LETTER">ADMISSION LETTER</option>
+                    <option value="TOILET">TOILET</option>
+                    <option value="MEDICAL ASSIT.">MEDICAL ASSIT.</option>
+                    <option value="AMBULANCE">AMBULANCE</option>
+                    <option value="RATION KIT">RATION KIT</option>
+                    <option value="MONITERY HELP">MONITERY HELP</option>
+                    <option value="CHAIRTY">CHAIRTY</option>
+                    <option value="IN KIND HELP">IN KIND HELP</option>
+                    <option value="TANKER">TANKER</option>
+                    <option value="SCHOOL / COLLEGE FEE LETTER">SCHOOL / COLLEGE FEE LETTER</option>
+                    <option value="OTHER">OTHER</option>
+                  </select>
+                  {errors.purpose && <p className="text-xs text-red-500 mt-1">{errors.purpose}</p>}
+                </div>
+
+                {/* Nature of Work details optional/required input */}
+                {formData.purpose && formData.purpose !== "DRAINAGE" && (
+                  <div className="mt-4 animate-fade-in">
+                    <label className={labelClass}>
+                      Nature of Work Details {(formData.purpose === "Other" || formData.purpose === "OTHER") ? "(Required) *" : "(Optional)"}
+                    </label>
+                    <input
+                      type="text"
+                      name="customPurpose"
+                      value={formData.customPurpose}
+                      onChange={handleChange}
+                      placeholder={(formData.purpose === "Other" || formData.purpose === "OTHER") ? "Please specify details" : "Enter additional details if any"}
+                      className={`${inputClass} ${errors.customPurpose ? "border-red-500 focus:ring-red-500/20" : ""}`}
+                    />
+                    {errors.customPurpose && <p className="text-xs text-red-500 mt-1">{errors.customPurpose}</p>}
+                  </div>
+                )}
+
+                {/* Drainage Sub-dropdown */}
+                {formData.purpose === "DRAINAGE" && (
+                  <div className="mt-4 animate-fade-in">
+                    <label className={labelClass}>Drainage Sub-Type *</label>
+                    <select
+                      name="subPurpose"
+                      value={formData.subPurpose}
+                      onChange={handleChange}
+                      className={`${inputClass} ${errors.subPurpose ? "border-red-500 focus:ring-red-500/20" : ""}`}
+                    >
+                      <option value="">Select Sub-Type</option>
+                      <option value="ROUND CHAMBER">ROUND CHAMBER</option>
+                      <option value="RECTANGLE CHAMBER">RECTANGLE CHAMBER</option>
+                      <option value="LINE CHANGE">LINE CHANGE</option>
+                      <option value="REPAIR WORK">REPAIR WORK</option>
+                      <option value="JETTING REQUIRED">JETTING REQUIRED</option>
+                      <option value="Other">Other</option>
+                    </select>
+                    {errors.subPurpose && <p className="text-xs text-red-500 mt-1">{errors.subPurpose}</p>}
+                  </div>
+                )}
+
+                {/* Custom/Optional Drainage subtype Details Text Input */}
+                {formData.purpose === "DRAINAGE" && formData.subPurpose && (
+                  <div className="mt-4 animate-fade-in">
+                    <label className={labelClass}>
+                      Drainage Details {formData.subPurpose === "Other" ? "(Required) *" : "(Optional)"}
+                    </label>
+                    <input
+                      type="text"
+                      name="customSubPurpose"
+                      value={formData.customSubPurpose}
+                      onChange={handleChange}
+                      placeholder={formData.subPurpose === "Other" ? "Please specify details" : "Enter additional details if any"}
+                      className={`${inputClass} ${errors.customSubPurpose ? "border-red-500 focus:ring-red-500/20" : ""}`}
+                    />
+                    {errors.customSubPurpose && <p className="text-xs text-red-500 mt-1">{errors.customSubPurpose}</p>}
+                  </div>
+                )}
+
+                {/* 4. Address */}
+                <div>
+                  <label className={labelClass}>Address *</label>
+                  <textarea
+                    name="address"
+                    rows={3}
+                    value={formData.address}
+                    onChange={handleChange}
+                    placeholder="Enter complete address details"
+                    className={`${inputClass} resize-none ${errors.address ? "border-red-500 focus:ring-red-500/20" : ""}`}
+                  />
+                  {errors.address && <p className="text-xs text-red-500 mt-1">{errors.address}</p>}
+                </div>
+
+                {/* 5. Gender */}
+                <div>
+                  <label className={labelClass}>Gender (Optional)</label>
+                  <select
+                    name="sex"
+                    value={formData.sex}
+                    onChange={handleChange}
+                    className={inputClass}
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+
+
+
+                {/* 7. Documents / Before Images Field */}
+                <div>
+                  <label className={labelClass}>Documents / Before Images (Optional)</label>
+                  <p className="text-xs text-slate-500 mb-2">
+                    Upload multiple geotagged photos or documents related to your visit request.
+                  </p>
+
+                  {formData.beforeImages && formData.beforeImages.length > 0 && (
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4">
+                      {formData.beforeImages.map((imgUrl, index) => (
+                        <div key={index} className="relative group rounded-xl overflow-hidden border border-orange-200 shadow-sm bg-slate-900">
+                          <img
+                            src={imgUrl}
+                            alt={`Before Image ${index + 1}`}
+                            className="w-full h-32 object-cover"
+                          />
+                          <div className="absolute top-1.5 left-1.5 bg-slate-900/80 backdrop-blur-sm text-amber-400 text-[10px] font-bold px-2 py-0.5 rounded border border-amber-400/30">
+                            📍 Geotagged
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => removeBeforeImage(index)}
+                            className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-red-600 text-white flex items-center justify-center text-xs font-bold hover:bg-red-700 shadow transition-colors"
+                            title="Remove image"
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <button
+                      type="button"
+                      onClick={() => document.getElementById("file-before-images").click()}
+                      className="flex-1 py-3 px-4 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-orange-500/50 transition-all flex items-center justify-center gap-2 text-sm text-slate-700 font-semibold shadow-sm"
+                    >
+                      <HiCloudUploadIcon className="w-5 h-5 text-orange-500" />
+                      {formData.beforeImages && formData.beforeImages.length > 0 ? "Add More Documents" : "Upload Documents / Before Images"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => startCamera("beforeImages")}
+                      className="flex-1 py-3 px-4 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 rounded-xl text-white transition-all flex items-center justify-center gap-2 text-sm font-semibold shadow-md shadow-orange-500/10"
+                    >
+                      <HiCameraIcon className="w-5 h-5" />
+                      Take Photo with Camera
+                    </button>
+                  </div>
+
+                  <input
+                    id="file-before-images"
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    className="hidden"
+                    onChange={handleBeforeImagesChange}
+                  />
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={handleClearForm}
+                  className="px-6 py-3 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 font-semibold transition-all"
+                >
+                  Clear Form
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="px-8 py-3 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-white font-semibold hover:from-orange-600 hover:to-amber-600 transition-all disabled:opacity-50 shadow-md shadow-orange-500/20 flex items-center gap-2"
+                >
+                  {isSubmitting ? "Submitting..." : "Submit Registration"}
+                </button>
+              </div>
+            </form>
+          )}
+        </div>
+      </div>
+
+      {activeCameraField && (
+        <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl overflow-hidden shadow-2xl max-w-md w-full border border-orange-100 flex flex-col">
+            {/* Header */}
+            <div className="px-5 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+              <h3 className="text-slate-800 font-bold text-base flex items-center gap-2">
+                <HiCameraIcon className="w-5 h-5 text-orange-500" />
+                Capture Photo
+              </h3>
+              <button
+                type="button"
+                onClick={stopCamera}
+                className="text-slate-400 hover:text-slate-600 transition-colors p-1 rounded-lg hover:bg-slate-200/50"
+              >
+                ✕
+              </button>
+            </div>
+            
+            {/* Video Container */}
+            <div className="relative aspect-video bg-slate-950 flex items-center justify-center overflow-hidden">
+              {!cameraStream && !cameraError && (
+                <div className="flex flex-col items-center gap-2 text-slate-400">
+                  <div className="animate-spin h-8 w-8 border-4 border-orange-500 border-t-transparent rounded-full" />
+                  <p className="text-xs">Initializing camera...</p>
+                </div>
+              )}
+              
+              {cameraError && (
+                <div className="p-6 text-center space-y-3">
+                  <p className="text-red-500 text-sm font-medium">{cameraError}</p>
+                  <button
+                    type="button"
+                    onClick={() => startCamera(activeCameraField, facingMode)}
+                    className="px-4 py-2 bg-orange-500 text-white text-xs font-semibold rounded-lg hover:bg-orange-600 transition-colors"
+                  >
+                    Try Again
+                  </button>
+                </div>
+              )}
+              
+              <video
+                ref={videoRef}
+                autoPlay
+                playsInline
+                className={`w-full h-full object-cover ${!cameraStream ? "hidden" : ""}`}
+                style={{ transform: facingMode === "user" ? "scaleX(-1)" : "none" }}
+              />
+            </div>
+            
+            {/* Actions Bar */}
+            <div className="px-5 py-4 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
+              <button
+                type="button"
+                onClick={stopCamera}
+                className="px-4 py-2 text-slate-600 hover:text-slate-800 text-sm font-semibold rounded-lg transition-colors"
+              >
+                Cancel
+              </button>
+              
+              {cameraStream && (
+                <button
+                  type="button"
+                  onClick={capturePhoto}
+                  className="w-14 h-14 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 p-1 flex items-center justify-center shadow-lg shadow-orange-500/25 border-4 border-white transition-all transform hover:scale-105 active:scale-95"
+                >
+                  <span className="w-10 h-10 rounded-full border-2 border-white/50 block" />
+                </button>
+              )}
+              
+              <button
+                type="button"
+                disabled={!cameraStream}
+                onClick={toggleCamera}
+                className="px-3 py-2 text-orange-600 hover:text-orange-700 disabled:opacity-40 text-sm font-semibold rounded-lg flex items-center gap-1 transition-all"
+              >
+                Switch
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+export default Form;

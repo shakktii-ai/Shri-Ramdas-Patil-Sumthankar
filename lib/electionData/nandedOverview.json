@@ -1,0 +1,3267 @@
+{
+  "constituencyMeta": {
+    "name": "Nanded",
+    "type": "Parliamentary Constituency (PC)",
+    "pcNumber": 16,
+    "state": "Maharashtra",
+    "zone": "Marathwada",
+    "district": "Nanded",
+    "coreAssemblyConstituencies": [
+      {
+        "acNo": 85,
+        "name": "Bhokar",
+        "category": "GEN",
+        "incumbentMLA": "Shri Ashok Chavan (Elected on INC, Joined BJP)"
+      },
+      {
+        "acNo": 86,
+        "name": "Nanded North",
+        "category": "GEN",
+        "incumbentMLA": "Shri Balaji Kalyankar (SHS)"
+      },
+      {
+        "acNo": 87,
+        "name": "Nanded South",
+        "category": "GEN",
+        "incumbentMLA": "Shri Mohan Hambarde (INC)"
+      },
+      {
+        "acNo": 89,
+        "name": "Naigaon",
+        "category": "GEN",
+        "incumbentMLA": "Shri Rajesh Pawar (BJP)"
+      },
+      {
+        "acNo": 90,
+        "name": "Deglur",
+        "category": "SC",
+        "incumbentMLA": "Shri Jitesh Antapurkar (INC)"
+      },
+      {
+        "acNo": 91,
+        "name": "Mukhed",
+        "category": "GEN",
+        "incumbentMLA": "Shri Tushar Rathod (BJP)"
+      }
+    ],
+    "referenceDistrictConstituencies": [
+      {
+        "acNo": 83,
+        "name": "Kinwat",
+        "category": "GEN/ST",
+        "details": "Falls under Hingoli PC"
+      },
+      {
+        "acNo": 84,
+        "name": "Hadgaon",
+        "category": "GEN",
+        "details": "Falls under Hingoli PC"
+      },
+      {
+        "acNo": 88,
+        "name": "Loha",
+        "category": "GEN",
+        "details": "Falls under Latur PC"
+      }
+    ],
+    "partyLeadership": {
+      "nandedCityDistrictPresident": "Shri Dilip Kandkurte (GEN - Komti)",
+      "nandedSouthDistrictPresident": "Shri Santukrao Hambarde (GEN - Maratha)",
+      "lokSabhaIncharge": "Shri Vyankat Gojegaonkar (GEN - Maratha)"
+    }
+  },
+  "casteDemographics": [
+    {
+      "caste": "Maratha",
+      "category": "General",
+      "percentage": 24,
+      "range": "24-26%",
+      "politicalInclination": "Historically backed Ashok Chavan (INC). Post his move to BJP, votes are split between BJP and INC; heavily impacted by Manoj Jarange Patil's Maratha reservation agitation.",
+      "historicAlignment": "Congress Stronghold",
+      "localIssuesAndDemands": "Maratha reservation in education and govt jobs; financial and fee concessions for Maratha students.",
+      "keyTalukas": [
+        "Bhokar",
+        "Nanded South",
+        "Naigaon",
+        "Mudkhed",
+        "Ardhapur"
+      ]
+    },
+    {
+      "caste": "Muslim",
+      "category": "General / Minority",
+      "percentage": 17,
+      "range": "17%",
+      "politicalInclination": "Split between Congress and AIMIM. Heavy consolidation behind INC in general parliamentary elections.",
+      "historicAlignment": "Congress Stronghold with urban AIMIM presence",
+      "localIssuesAndDemands": "Equitable development of minority localities, civic amenities in municipal wards, Setu center access.",
+      "keyTalukas": [
+        "Nanded City",
+        "Nanded North",
+        "Nanded South",
+        "Deglur",
+        "Biloli"
+      ]
+    },
+    {
+      "caste": "Mahar (Buddhist / SC)",
+      "category": "Scheduled Caste (SC)",
+      "percentage": 12,
+      "range": "12%",
+      "politicalInclination": "Historically supported Congress; significant shift toward Prakash Ambedkar's Vanchit Bahujan Aghadi (VBA).",
+      "historicAlignment": "Congress & VBA",
+      "localIssuesAndDemands": "Development of historic Ashoka Pillar (Ashok Stambh) at Dabhad for tourism; construction of a grand Cultural & Social Bhavan in Nanded city; Ambedkar statue in Mudkhed.",
+      "keyTalukas": [
+        "Nanded North",
+        "Nanded South",
+        "Deglur",
+        "Naigaon",
+        "Mukhed"
+      ]
+    },
+    {
+      "caste": "Lingayat (Panchamshali / Jangam)",
+      "category": "OBC / General",
+      "percentage": 10,
+      "range": "10%",
+      "politicalInclination": "Large section backs BJP. In 2024, VBA candidate Avinash Bhosikar (Lingayat) captured substantial Lingayat votes.",
+      "historicAlignment": "BJP Stronghold",
+      "localIssuesAndDemands": "Release of state funds for Lingayat Maths; relocation of Mahatma Basaveshwar statue from city outskirts to main Nanded city center; appointing President for Basaveshwar Corporation.",
+      "keyTalukas": [
+        "Naigaon",
+        "Deglur",
+        "Mukhed",
+        "Loha",
+        "Nanded City"
+      ]
+    },
+    {
+      "caste": "Hatkar Dhangar",
+      "category": "VJNT / OBC",
+      "percentage": 8,
+      "range": "8%",
+      "politicalInclination": "Strongly inclined towards BJP; sections influenced by VBA (Yashpal Bhinge).",
+      "historicAlignment": "BJP Leaning",
+      "localIssuesAndDemands": "Setting up dedicated hostels for Dhangar female students; implementation of 13 special schemes including 75% subsidy for modern sheep farming.",
+      "keyTalukas": [
+        "Mukhed",
+        "Naigaon",
+        "Hadgaon",
+        "Kinwat"
+      ]
+    },
+    {
+      "caste": "Banjara (Lamani / Lambani)",
+      "category": "VJNT / OBC",
+      "percentage": 8,
+      "range": "8%",
+      "politicalInclination": "Solid support for BJP, spearheaded by BJP MLA Shri Tushar Rathod in Mukhed.",
+      "historicAlignment": "BJP Stronghold",
+      "localIssuesAndDemands": "Construction of a dedicated Banjara Sanskritik Bhavan (Cultural Hall) in Nanded; civic development in Tanda settlements.",
+      "keyTalukas": [
+        "Mukhed",
+        "Kinwat",
+        "Bhokar",
+        "Deglur"
+      ]
+    },
+    {
+      "caste": "Munnerwarlu (Mannerwarlu)",
+      "category": "Scheduled Tribe (ST)",
+      "percentage": 6,
+      "range": "5-6%",
+      "politicalInclination": "Substantial support for Congress; local influence shared with BJP and independent tribal leaders.",
+      "historicAlignment": "Congress Leaning",
+      "localIssuesAndDemands": "Resolution of ST caste validity certification issues; local livelihood opportunities.",
+      "keyTalukas": [
+        "Bhokar",
+        "Kinwat",
+        "Naigaon",
+        "Deglur"
+      ]
+    },
+    {
+      "caste": "Matang",
+      "category": "Scheduled Caste (SC)",
+      "percentage": 5,
+      "range": "5%",
+      "politicalInclination": "Split between Congress and BJP. Influenced by MLA Jitesh Antapurkar.",
+      "historicAlignment": "Divided between Congress and Mahayuti",
+      "localIssuesAndDemands": "Economic welfare support via Annabhau Sathe Development Corporation.",
+      "keyTalukas": [
+        "Deglur",
+        "Naigaon",
+        "Mukhed"
+      ]
+    },
+    {
+      "caste": "Komti (Arya Vaishya)",
+      "category": "General",
+      "percentage": 1,
+      "range": "1-2%",
+      "politicalInclination": "Financially prosperous trading community that uniformly and solidly supports the BJP.",
+      "historicAlignment": "Solid BJP Base",
+      "localIssuesAndDemands": "Commercial security, ease of trading and local market infrastructure.",
+      "keyTalukas": [
+        "Nanded City",
+        "Nanded South",
+        "Deglur"
+      ]
+    },
+    {
+      "caste": "Koli / Mahadev Koli",
+      "category": "Scheduled Tribe (ST)",
+      "percentage": 1,
+      "range": "1%",
+      "politicalInclination": "Predominantly supports Congress.",
+      "historicAlignment": "Congress Leaning",
+      "localIssuesAndDemands": "Tribe certificate verification, riverine and fishing welfare schemes.",
+      "keyTalukas": [
+        "Kinwat",
+        "Hadgaon",
+        "Naigaon"
+      ]
+    },
+    {
+      "caste": "Brahmin",
+      "category": "General",
+      "percentage": 1,
+      "range": "1%",
+      "politicalInclination": "Firmly supports the BJP.",
+      "historicAlignment": "Core BJP Base",
+      "localIssuesAndDemands": "Economic development criteria, cultural preservation.",
+      "keyTalukas": [
+        "Nanded City",
+        "Nanded North",
+        "Nanded South"
+      ]
+    },
+    {
+      "caste": "Others (Sikh, Mali, Vanjari, Telugu, Wadar)",
+      "category": "Various",
+      "percentage": 7,
+      "range": "7%",
+      "politicalInclination": "Diverse. Sikh community (4% in City) has grievances with local BJP leadership; Mali and Vanjari lean towards Mahayuti.",
+      "historicAlignment": "Split across alliances",
+      "localIssuesAndDemands": "Pilgrimage infrastructure around Gurudwara Hazur Sahib; fair crop pricing.",
+      "keyTalukas": [
+        "Nanded City",
+        "Loha",
+        "Mukhed"
+      ]
+    }
+  ],
+  "economicProfile": {
+    "overview": "The economy of Nanded district is driven by agrarian production, particularly cotton, soybean, sugarcane, and specialized horticulture (bananas and sweet limes/mosambi), with growing agro-processing and industrial development.",
+    "keyIndustries": [
+      "Agro-Processing & Fruit Processing (Banana, Sweet Lime)",
+      "Cooperative & Private Sugar Factories",
+      "Cotton Ginning, Pressing & Textile Mills",
+      "Turmeric (Haldi) Processing & Trading Centers",
+      "Dal Mills & Edible Oil Extraction",
+      "Truck Body Building & Commercial Vehicle Fabrication",
+      "Metal Works, Brick Kilns, Leather Craft & Tanning"
+    ],
+    "prominentIndustrialists": [
+      "Shri Subodh Kakani",
+      "Shri Sanjay Bhandari",
+      "Shri Pravin Biyani",
+      "Shri Marotrao Kawale Guruji",
+      "Shri Marotirao Kanthewad"
+    ],
+    "midcAreas": [
+      {
+        "name": "Dhanegaon MIDC",
+        "scale": "Active Industrial Cluster",
+        "details": "Houses small and medium scale fabrication and light manufacturing units."
+      },
+      {
+        "name": "Nanded Growth Centre",
+        "scale": "Major Growth Hub",
+        "details": "Accommodates major agro-processing, chemical, and metal fabrication enterprises."
+      },
+      {
+        "name": "Kondhar Mini Area",
+        "scale": "Mini Industrial Zone",
+        "details": "Focuses on rural artisan units and small ancillary manufacturing."
+      },
+      {
+        "name": "Kushnoor MIDC",
+        "scale": "Primary Industrial Hub",
+        "details": "Houses approximately 499 Small Scale Industries (SSIs) and 5 Medium Scale Industries."
+      },
+      {
+        "name": "Khanapur MIDC (Deglur)",
+        "scale": "Struggling Cluster",
+        "details": "Critical issue: Only 2 to 4 industries are operational; severe youth migration and unemployment."
+      }
+    ],
+    "sugarFactories": [
+      {
+        "name": "Bhaurao Chavan Co-Operative Sugar Factory",
+        "location": "Nanded",
+        "status": "Operational",
+        "management": "Ashok Chavan Cooperative Network"
+      },
+      {
+        "name": "MVK Agro Food Product Ltd",
+        "location": "Umri",
+        "status": "Operational",
+        "management": "Private / Agro"
+      },
+      {
+        "name": "Shri Subhash Sugar Pvt Ltd",
+        "location": "Hadgaon",
+        "status": "Operational",
+        "management": "Private"
+      },
+      {
+        "name": "Kalambar Vibhag Sahakari Sakhar Karkhana Ltd",
+        "location": "Loha",
+        "status": "Closed",
+        "management": "Cooperative - Awaits revival package"
+      },
+      {
+        "name": "Twenty-One Sugars Ltd (Unit - 3)",
+        "location": "Loha",
+        "status": "Operational",
+        "management": "Private Enterprise"
+      },
+      {
+        "name": "Venkatrao Patil-Kawale Sugar Factory (Khandsari & Jaggery)",
+        "location": "Umri",
+        "status": "Operational",
+        "management": "Marotrao Kawale"
+      }
+    ],
+    "researchAndSupport": [
+      {
+        "name": "Regional Cotton Research Centre (Kapus Sanshodhan Kendra)",
+        "location": "Nanded",
+        "role": "State-level scientific research hub supporting cotton cultivators through pest-resistant seeds and yield improvement."
+      }
+    ],
+    "irrigationInfrastructure": {
+      "majorProjects": [
+        {
+          "name": "Vishnupuri Project",
+          "irrigatedArea": "28,340 Hectares",
+          "details": "Major dam on Godavari river providing water to Nanded city and agriculture."
+        },
+        {
+          "name": "Manar (Manor) Project",
+          "irrigatedArea": "23,310 Hectares",
+          "details": "Critical irrigation reservoir for southern talukas."
+        },
+        {
+          "name": "Purna Project",
+          "irrigatedArea": "20,000 Hectares",
+          "details": "Canal-based river project covering extensive farming command areas."
+        }
+      ],
+      "mediumProjectsCount": 10,
+      "minorProjectsCount": 394,
+      "irrigationBorewells": 6620,
+      "pendingProjects": [
+        {
+          "name": "Lendi Inter-State Irrigation Project",
+          "status": "Incomplete for 30+ Years",
+          "impact": "Joint project with Telangana. Will irrigate 27,000 acres in Nanded (Mukhed/Deglur) and 22,000 acres in Nizamabad."
+        },
+        {
+          "name": "Nagzhari Dam Distribution System",
+          "status": "Dam built, no distribution canals",
+          "impact": "Farming in Kinwat taluka remains 100% rain-dependent despite dam storage."
+        }
+      ]
+    },
+    "crops": {
+      "dominantCrop": "Cotton (Kapus) - Prominent cash crop defining the district's agrarian economy.",
+      "majorCashCrops": [
+        "Soybean",
+        "Sugarcane",
+        "Turmeric (Haldi - massive in Nandgaon & Degloor)"
+      ],
+      "pulsesAndGrains": [
+        "Red Gram (Tur)",
+        "Green Gram (Moong)",
+        "Black Gram (Udad)",
+        "Jowar",
+        "Wheat",
+        "Maize"
+      ],
+      "horticulture": "Bananas and Sweet Limes (Mosambi) are leading horticultural crops with enormous agro-processing potential."
+    },
+    "textileIndustries": [
+      {
+        "name": "Tirupati Textile",
+        "location": "MIDC Nanded",
+        "type": "Textile Manufacturing Unit",
+        "details": "Small-scale powerloom and fabric processing enterprise in Dhanegaon/Nanded MIDC."
+      },
+      {
+        "name": "LB Cotton Industries LLP",
+        "location": "Dharmabad, Nanded",
+        "type": "Cotton Processing & Ginning",
+        "details": "Commercial raw cotton ginning, seed extraction and baling facility."
+      },
+      {
+        "name": "Nanded Textile Mill",
+        "location": "Khadakpura, Nanded",
+        "type": "Traditional Mill & Artisan Unit",
+        "details": "Historic textile unit focused on traditional yarn, weaving, and local artisan fabric."
+      },
+      {
+        "name": "Natraj Cotton Pvt Ltd",
+        "location": "Tamsa, Belgawhan D, Nanded",
+        "type": "Ginning & Pressing Unit",
+        "details": "High-volume cotton pressing and commercial lint export facility."
+      }
+    ]
+  },
+  "issuesAndDemands": [
+    {
+      "id": "INF-1",
+      "sector": "Infrastructure",
+      "issue": "Nanded-Yavatmal-Wardha Railway Line Project (284 km)",
+      "description": "Under-construction broad-gauge railway line connecting Wardha to Nanded via Yavatmal. Granted special status; vital for high-speed connectivity between Nagpur and Marathwada.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Long Term",
+      "concernedDepartment": "Ministry of Railways (GOI) & MRIDC"
+    },
+    {
+      "id": "INF-2",
+      "sector": "Infrastructure",
+      "issue": "Bidar-Nanded Railway Line Project",
+      "description": "Approved ₹750 crore budget for Nanded-Deglur-Bidar rail link. Significant strategic project for Marathwada-Karnataka connectivity.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Long Term",
+      "concernedDepartment": "Ministry of Railways (GOI) & MRIDC"
+    },
+    {
+      "id": "INF-3",
+      "sector": "Infrastructure",
+      "issue": "Jalna-Nanded Samruddhi Link Expressway",
+      "description": "Approved ₹24,702 crore (₹247.02 billion) expressway connecting Nanded directly to the Mumbai-Nagpur Samruddhi Mahamarg. High demand to expedite land acquisition.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Long Term",
+      "concernedDepartment": "Ministry of Road Transport & MSRDC, Govt of Maharashtra"
+    },
+    {
+      "id": "INF-4",
+      "sector": "Infrastructure",
+      "issue": "New Central Bus Stand in Nanded South",
+      "description": "Work on the proposed modern central bus stand in Nanded South has not commenced. Immediate ground-breaking demanded.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Long Term",
+      "concernedDepartment": "Ministry of Transport, Govt of Maharashtra & MSRTC"
+    },
+    {
+      "id": "INF-5",
+      "sector": "Infrastructure",
+      "issue": "Demand for Carving out New Kinwat District",
+      "description": "Kinwat taluka is located 140 km from Nanded district headquarters. Severe travel inconvenience for local population drives demand for a separate district.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Long Term",
+      "concernedDepartment": "Ministry of Revenue & Home Ministry, Govt of Maharashtra"
+    },
+    {
+      "id": "INF-6",
+      "sector": "Infrastructure",
+      "issue": "Mobile Network Blackspots in Mudkhed & Bhokar",
+      "description": "Multiple rural villages in Mudkhed and Bhokar talukas completely lack mobile network towers.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Short Term",
+      "concernedDepartment": "Department of Telecommunications & Ministry of IT, Govt of Maharashtra"
+    },
+    {
+      "id": "INF-7",
+      "sector": "Infrastructure",
+      "issue": "Preservation of Ancient Fort in Kandhar",
+      "description": "Historic fort in Kandhar neglected without heritage conservation; high potential as a major tourism and revenue center.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Long Term",
+      "concernedDepartment": "Ministry of Tourism & Culture, Govt of Maharashtra & ASI"
+    },
+    {
+      "id": "INF-8",
+      "sector": "Infrastructure",
+      "issue": "Expedited Construction of Deglur Naka Flyover",
+      "description": "Severe traffic congestion in Nanded city requires rapid construction of the Deglur Naka flyover.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Short Term",
+      "concernedDepartment": "PWD & Urban Development Department, Govt of Maharashtra"
+    },
+    {
+      "id": "INF-9",
+      "sector": "Infrastructure",
+      "issue": "City Road Reconstruction (Railway Station - Gandhi Chowk & Bus Stand - Bafna Chowk)",
+      "description": "Heavy commercial arteries in Nanded city suffer from acute wear and tear; urgent resurfacing demanded.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Short Term",
+      "concernedDepartment": "Public Works Department & Nanded-Waghala Municipal Corporation"
+    },
+    {
+      "id": "INF-10",
+      "sector": "Infrastructure",
+      "issue": "Extension of Vande Bharat Express to Nanded",
+      "description": "Extend Mumbai-Jalna Vande Bharat train up to Nanded for direct semi-high speed connectivity to Mumbai.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Long Term",
+      "concernedDepartment": "Ministry of Railways, Govt of India"
+    },
+    {
+      "id": "INF-11",
+      "sector": "Infrastructure",
+      "issue": "Agricultural Daytime Power Shortage in Deglur",
+      "description": "Severe lack of 3-phase daytime electricity disrupting farm tube-wells and irrigation.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Short Term",
+      "concernedDepartment": "Ministry of Energy & Power (MSEDCL), Govt of Maharashtra"
+    },
+    {
+      "id": "AGR-1",
+      "sector": "Agriculture & Irrigation",
+      "issue": "Canal Distribution Network for Nagzhari Dam",
+      "description": "Nagzhari dam in Kinwat taluka has water but zero canal delivery system for farming and potable needs.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Long Term",
+      "concernedDepartment": "Ministry of Water Resources, Govt of Maharashtra"
+    },
+    {
+      "id": "AGR-2",
+      "sector": "Agriculture & Irrigation",
+      "issue": "Banana & Horticultural Processing Corporation",
+      "description": "Nanded is a premier banana and sweet lime producer. Widespread demand for cold-chain processing, disease research (Cucumber Mosaic Virus, Karpa), and assured buy-back.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Long Term",
+      "concernedDepartment": "Ministry of Agriculture & Horticulture, Govt of Maharashtra"
+    },
+    {
+      "id": "AGR-3",
+      "sector": "Agriculture & Irrigation",
+      "issue": "Turmeric & Soybean Government Procurement Centers",
+      "description": "Establish dedicated purchase centers for turmeric in Nandgaon/Degloor and soybean in Mukhed/Umri.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Long Term",
+      "concernedDepartment": "Ministry of Agriculture & State Marketing Board"
+    },
+    {
+      "id": "AGR-4",
+      "sector": "Agriculture & Irrigation",
+      "issue": "Fair & Transparent Grain Procurement (Dhan Kharedi)",
+      "description": "Eliminate broker interference and long waiting lines at procurement centers; implement transparent quota allocations.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Long Term",
+      "concernedDepartment": "Department of Food & Civil Supplies, Govt of Maharashtra"
+    },
+    {
+      "id": "AGR-5",
+      "sector": "Agriculture & Irrigation",
+      "issue": "Human-Wildlife Conflict Mitigation in Kinwat",
+      "description": "Growing instances of leopard and wildlife incursions on forest-edge farms; action plan awaiting deployment.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Short Term",
+      "concernedDepartment": "Ministry of Forests, Govt of Maharashtra"
+    },
+    {
+      "id": "AGR-6",
+      "sector": "Agriculture & Irrigation",
+      "issue": "Restoration of Lal Kandhari Cow Breed Center",
+      "description": "Relocation of the indigenous Lal Kandhari cattle preservation center from Kandhar to Ambajogai in 2023 caused public indignation.",
+      "priority": "Medium",
+      "politicalBenefit": "Medium",
+      "timeline": "Short Term",
+      "concernedDepartment": "Animal Husbandry Department, Govt of Maharashtra"
+    },
+    {
+      "id": "IND-1",
+      "sector": "Industries",
+      "issue": "Revitalization of Khanapur MIDC (Deglur)",
+      "description": "Multiple industrial units exited Nandgaon/Degloor. In Khanapur MIDC, only 2-4 factories operate; urgent revival package needed.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Long Term",
+      "concernedDepartment": "Ministry of Industries & MIDC, Govt of Maharashtra"
+    },
+    {
+      "id": "IND-2",
+      "sector": "Industries",
+      "issue": "Major Industrial Anchor Project in Loha",
+      "description": "Absence of any large industrial employer in Loha; demand for setting up a textile or agro-industrial park.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Long Term",
+      "concernedDepartment": "Ministry of Industries & MIDC, Govt of Maharashtra"
+    },
+    {
+      "id": "HLT-1",
+      "sector": "Healthcare",
+      "issue": "Govt Hospital Healthcare Crisis & Medicine Shortages",
+      "description": "Severe public outrage following patient deaths at the Nanded Government Medical College due to alleged medicine and consumable shortages.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Short Term",
+      "concernedDepartment": "Ministry of Health & Medical Education, Govt of Maharashtra"
+    },
+    {
+      "id": "HLT-2",
+      "sector": "Healthcare",
+      "issue": "Staff & Specialist Doctor Vacancies in Critical Care",
+      "description": "Acute shortage of intensivists, nurses, and medical officers in district ICU wards.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Short Term",
+      "concernedDepartment": "Ministry of Health, Govt of Maharashtra"
+    },
+    {
+      "id": "HLT-3",
+      "sector": "Healthcare",
+      "issue": "Diagnostic Equipment (MRI & 24x7 Chemist) at Vishnupuri & Deglur",
+      "description": "Demand for state-of-the-art MRI machines at Vishnupuri GMC and Deglur Sub-District Hospital, plus subsidized pharmacies.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Short Term",
+      "concernedDepartment": "Department of Medical Education & Drugs, Govt of Maharashtra"
+    },
+    {
+      "id": "HLT-4",
+      "sector": "Healthcare",
+      "issue": "Dilapidated Hospital Building at Bodhadi",
+      "description": "The Bodhadi government hospital structure is in ruins and urgently needs a reconstructed modern healthcare facility.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Long Term",
+      "concernedDepartment": "Public Health Department, Govt of Maharashtra"
+    },
+    {
+      "id": "ADM-1",
+      "sector": "Administrative Management",
+      "issue": "Removal of Illegal Encroachments on Forest & Govt Land",
+      "description": "Massive encroachments across Ganpur, Sangvi Khurd, Limbgaon, Malsawargaon, Khairgaon, Ardhapur, Mendla, Chabhara, Malegaon, Shendan, Vadgaon, Manatha.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Long Term",
+      "concernedDepartment": "Ministry of Rural Development & Revenue Department"
+    },
+    {
+      "id": "ADM-2",
+      "sector": "Administrative Management",
+      "issue": "MSRTC Bus Stands in Deglur & Biloli in Deplorable Condition",
+      "description": "Potholes, water logging, lack of sanitary facilities cause severe hardship for daily bus travelers in Deglur and Biloli.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Long Term",
+      "concernedDepartment": "Ministry of Transport & PWD, Govt of Maharashtra"
+    },
+    {
+      "id": "CAS-1",
+      "sector": "Caste-Community-Cohort",
+      "issue": "Encroachment Removal in Ardhapur (E-Rasool Dargah)",
+      "description": "Public demand to survey and reclaim illegally occupied public land in Ardhapur taluka.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Long Term",
+      "concernedDepartment": "Tehsildar Ardhapur & Revenue Department, Govt of Maharashtra"
+    },
+    {
+      "id": "CAS-2",
+      "sector": "Caste-Community-Cohort",
+      "issue": "Organized Market for Tendu Patta in Kinwat",
+      "description": "Tribal gatherers face lack of regulated procurement for tendu leaves; institutional mandi support demanded.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Long Term",
+      "concernedDepartment": "Ministry of Tribal Development & Forest Dept, Govt of Maharashtra"
+    },
+    {
+      "id": "CAS-3",
+      "sector": "Caste-Community-Cohort",
+      "issue": "Religious Tourism Funds for Renuka Mata & Shri Datta Temple at Mahur",
+      "description": "Substantial fund allocation demanded for tourist amenities, roads, and sanctum development at Mahur Shaktipeeth.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Long Term",
+      "concernedDepartment": "Ministry of Tourism, Govt of Maharashtra"
+    },
+    {
+      "id": "CAS-4",
+      "sector": "Caste-Community-Cohort",
+      "issue": "Setu Suvidha Center Access & Ladki Bahin Yojana Verification",
+      "description": "Complaints of administrative harassment and delays for women applicants at Setu centers; streamlined access demanded.",
+      "priority": "High",
+      "politicalBenefit": "High",
+      "timeline": "Long Term",
+      "concernedDepartment": "Department of Information Technology & Collectorate Nanded"
+    }
+  ],
+  "assemblyConstituencies": [
+    {
+      "acNo": 85,
+      "name": "Bhokar",
+      "isCorePC": true,
+      "incumbentMLA": "Shri Ashok Chavan (Elected on INC, Joined BJP)",
+      "dominantCastes": [
+        "Maratha (28%)",
+        "Muslim (11%)",
+        "Banjara (10%)",
+        "Buddhist/Mahar (10%)",
+        "Dhangar (7%)",
+        "Lingayat (6%)",
+        "ST Mannervarlu (6%)"
+      ],
+      "casteDemography": [
+        {
+          "caste": "Maratha",
+          "category": "GEN",
+          "percentage": 28
+        },
+        {
+          "caste": "Muslim",
+          "category": "GEN",
+          "percentage": 11
+        },
+        {
+          "caste": "Banjara/Lamani",
+          "category": "OBC",
+          "percentage": 10
+        },
+        {
+          "caste": "Buddhist/Mahar",
+          "category": "SC",
+          "percentage": 10
+        },
+        {
+          "caste": "Dhangar",
+          "category": "OBC",
+          "percentage": 7
+        },
+        {
+          "caste": "Lingayat/Panchamshali",
+          "category": "GEN",
+          "percentage": 6
+        },
+        {
+          "caste": "Hindu Dalit",
+          "category": "SC",
+          "percentage": 6
+        },
+        {
+          "caste": "Mahadev Koli/Mannervarlu",
+          "category": "ST",
+          "percentage": 6
+        },
+        {
+          "caste": "OBC-Others",
+          "category": "OBC",
+          "percentage": 10
+        },
+        {
+          "caste": "Others",
+          "category": "GEN",
+          "percentage": 3
+        },
+        {
+          "caste": "ST-Others",
+          "category": "ST",
+          "percentage": 3
+        }
+      ],
+      "assemblyElections": [
+        {
+          "year": 2009,
+          "turnout": "69.13%",
+          "totalVotes": 151724,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Ashok Shankarrao Chavan",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 120849,
+              "percentage": 79.65
+            },
+            {
+              "rank": 2,
+              "candidate": "Dr. Madhavrao Kinhalkar",
+              "party": "IND",
+              "caste": "GEN-Maratha",
+              "votes": 13346,
+              "percentage": 8.8
+            },
+            {
+              "rank": 3,
+              "candidate": "Bhimrao Kshirsagar",
+              "party": "SHS",
+              "caste": "SC-Mahar",
+              "votes": 6405,
+              "percentage": 4.22
+            }
+          ]
+        },
+        {
+          "year": 2014,
+          "turnout": "70.26%",
+          "totalVotes": 185150,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Ameeta Ashokrao Chavan",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 100781,
+              "percentage": 54.43
+            },
+            {
+              "rank": 2,
+              "candidate": "Dr. Madhavrao Kinhalkar",
+              "party": "BJP",
+              "caste": "GEN-Maratha",
+              "votes": 53224,
+              "percentage": 28.75
+            },
+            {
+              "rank": 3,
+              "candidate": "Baban Barse",
+              "party": "SHS",
+              "caste": "GEN-Maratha",
+              "votes": 12760,
+              "percentage": 6.89
+            }
+          ]
+        },
+        {
+          "year": 2019,
+          "turnout": "74.33%",
+          "totalVotes": 207382,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Ashok Shankarrao Chavan",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 140559,
+              "percentage": 67.78
+            },
+            {
+              "rank": 2,
+              "candidate": "Bapusaheb Deshmukh Gorthekar",
+              "party": "BJP",
+              "caste": "GEN-Maratha",
+              "votes": 43114,
+              "percentage": 20.79
+            },
+            {
+              "rank": 3,
+              "candidate": "Namdev Nagorao Ayalwad",
+              "party": "VBA",
+              "caste": "OBC-Golewar",
+              "votes": 17813,
+              "percentage": 8.59
+            }
+          ]
+        }
+      ],
+      "generalElections": [
+        {
+          "year": 2014,
+          "totalVotes": 175651,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Ashok Shankarrao Chavan",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 89895,
+              "percentage": 51.18
+            },
+            {
+              "rank": 2,
+              "candidate": "D. B. Patil",
+              "party": "BJP",
+              "caste": "GEN-Maratha",
+              "votes": 66696,
+              "percentage": 37.97
+            },
+            {
+              "rank": 3,
+              "candidate": "Dr. Hansraj Vaidya",
+              "party": "BSP",
+              "caste": "GEN-Maratha",
+              "votes": 4701,
+              "percentage": 2.68
+            }
+          ]
+        },
+        {
+          "year": 2019,
+          "totalVotes": 196142,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Ashok Shankarrao Chavan",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 85005,
+              "percentage": 43.34
+            },
+            {
+              "rank": 2,
+              "candidate": "Prataprao Patil Chikhalikar",
+              "party": "BJP",
+              "caste": "GEN-Maratha",
+              "votes": 80219,
+              "percentage": 40.9
+            },
+            {
+              "rank": 3,
+              "candidate": "Yashpal Bhinge",
+              "party": "VBA",
+              "caste": "OBC-Dhangar",
+              "votes": 26020,
+              "percentage": 13.27
+            }
+          ]
+        },
+        {
+          "year": 2024,
+          "turnout": "65.37%",
+          "totalVotes": 191582,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Prataprao Patil Chikhalikar",
+              "party": "BJP",
+              "caste": "GEN-Maratha",
+              "votes": 84331,
+              "percentage": 44.02
+            },
+            {
+              "rank": 2,
+              "candidate": "Vasantrao Chavan",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 83490,
+              "percentage": 43.58
+            },
+            {
+              "rank": 3,
+              "candidate": "Avinash Bhosikar",
+              "party": "VBA",
+              "caste": "OBC-Lingayat",
+              "votes": 16870,
+              "percentage": 8.81
+            }
+          ]
+        }
+      ],
+      "politicalDynamics": [
+        "Historically the fortress of Shri Ashok Chavan who won by 100,000 votes in 2019.",
+        "Post Ashok Chavan joining BJP, the BJP secured a slim 841-vote lead in the 2024 General Election.",
+        "Smt. Shreejaya Chavan has undertaken aggressive village-to-village outreach.",
+        "Friction between BJP District President Kishor Deshmukh and Ashok Chavan's supporters.",
+        "Maratha reservation movement led by Manoj Jarange Patil triggered backlash among rural Maratha youth against BJP.",
+        "Congress opposition led by B.R. Kadam (Bhokar), Pappu Patil Kondhekar (Ardhapur), and Pratap Deshmukh (Mudkhed)."
+      ]
+    },
+    {
+      "acNo": 86,
+      "name": "Nanded North",
+      "isCorePC": true,
+      "incumbentMLA": "Shri Balaji Devidasrao Kalyankar (SHS, GEN-Maratha)",
+      "dominantCastes": [
+        "Muslim (26%)",
+        "Maratha (23%)",
+        "Buddhist/Mahar (14%)",
+        "Dhangar (10%)",
+        "Sikh (4%)",
+        "Brahmin (3%)",
+        "Lingayat (3%)"
+      ],
+      "casteDemography": [
+        {
+          "caste": "Muslim",
+          "category": "GEN",
+          "percentage": 26
+        },
+        {
+          "caste": "Maratha",
+          "category": "GEN",
+          "percentage": 23
+        },
+        {
+          "caste": "Buddhist/Mahar",
+          "category": "SC",
+          "percentage": 14
+        },
+        {
+          "caste": "Dhangar",
+          "category": "OBC",
+          "percentage": 10
+        },
+        {
+          "caste": "Sikh",
+          "category": "GEN",
+          "percentage": 4
+        },
+        {
+          "caste": "Brahmin",
+          "category": "GEN",
+          "percentage": 3
+        },
+        {
+          "caste": "Lingayat/Panchamshali",
+          "category": "GEN",
+          "percentage": 3
+        },
+        {
+          "caste": "Matang",
+          "category": "SC",
+          "percentage": 3
+        },
+        {
+          "caste": "Mali/Fulmali",
+          "category": "OBC",
+          "percentage": 2
+        },
+        {
+          "caste": "Hindu Dalit",
+          "category": "SC",
+          "percentage": 2
+        },
+        {
+          "caste": "OBC-Others",
+          "category": "OBC",
+          "percentage": 4
+        },
+        {
+          "caste": "Others",
+          "category": "GEN",
+          "percentage": 3
+        },
+        {
+          "caste": "ST-Others",
+          "category": "ST",
+          "percentage": 3
+        }
+      ],
+      "assemblyElections": [
+        {
+          "year": 2009,
+          "turnout": "49.45%",
+          "totalVotes": 136560,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "D.P. Sawant",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 67052,
+              "percentage": 49.1
+            },
+            {
+              "rank": 2,
+              "candidate": "Anusaya Khedkar",
+              "party": "SHS",
+              "caste": "GEN-Maratha",
+              "votes": 22970,
+              "percentage": 16.82
+            },
+            {
+              "rank": 3,
+              "candidate": "Dr. Shila Kadam",
+              "party": "IND",
+              "caste": "GEN-Maratha",
+              "votes": 13408,
+              "percentage": 9.82
+            }
+          ]
+        },
+        {
+          "year": 2014,
+          "turnout": "53.62%",
+          "totalVotes": 177856,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "D.P. Sawant",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 40356,
+              "percentage": 22.69
+            },
+            {
+              "rank": 2,
+              "candidate": "Sudhakar Pandhare",
+              "party": "BJP",
+              "caste": "GEN-Maratha",
+              "votes": 32754,
+              "percentage": 18.42
+            },
+            {
+              "rank": 3,
+              "candidate": "Abdul Habeeb Abdul Rahim",
+              "party": "AIMIM",
+              "caste": "GEN-Muslim",
+              "votes": 32333,
+              "percentage": 18.18
+            }
+          ]
+        },
+        {
+          "year": 2019,
+          "turnout": "60.44%",
+          "totalVotes": 189501,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Balaji Devidasrao Kalyankar",
+              "party": "SHS",
+              "caste": "GEN-Maratha",
+              "votes": 62884,
+              "percentage": 33.18
+            },
+            {
+              "rank": 2,
+              "candidate": "D.P. Sawant",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 50778,
+              "percentage": 26.8
+            },
+            {
+              "rank": 3,
+              "candidate": "Feroz Lala",
+              "party": "AIMIM",
+              "caste": "GEN-Muslim",
+              "votes": 41892,
+              "percentage": 22.11
+            }
+          ]
+        }
+      ],
+      "generalElections": [
+        {
+          "year": 2014,
+          "totalVotes": 170140,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Ashok Shankarrao Chavan",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 97319,
+              "percentage": 57.2
+            },
+            {
+              "rank": 2,
+              "candidate": "D. B. Patil",
+              "party": "BJP",
+              "caste": "GEN-Maratha",
+              "votes": 54165,
+              "percentage": 31.84
+            },
+            {
+              "rank": 3,
+              "candidate": "Rajratna Ambedkar",
+              "party": "BMUP",
+              "caste": "SC-Mahar",
+              "votes": 5937,
+              "percentage": 3.49
+            }
+          ]
+        },
+        {
+          "year": 2019,
+          "totalVotes": 193215,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Ashok Shankarrao Chavan",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 90571,
+              "percentage": 46.88
+            },
+            {
+              "rank": 2,
+              "candidate": "Prataprao Patil Chikhalikar",
+              "party": "BJP",
+              "caste": "GEN-Maratha",
+              "votes": 60454,
+              "percentage": 31.29
+            },
+            {
+              "rank": 3,
+              "candidate": "Yashpal Bhinge",
+              "party": "VBA",
+              "caste": "OBC-Dhangar",
+              "votes": 38795,
+              "percentage": 20.08
+            }
+          ]
+        },
+        {
+          "year": 2024,
+          "turnout": "58.53%",
+          "totalVotes": 199665,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Vasantrao Chavan",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 105135,
+              "percentage": 52.66
+            },
+            {
+              "rank": 2,
+              "candidate": "Prataprao Patil Chikhalikar",
+              "party": "BJP",
+              "caste": "GEN-Maratha",
+              "votes": 64540,
+              "percentage": 32.32
+            },
+            {
+              "rank": 3,
+              "candidate": "Avinash Bhosikar",
+              "party": "VBA",
+              "caste": "OBC-Lingayat",
+              "votes": 24868,
+              "percentage": 12.45
+            }
+          ]
+        }
+      ],
+      "politicalDynamics": [
+        "26% Muslim and 14% SC population make it favorable for INC, but past votes fractured between AIMIM (Feroz Lala) and VBA.",
+        "Balaji Kalyankar (SHS) won in 2019 through Hindu vote consolidation and division between INC and AIMIM.",
+        "In 2024 GE, Congress generated a massive 40,595-vote lead over BJP in this constituency.",
+        "The Sikh community has shown alienation towards local BJP leadership over the sidelining of Dilip Sodhi."
+      ]
+    },
+    {
+      "acNo": 87,
+      "name": "Nanded South",
+      "isCorePC": true,
+      "incumbentMLA": "Shri Mohanrao Marotrao Hambarde (INC, GEN-Maratha)",
+      "dominantCastes": [
+        "Maratha (33%)",
+        "Muslim (27%)",
+        "Buddhist/Mahar (15%)",
+        "Dhangar (5%)",
+        "Hindu Dalit (5%)",
+        "Komti (4%)",
+        "Brahmin (4%)",
+        "Lingayat (3%)"
+      ],
+      "casteDemography": [
+        {
+          "caste": "Maratha",
+          "category": "GEN",
+          "percentage": 33
+        },
+        {
+          "caste": "Muslim",
+          "category": "GEN",
+          "percentage": 27
+        },
+        {
+          "caste": "Buddhist/Mahar",
+          "category": "SC",
+          "percentage": 15
+        },
+        {
+          "caste": "Dhangar",
+          "category": "OBC",
+          "percentage": 5
+        },
+        {
+          "caste": "Hindu Dalit",
+          "category": "SC",
+          "percentage": 5
+        },
+        {
+          "caste": "Komti",
+          "category": "GEN",
+          "percentage": 4
+        },
+        {
+          "caste": "Brahmin",
+          "category": "GEN",
+          "percentage": 4
+        },
+        {
+          "caste": "Lingayat/Panchamshali",
+          "category": "GEN",
+          "percentage": 3
+        },
+        {
+          "caste": "Mahadev Koli/Mannervarlu",
+          "category": "ST",
+          "percentage": 2
+        },
+        {
+          "caste": "Sikh",
+          "category": "GEN",
+          "percentage": 1
+        },
+        {
+          "caste": "Others",
+          "category": "GEN",
+          "percentage": 1
+        }
+      ],
+      "assemblyElections": [
+        {
+          "year": 2009,
+          "turnout": "52.70%",
+          "totalVotes": 138042,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Omprakash Pokarna",
+              "party": "INC",
+              "caste": "GEN-Jain",
+              "votes": 71367,
+              "percentage": 51.7
+            },
+            {
+              "rank": 2,
+              "candidate": "Hemant Patil",
+              "party": "SHS",
+              "caste": "GEN-Maratha",
+              "votes": 53904,
+              "percentage": 39.05
+            },
+            {
+              "rank": 3,
+              "candidate": "Ishwar Yemul",
+              "party": "BSP",
+              "caste": "ST-Mannervarlu",
+              "votes": 9354,
+              "percentage": 6.78
+            }
+          ]
+        },
+        {
+          "year": 2014,
+          "turnout": "57.88%",
+          "totalVotes": 174229,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Hemant Shriram Patil",
+              "party": "SHS",
+              "caste": "GEN-Maratha",
+              "votes": 45836,
+              "percentage": 26.31
+            },
+            {
+              "rank": 2,
+              "candidate": "Dilip Venkatrao Kandkurte",
+              "party": "BJP",
+              "caste": "GEN-Komti",
+              "votes": 42629,
+              "percentage": 24.47
+            },
+            {
+              "rank": 3,
+              "candidate": "Moin Mukhtar",
+              "party": "AIMIM",
+              "caste": "GEN-Muslim",
+              "votes": 34590,
+              "percentage": 19.85
+            }
+          ]
+        },
+        {
+          "year": 2019,
+          "turnout": "64.12%",
+          "totalVotes": 182816,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Mohanrao Marotrao Hambarde",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 46943,
+              "percentage": 25.68
+            },
+            {
+              "rank": 2,
+              "candidate": "Dilip Venkatrao Kandkurte",
+              "party": "IND (BJP Rebel)",
+              "caste": "GEN-Komti",
+              "votes": 43351,
+              "percentage": 23.71
+            },
+            {
+              "rank": 3,
+              "candidate": "Rajshri Hemant Patil",
+              "party": "SHS",
+              "caste": "GEN-Maratha",
+              "votes": 37066,
+              "percentage": 20.28
+            }
+          ]
+        }
+      ],
+      "generalElections": [
+        {
+          "year": 2014,
+          "totalVotes": 165543,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Ashok Shankarrao Chavan",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 88700,
+              "percentage": 53.58
+            },
+            {
+              "rank": 2,
+              "candidate": "D. B. Patil",
+              "party": "BJP",
+              "caste": "GEN-Maratha",
+              "votes": 61604,
+              "percentage": 37.21
+            },
+            {
+              "rank": 3,
+              "candidate": "Dr. Hansraj Vaidya",
+              "party": "BSP",
+              "caste": "GEN-Maratha",
+              "votes": 4091,
+              "percentage": 2.47
+            }
+          ]
+        },
+        {
+          "year": 2019,
+          "totalVotes": 180560,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Ashok Shankarrao Chavan",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 77387,
+              "percentage": 42.86
+            },
+            {
+              "rank": 2,
+              "candidate": "Prataprao Patil Chikhalikar",
+              "party": "BJP",
+              "caste": "GEN-Maratha",
+              "votes": 72523,
+              "percentage": 40.17
+            },
+            {
+              "rank": 3,
+              "candidate": "Yashpal Bhinge",
+              "party": "VBA",
+              "caste": "OBC-Dhangar",
+              "votes": 27222,
+              "percentage": 15.08
+            }
+          ]
+        },
+        {
+          "year": 2024,
+          "turnout": "60.28%",
+          "totalVotes": 186163,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Vasantrao Chavan",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 90606,
+              "percentage": 48.67
+            },
+            {
+              "rank": 2,
+              "candidate": "Prataprao Patil Chikhalikar",
+              "party": "BJP",
+              "caste": "GEN-Maratha",
+              "votes": 72512,
+              "percentage": 38.95
+            },
+            {
+              "rank": 3,
+              "candidate": "Avinash Bhosikar",
+              "party": "VBA",
+              "caste": "OBC-Lingayat",
+              "votes": 18517,
+              "percentage": 9.95
+            }
+          ]
+        }
+      ],
+      "politicalDynamics": [
+        "Shri Santukrao Hambarde (BJP District President) is the brother of Mohanrao Hambarde (INC MLA).",
+        "Shri Dilip Kandkurte (Komti leader) commands immense respect among trading and business communities.",
+        "In 2024 GE, INC won Nanded South by 18,094 votes.",
+        "VBA (Farukh Ahmed) and AIMIM (Saber Chaus) retain strong holds over substantial minority and Dalit pockets."
+      ]
+    },
+    {
+      "acNo": 89,
+      "name": "Naigaon",
+      "isCorePC": true,
+      "incumbentMLA": "Shri Rajesh Sambhaji Pawar (BJP, GEN-Maratha)",
+      "dominantCastes": [
+        "Maratha (32%)",
+        "Buddhist/Mahar (12%)",
+        "Muslim (10%)",
+        "Lingayat (7%)",
+        "Matang (7%)",
+        "Dhangar (6%)",
+        "ST Mannervarlu (6%)"
+      ],
+      "casteDemography": [
+        {
+          "caste": "Maratha",
+          "category": "GEN",
+          "percentage": 32
+        },
+        {
+          "caste": "Buddhist/Mahar",
+          "category": "SC",
+          "percentage": 12
+        },
+        {
+          "caste": "Muslim",
+          "category": "GEN",
+          "percentage": 10
+        },
+        {
+          "caste": "Lingayat/Panchamshali",
+          "category": "GEN",
+          "percentage": 7
+        },
+        {
+          "caste": "Matang",
+          "category": "SC",
+          "percentage": 7
+        },
+        {
+          "caste": "Dhangar",
+          "category": "OBC",
+          "percentage": 6
+        },
+        {
+          "caste": "Mahadev Koli/Mannervarlu",
+          "category": "ST",
+          "percentage": 6
+        },
+        {
+          "caste": "Others",
+          "category": "GEN",
+          "percentage": 5
+        },
+        {
+          "caste": "OBC-Others",
+          "category": "OBC",
+          "percentage": 5
+        },
+        {
+          "caste": "Banjara/Lamani",
+          "category": "OBC",
+          "percentage": 2
+        },
+        {
+          "caste": "Gavli",
+          "category": "OBC",
+          "percentage": 2
+        },
+        {
+          "caste": "Sutar/Lohar",
+          "category": "OBC",
+          "percentage": 2
+        },
+        {
+          "caste": "SC-Others",
+          "category": "SC",
+          "percentage": 2
+        },
+        {
+          "caste": "ST-Others",
+          "category": "ST",
+          "percentage": 2
+        }
+      ],
+      "assemblyElections": [
+        {
+          "year": 2009,
+          "turnout": "70.58%",
+          "totalVotes": 170915,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Vasantrao Chavan",
+              "party": "IND",
+              "caste": "GEN-Maratha",
+              "votes": 63534,
+              "percentage": 37.17
+            },
+            {
+              "rank": 2,
+              "candidate": "Bapusaheb Gorthekar",
+              "party": "NCP",
+              "caste": "GEN-Maratha",
+              "votes": 52414,
+              "percentage": 30.67
+            },
+            {
+              "rank": 3,
+              "candidate": "Balaji Bachewar",
+              "party": "JSS",
+              "caste": "OBC-Lingayat",
+              "votes": 16688,
+              "percentage": 9.76
+            }
+          ]
+        },
+        {
+          "year": 2014,
+          "turnout": "70.79%",
+          "totalVotes": 198274,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Vasantrao Chavan",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 71020,
+              "percentage": 35.82
+            },
+            {
+              "rank": 2,
+              "candidate": "Rajesh Sambhaji Pawar",
+              "party": "BJP",
+              "caste": "GEN-Maratha",
+              "votes": 60595,
+              "percentage": 30.56
+            },
+            {
+              "rank": 3,
+              "candidate": "Bapusaheb Gorthekar",
+              "party": "NCP",
+              "caste": "GEN-Maratha",
+              "votes": 57247,
+              "percentage": 28.87
+            }
+          ]
+        },
+        {
+          "year": 2019,
+          "turnout": "74.10%",
+          "totalVotes": 210011,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Rajesh Sambhaji Pawar",
+              "party": "BJP",
+              "caste": "GEN-Maratha",
+              "votes": 117750,
+              "percentage": 56.07
+            },
+            {
+              "rank": 2,
+              "candidate": "Vasantrao Chavan",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 63366,
+              "percentage": 30.17
+            },
+            {
+              "rank": 3,
+              "candidate": "Marotrao Kawale Guruji",
+              "party": "VBA",
+              "caste": "GEN-Maratha",
+              "votes": 23005,
+              "percentage": 10.95
+            }
+          ]
+        }
+      ],
+      "generalElections": [
+        {
+          "year": 2014,
+          "totalVotes": 178168,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "D. B. Patil",
+              "party": "BJP",
+              "caste": "GEN-Maratha",
+              "votes": 80150,
+              "percentage": 44.99
+            },
+            {
+              "rank": 2,
+              "candidate": "Ashok Shankarrao Chavan",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 76304,
+              "percentage": 42.83
+            },
+            {
+              "rank": 3,
+              "candidate": "Rajratna Ambedkar",
+              "party": "BMUP",
+              "caste": "SC-Mahar",
+              "votes": 6105,
+              "percentage": 3.43
+            }
+          ]
+        },
+        {
+          "year": 2019,
+          "totalVotes": 197369,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Prataprao Patil Chikhalikar",
+              "party": "BJP",
+              "caste": "GEN-Maratha",
+              "votes": 92075,
+              "percentage": 46.65
+            },
+            {
+              "rank": 2,
+              "candidate": "Ashok Shankarrao Chavan",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 71434,
+              "percentage": 36.19
+            },
+            {
+              "rank": 3,
+              "candidate": "Yashpal Bhinge",
+              "party": "VBA",
+              "caste": "OBC-Dhangar",
+              "votes": 27530,
+              "percentage": 13.95
+            }
+          ]
+        },
+        {
+          "year": 2024,
+          "turnout": "65.32%",
+          "totalVotes": 196616,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Vasantrao Chavan",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 89873,
+              "percentage": 45.71
+            },
+            {
+              "rank": 2,
+              "candidate": "Prataprao Patil Chikhalikar",
+              "party": "BJP",
+              "caste": "GEN-Maratha",
+              "votes": 85491,
+              "percentage": 43.48
+            },
+            {
+              "rank": 3,
+              "candidate": "Avinash Bhosikar",
+              "party": "VBA",
+              "caste": "OBC-Lingayat",
+              "votes": 13828,
+              "percentage": 7.03
+            }
+          ]
+        }
+      ],
+      "politicalDynamics": [
+        "Constituency spans Naigaon, Umri, and Dharmabad talukas.",
+        "Rajesh Pawar (BJP MLA) faces internal rivalry with Prataprao Chikhalikar and Ram Patil Ratolikar MLC.",
+        "Late Vasantrao Chavan had extensive cooperative societies and APMC control; his son Ravindra Chavan is active here.",
+        "Lingayat leader Avinash Bhosikar polled 13,828 votes as VBA candidate in 2024 GE.",
+        "In 2024 GE, INC won Naigaon by 4,382 votes over BJP."
+      ]
+    },
+    {
+      "acNo": 90,
+      "name": "Deglur",
+      "isCorePC": true,
+      "incumbentMLA": "Shri Jitesh Raosaheb Antapurkar (INC, SC-Matang)",
+      "dominantCastes": [
+        "Maratha (18%)",
+        "Buddhist/Mahar (14%)",
+        "Lingayat (12%)",
+        "Muslim (11%)",
+        "Hindu Dalit (9%)",
+        "Dhangar (6%)",
+        "Banjara (5%)",
+        "ST Mannervarlu (5%)"
+      ],
+      "casteDemography": [
+        {
+          "caste": "Maratha",
+          "category": "GEN",
+          "percentage": 18
+        },
+        {
+          "caste": "Buddhist/Mahar",
+          "category": "SC",
+          "percentage": 14
+        },
+        {
+          "caste": "Lingayat/Panchamshali",
+          "category": "GEN",
+          "percentage": 12
+        },
+        {
+          "caste": "Muslim",
+          "category": "GEN",
+          "percentage": 11
+        },
+        {
+          "caste": "Hindu Dalit",
+          "category": "SC",
+          "percentage": 9
+        },
+        {
+          "caste": "OBC-Others",
+          "category": "OBC",
+          "percentage": 9
+        },
+        {
+          "caste": "Dhangar",
+          "category": "OBC",
+          "percentage": 6
+        },
+        {
+          "caste": "Banjara/Lamani",
+          "category": "OBC",
+          "percentage": 5
+        },
+        {
+          "caste": "Mahadev Koli/Mannervarlu",
+          "category": "ST",
+          "percentage": 5
+        },
+        {
+          "caste": "Others",
+          "category": "GEN",
+          "percentage": 4
+        },
+        {
+          "caste": "ST-Others",
+          "category": "ST",
+          "percentage": 4
+        },
+        {
+          "caste": "SC-Others",
+          "category": "SC",
+          "percentage": 3
+        }
+      ],
+      "assemblyElections": [
+        {
+          "year": 2009,
+          "turnout": "61.05%",
+          "totalVotes": 154945,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Raosaheb Antapurkar",
+              "party": "INC",
+              "caste": "SC-Matang",
+              "votes": 64409,
+              "percentage": 41.57
+            },
+            {
+              "rank": 2,
+              "candidate": "Subhash Sabane",
+              "party": "SHS",
+              "caste": "SC-Charmakar",
+              "votes": 58398,
+              "percentage": 37.69
+            },
+            {
+              "rank": 3,
+              "candidate": "Maroti Wadekar",
+              "party": "IND",
+              "caste": "SC-Matang",
+              "votes": 16400,
+              "percentage": 10.58
+            }
+          ]
+        },
+        {
+          "year": 2014,
+          "turnout": "58.71%",
+          "totalVotes": 170479,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Subhash Piraji Sabane",
+              "party": "SHS",
+              "caste": "SC-Charmakar",
+              "votes": 66852,
+              "percentage": 39.21
+            },
+            {
+              "rank": 2,
+              "candidate": "Raosaheb Antapurkar",
+              "party": "INC",
+              "caste": "SC-Matang",
+              "votes": 58204,
+              "percentage": 34.14
+            },
+            {
+              "rank": 3,
+              "candidate": "Bhimrao Kshirsagar",
+              "party": "BJP",
+              "caste": "SC-Mahar",
+              "votes": 20542,
+              "percentage": 12.05
+            }
+          ]
+        },
+        {
+          "year": 2019,
+          "turnout": "61.03%",
+          "totalVotes": 178131,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Raosaheb Antapurkar",
+              "party": "INC",
+              "caste": "SC-Matang",
+              "votes": 89407,
+              "percentage": 50.19
+            },
+            {
+              "rank": 2,
+              "candidate": "Subhash Piraji Sabane",
+              "party": "SHS",
+              "caste": "SC-Charmakar",
+              "votes": 66974,
+              "percentage": 37.6
+            },
+            {
+              "rank": 3,
+              "candidate": "Ramchandra Bharande",
+              "party": "VBA",
+              "caste": "SC-Matang",
+              "votes": 12057,
+              "percentage": 6.77
+            }
+          ]
+        }
+      ],
+      "generalElections": [
+        {
+          "year": 2014,
+          "totalVotes": 167658,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Ashok Shankarrao Chavan",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 75083,
+              "percentage": 44.78
+            },
+            {
+              "rank": 2,
+              "candidate": "D. B. Patil",
+              "party": "BJP",
+              "caste": "GEN-Maratha",
+              "votes": 72746,
+              "percentage": 43.39
+            },
+            {
+              "rank": 3,
+              "candidate": "Rajratna Ambedkar",
+              "party": "BMUP",
+              "caste": "SC-Mahar",
+              "votes": 5213,
+              "percentage": 3.11
+            }
+          ]
+        },
+        {
+          "year": 2019,
+          "totalVotes": 183532,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Prataprao Patil Chikhalikar",
+              "party": "BJP",
+              "caste": "GEN-Maratha",
+              "votes": 87211,
+              "percentage": 47.52
+            },
+            {
+              "rank": 2,
+              "candidate": "Ashok Shankarrao Chavan",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 63902,
+              "percentage": 34.82
+            },
+            {
+              "rank": 3,
+              "candidate": "Yashpal Bhinge",
+              "party": "VBA",
+              "caste": "OBC-Dhangar",
+              "votes": 26339,
+              "percentage": 14.35
+            }
+          ]
+        },
+        {
+          "year": 2024,
+          "turnout": "59.82%",
+          "totalVotes": 181858,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Vasantrao Chavan",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 83606,
+              "percentage": 45.97
+            },
+            {
+              "rank": 2,
+              "candidate": "Prataprao Patil Chikhalikar",
+              "party": "BJP",
+              "caste": "GEN-Maratha",
+              "votes": 82426,
+              "percentage": 45.32
+            },
+            {
+              "rank": 3,
+              "candidate": "Avinash Bhosikar",
+              "party": "VBA",
+              "caste": "OBC-Lingayat",
+              "votes": 9155,
+              "percentage": 5.03
+            }
+          ]
+        }
+      ],
+      "politicalDynamics": [
+        "Reserved SC constituency with substantial Matang, Mahar, Lingayat (12%), and Banjara populations.",
+        "Subhash Sabane joined BJP from SHS; differences persist between him and former MP Prataprao Chikhalikar.",
+        "Bhaskarrao Khatgaonkar holds strong local influence in Biloli taluka.",
+        "In 2024 GE, Congress won Deglur AC by a narrow margin of 1,180 votes."
+      ]
+    },
+    {
+      "acNo": 91,
+      "name": "Mukhed",
+      "isCorePC": true,
+      "incumbentMLA": "Shri Tushar Govindrao Rathod (BJP, OBC-Banjara)",
+      "dominantCastes": [
+        "Banjara (28%)",
+        "Maratha (15%)",
+        "Buddhist/Mahar (9%)",
+        "Dhangar (8%)",
+        "Hindu Dalit (7%)",
+        "ST Mannervarlu (7%)",
+        "Muslim (7%)",
+        "Lingayat (6%)"
+      ],
+      "casteDemography": [
+        {
+          "caste": "Banjara/Lamani",
+          "category": "OBC",
+          "percentage": 28
+        },
+        {
+          "caste": "Maratha",
+          "category": "GEN",
+          "percentage": 15
+        },
+        {
+          "caste": "Buddhist/Mahar",
+          "category": "SC",
+          "percentage": 9
+        },
+        {
+          "caste": "Dhangar",
+          "category": "OBC",
+          "percentage": 8
+        },
+        {
+          "caste": "Hindu Dalit",
+          "category": "SC",
+          "percentage": 7
+        },
+        {
+          "caste": "Mahadev Koli/Mannervarlu",
+          "category": "ST",
+          "percentage": 7
+        },
+        {
+          "caste": "Muslim",
+          "category": "GEN",
+          "percentage": 7
+        },
+        {
+          "caste": "Lingayat/Panchamshali",
+          "category": "GEN",
+          "percentage": 6
+        },
+        {
+          "caste": "Vanjari",
+          "category": "OBC",
+          "percentage": 4
+        },
+        {
+          "caste": "Matang",
+          "category": "SC",
+          "percentage": 3
+        },
+        {
+          "caste": "OBC-Others",
+          "category": "OBC",
+          "percentage": 3
+        },
+        {
+          "caste": "SC-Others",
+          "category": "SC",
+          "percentage": 2
+        },
+        {
+          "caste": "Others",
+          "category": "GEN",
+          "percentage": 1
+        }
+      ],
+      "assemblyElections": [
+        {
+          "year": 2009,
+          "turnout": "66.22%",
+          "totalVotes": 160331,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Hanmanthrao Betmogrekar",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 66013,
+              "percentage": 41.17
+            },
+            {
+              "rank": 2,
+              "candidate": "Govind Rathod",
+              "party": "IND",
+              "caste": "OBC-Banjara",
+              "votes": 64797,
+              "percentage": 40.41
+            },
+            {
+              "rank": 3,
+              "candidate": "Vasant Sambutwad",
+              "party": "SHS",
+              "caste": "OBC-Dhangar",
+              "votes": 15508,
+              "percentage": 9.67
+            }
+          ]
+        },
+        {
+          "year": 2014,
+          "turnout": "64.54%",
+          "totalVotes": 177470,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Govind Makkaji Rathod",
+              "party": "BJP",
+              "caste": "OBC-Banjara",
+              "votes": 118781,
+              "percentage": 66.93
+            },
+            {
+              "rank": 2,
+              "candidate": "Hanmanthrao Betmogrekar",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 45490,
+              "percentage": 25.63
+            },
+            {
+              "rank": 3,
+              "candidate": "Venkat Lohbande",
+              "party": "SHS",
+              "caste": "SC-Mahar",
+              "votes": 3930,
+              "percentage": 2.21
+            }
+          ]
+        },
+        {
+          "year": 2019,
+          "turnout": "65.69%",
+          "totalVotes": 186014,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Tushar Govindrao Rathod",
+              "party": "BJP",
+              "caste": "OBC-Banjara",
+              "votes": 102573,
+              "percentage": 55.14
+            },
+            {
+              "rank": 2,
+              "candidate": "Bhausaheb Mandlapurkar",
+              "party": "INC",
+              "caste": "OBC-Dhangar",
+              "votes": 70710,
+              "percentage": 38.01
+            },
+            {
+              "rank": 3,
+              "candidate": "Jivan Daregawe",
+              "party": "VBA",
+              "caste": "OBC-Lingayat",
+              "votes": 8756,
+              "percentage": 4.71
+            }
+          ]
+        }
+      ],
+      "generalElections": [
+        {
+          "year": 2014,
+          "totalVotes": 153105,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "D. B. Patil",
+              "party": "BJP",
+              "caste": "GEN-Maratha",
+              "votes": 75093,
+              "percentage": 49.05
+            },
+            {
+              "rank": 2,
+              "candidate": "Ashok Shankarrao Chavan",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 63991,
+              "percentage": 41.8
+            },
+            {
+              "rank": 3,
+              "candidate": "Rajratna Ambedkar",
+              "party": "BMUP",
+              "caste": "SC-Mahar",
+              "votes": 3402,
+              "percentage": 2.22
+            }
+          ]
+        },
+        {
+          "year": 2019,
+          "totalVotes": 168437,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Prataprao Patil Chikhalikar",
+              "party": "BJP",
+              "caste": "GEN-Maratha",
+              "votes": 89666,
+              "percentage": 53.23
+            },
+            {
+              "rank": 2,
+              "candidate": "Ashok Shankarrao Chavan",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 53839,
+              "percentage": 31.96
+            },
+            {
+              "rank": 3,
+              "candidate": "Yashpal Bhinge",
+              "party": "VBA",
+              "caste": "OBC-Dhangar",
+              "votes": 19435,
+              "percentage": 11.54
+            }
+          ]
+        },
+        {
+          "year": 2024,
+          "turnout": "56.76%",
+          "totalVotes": 167776,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Prataprao Patil Chikhalikar",
+              "party": "BJP",
+              "caste": "GEN-Maratha",
+              "votes": 78152,
+              "percentage": 46.58
+            },
+            {
+              "rank": 2,
+              "candidate": "Vasantrao Chavan",
+              "party": "INC",
+              "caste": "GEN-Maratha",
+              "votes": 74155,
+              "percentage": 44.2
+            },
+            {
+              "rank": 3,
+              "candidate": "Avinash Bhosikar",
+              "party": "VBA",
+              "caste": "OBC-Lingayat",
+              "votes": 8852,
+              "percentage": 5.28
+            }
+          ]
+        }
+      ],
+      "politicalDynamics": [
+        "Strongest BJP fortress in the PC due to 28% Banjara and 8% Dhangar base.",
+        "MLA Tushar Rathod has low anti-incumbency and delivered the highest lead (3,997 votes) to BJP in 2024 GE.",
+        "Rathod successfully resolved rehabilitation and land acquisition issues for the Lendi project.",
+        "Rivalry exists between MLA Tushar Rathod and former MP Prataprao Chikhalikar."
+      ]
+    },
+    {
+      "acNo": 83,
+      "name": "Kinwat",
+      "isCorePC": false,
+      "incumbentMLA": "Shri Bhimrao Ramji Keram (BJP, ST)",
+      "dominantCastes": [
+        "Banjara (25%)",
+        "Aandh ST (9%)",
+        "Muslim (9%)",
+        "Maratha (9%)",
+        "Buddhist/Mahar (6%)",
+        "Dhangar (5%)"
+      ],
+      "casteDemography": [
+        {
+          "caste": "Banjara/Lamani",
+          "category": "OBC",
+          "percentage": 25
+        },
+        {
+          "caste": "Maratha",
+          "category": "GEN",
+          "percentage": 9
+        },
+        {
+          "caste": "Muslim",
+          "category": "GEN",
+          "percentage": 9
+        },
+        {
+          "caste": "Aandh",
+          "category": "ST",
+          "percentage": 9
+        },
+        {
+          "caste": "ST-Others",
+          "category": "ST",
+          "percentage": 9
+        },
+        {
+          "caste": "Buddhist/Mahar",
+          "category": "SC",
+          "percentage": 6
+        },
+        {
+          "caste": "Dhangar",
+          "category": "OBC",
+          "percentage": 5
+        },
+        {
+          "caste": "Mali/Fulmali",
+          "category": "OBC",
+          "percentage": 5
+        },
+        {
+          "caste": "Gond",
+          "category": "ST",
+          "percentage": 4
+        },
+        {
+          "caste": "Vanjari",
+          "category": "OBC",
+          "percentage": 4
+        },
+        {
+          "caste": "SC-Others",
+          "category": "SC",
+          "percentage": 4
+        },
+        {
+          "caste": "Others",
+          "category": "GEN",
+          "percentage": 4
+        },
+        {
+          "caste": "Mahadev Koli/Mannervarlu",
+          "category": "ST",
+          "percentage": 3
+        }
+      ],
+      "assemblyElections": [
+        {
+          "year": 2014,
+          "turnout": "70.80%",
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Jadhav Pradeep Hemsingh (Naik)",
+              "party": "NCP",
+              "votes": 60127,
+              "percentage": 34.6
+            },
+            {
+              "rank": 2,
+              "candidate": "Keram Bhimrao Ramji",
+              "party": "IND",
+              "votes": 55152,
+              "percentage": 31.7
+            },
+            {
+              "rank": 3,
+              "candidate": "Ashok Shamrao Suryavanshi",
+              "party": "BJP",
+              "votes": 18695,
+              "percentage": 10.7
+            }
+          ]
+        },
+        {
+          "year": 2019,
+          "turnout": "72.40%",
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Keram Bhimrao Ramji",
+              "party": "BJP",
+              "votes": 89628,
+              "percentage": 48.6
+            },
+            {
+              "rank": 2,
+              "candidate": "Jadhav Pradeep Hemsingh (Naik)",
+              "party": "NCP",
+              "votes": 76356,
+              "percentage": 41.4
+            },
+            {
+              "rank": 3,
+              "candidate": "Prof. Dr. Hemraj Uike",
+              "party": "VBA",
+              "votes": 11764,
+              "percentage": 6.4
+            }
+          ]
+        }
+      ],
+      "generalElections": [
+        {
+          "year": 2014,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Rajeev Shankarrao Satav",
+              "party": "INC",
+              "votes": 69782,
+              "percentage": 43.95
+            },
+            {
+              "rank": 2,
+              "candidate": "Subhash Bapurao Wankhede",
+              "party": "SHS",
+              "votes": 67750,
+              "percentage": 42.67
+            }
+          ]
+        },
+        {
+          "year": 2019,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Hemant Patil",
+              "party": "SHS",
+              "votes": 92386,
+              "percentage": 51.93
+            },
+            {
+              "rank": 2,
+              "candidate": "Wankhede Subhashrao Bapurao",
+              "party": "INC",
+              "votes": 48531,
+              "percentage": 27.28
+            }
+          ]
+        }
+      ],
+      "politicalDynamics": [
+        "Part of Hingoli Lok Sabha constituency; heavy ST and Banjara population.",
+        "Strong local agitation demanding Kinwat be separated into a distinct district."
+      ]
+    },
+    {
+      "acNo": 84,
+      "name": "Hadgaon",
+      "isCorePC": false,
+      "incumbentMLA": "Shri Madhavrao Nivruttirao Pawar (INC, GEN-Maratha)",
+      "dominantCastes": [
+        "Maratha (30%)",
+        "Buddhist/Mahar (11%)",
+        "Aandh ST (10%)",
+        "Lingayat (8%)",
+        "Dhangar (8%)",
+        "Muslim (8%)"
+      ],
+      "casteDemography": [
+        {
+          "caste": "Maratha",
+          "category": "GEN",
+          "percentage": 30
+        },
+        {
+          "caste": "Buddhist/Mahar",
+          "category": "SC",
+          "percentage": 11
+        },
+        {
+          "caste": "Aandh",
+          "category": "ST",
+          "percentage": 10
+        },
+        {
+          "caste": "Lingayat/Panchamshali",
+          "category": "GEN",
+          "percentage": 8
+        },
+        {
+          "caste": "Dhangar",
+          "category": "OBC",
+          "percentage": 8
+        },
+        {
+          "caste": "Muslim",
+          "category": "GEN",
+          "percentage": 8
+        },
+        {
+          "caste": "Hindu Dalit",
+          "category": "SC",
+          "percentage": 8
+        },
+        {
+          "caste": "OBC-Others",
+          "category": "OBC",
+          "percentage": 8
+        },
+        {
+          "caste": "Banjara/Lamani",
+          "category": "OBC",
+          "percentage": 4
+        },
+        {
+          "caste": "Others",
+          "category": "GEN",
+          "percentage": 3
+        },
+        {
+          "caste": "ST-Others",
+          "category": "ST",
+          "percentage": 2
+        }
+      ],
+      "assemblyElections": [
+        {
+          "year": 2014,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Ashtikar Patil Nagesh Bapurao",
+              "party": "SHS",
+              "votes": 78520,
+              "percentage": 41.9
+            },
+            {
+              "rank": 2,
+              "candidate": "Pawar Madhavrao Nivrutirao",
+              "party": "INC",
+              "votes": 65079,
+              "percentage": 34.7
+            }
+          ]
+        },
+        {
+          "year": 2019,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Pawar Madhavrao Nivrutirao",
+              "party": "INC",
+              "votes": 74325,
+              "percentage": 38.0
+            },
+            {
+              "rank": 2,
+              "candidate": "Baburao Kohlikar",
+              "party": "IND",
+              "votes": 60962,
+              "percentage": 31.1
+            },
+            {
+              "rank": 3,
+              "candidate": "Ashtikar Patil Nagesh Bapurao",
+              "party": "SHS",
+              "votes": 44143,
+              "percentage": 22.5
+            }
+          ]
+        }
+      ],
+      "generalElections": [
+        {
+          "year": 2014,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Subhash Bapurao Wankhede",
+              "party": "SHS",
+              "votes": 77331,
+              "percentage": 45.93
+            },
+            {
+              "rank": 2,
+              "candidate": "Rajeev Shankarrao Satav",
+              "party": "INC",
+              "votes": 75510,
+              "percentage": 44.85
+            }
+          ]
+        },
+        {
+          "year": 2019,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Hemant Patil",
+              "party": "SHS",
+              "votes": 93433,
+              "percentage": 49.89
+            },
+            {
+              "rank": 2,
+              "candidate": "Wankhede Subhashrao Bapurao",
+              "party": "INC",
+              "votes": 50238,
+              "percentage": 26.83
+            }
+          ]
+        }
+      ],
+      "politicalDynamics": [
+        "Part of Hingoli Lok Sabha constituency; competitive Maratha battleground between Shiv Sena and Congress."
+      ]
+    },
+    {
+      "acNo": 88,
+      "name": "Loha",
+      "isCorePC": false,
+      "incumbentMLA": "Shri Shyamsundar Shinde (PWPI / Independent)",
+      "dominantCastes": [
+        "Maratha (23%)",
+        "Lingayat (14%)",
+        "Hindu Dalit (10%)",
+        "Buddhist/Mahar (9%)",
+        "Muslim (8%)",
+        "Dhangar (7%)",
+        "Banjara (5%)"
+      ],
+      "casteDemography": [
+        {
+          "caste": "Maratha",
+          "category": "GEN",
+          "percentage": 23
+        },
+        {
+          "caste": "Lingayat/Panchamshali",
+          "category": "GEN",
+          "percentage": 14
+        },
+        {
+          "caste": "Hindu Dalit",
+          "category": "SC",
+          "percentage": 10
+        },
+        {
+          "caste": "Buddhist/Mahar",
+          "category": "SC",
+          "percentage": 9
+        },
+        {
+          "caste": "Muslim",
+          "category": "GEN",
+          "percentage": 8
+        },
+        {
+          "caste": "Dhangar",
+          "category": "OBC",
+          "percentage": 7
+        },
+        {
+          "caste": "Banjara/Lamani",
+          "category": "OBC",
+          "percentage": 5
+        },
+        {
+          "caste": "Telugu/Reddy",
+          "category": "GEN",
+          "percentage": 4
+        },
+        {
+          "caste": "Vanjari",
+          "category": "OBC",
+          "percentage": 4
+        },
+        {
+          "caste": "Others",
+          "category": "GEN",
+          "percentage": 4
+        },
+        {
+          "caste": "Brahmin",
+          "category": "GEN",
+          "percentage": 3
+        },
+        {
+          "caste": "Wadar",
+          "category": "OBC",
+          "percentage": 3
+        },
+        {
+          "caste": "Komti",
+          "category": "GEN",
+          "percentage": 2
+        },
+        {
+          "caste": "ST-Others",
+          "category": "ST",
+          "percentage": 2
+        }
+      ],
+      "assemblyElections": [
+        {
+          "year": 2014,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Chikhalikar Prataprao Govindrao",
+              "party": "SHS",
+              "votes": 92435,
+              "percentage": 47.0
+            },
+            {
+              "rank": 2,
+              "candidate": "Dhondge Mukteshwar Keshavrao",
+              "party": "BJP",
+              "votes": 46949,
+              "percentage": 23.9
+            }
+          ]
+        },
+        {
+          "year": 2019,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Shyamsundar Shinde",
+              "party": "PWPI",
+              "votes": 101668,
+              "percentage": 52.8
+            },
+            {
+              "rank": 2,
+              "candidate": "Narangale Shivkumar Narayanrao",
+              "party": "VBA",
+              "votes": 37306,
+              "percentage": 19.4
+            }
+          ]
+        }
+      ],
+      "generalElections": [
+        {
+          "year": 2014,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Gaikwad Sunil Baliram",
+              "party": "BJP",
+              "votes": 95249,
+              "percentage": 64.51
+            },
+            {
+              "rank": 2,
+              "candidate": "Bansode Dattatray Gunderao",
+              "party": "INC",
+              "votes": 36933,
+              "percentage": 25.01
+            }
+          ]
+        },
+        {
+          "year": 2019,
+          "candidates": [
+            {
+              "rank": 1,
+              "candidate": "Sudhakar Tukaram Shrangare",
+              "party": "BJP",
+              "votes": 105870,
+              "percentage": 61.97
+            },
+            {
+              "rank": 2,
+              "candidate": "Kamant Machhindra Gunwantrao",
+              "party": "INC",
+              "votes": 37208,
+              "percentage": 21.78
+            }
+          ]
+        }
+      ],
+      "politicalDynamics": [
+        "Part of Latur Lok Sabha constituency; high concentration of Lingayat voters (14%) and prominent role of the Chikhalikar family."
+      ]
+    }
+  ],
+  "ge2024ResultAnalysis": {
+    "winner": {
+      "candidate": "Late Shri Vasantrao Balwantrao Chavan",
+      "party": "Indian National Congress (INC)",
+      "votes": 528894,
+      "votePercentage": 46.88
+    },
+    "runnerUp": {
+      "candidate": "Shri Prataprao Patil Chikhalikar",
+      "party": "Bharatiya Janata Party (BJP)",
+      "votes": 469452,
+      "votePercentage": 41.62
+    },
+    "secondRunnerUp": {
+      "candidate": "Shri Avinash Vishwanath Bhosikar",
+      "party": "Vanchit Bahujan Aghadi (VBA)",
+      "votes": 92070,
+      "votePercentage": 8.16
+    },
+    "margin": -59442,
+    "turnout": "60.94%",
+    "segmentWiseSummary": [
+      {
+        "acNo": 85,
+        "name": "Bhokar",
+        "leadParty": "BJP",
+        "leadCandidate": "Prataprao Chikhalikar",
+        "margin": 841,
+        "bjpVotes": 84331,
+        "incVotes": 83490,
+        "vbaVotes": 16870
+      },
+      {
+        "acNo": 86,
+        "name": "Nanded North",
+        "leadParty": "INC",
+        "leadCandidate": "Vasantrao Chavan",
+        "margin": 40595,
+        "bjpVotes": 64540,
+        "incVotes": 105135,
+        "vbaVotes": 24868
+      },
+      {
+        "acNo": 87,
+        "name": "Nanded South",
+        "leadParty": "INC",
+        "leadCandidate": "Vasantrao Chavan",
+        "margin": 18094,
+        "bjpVotes": 72512,
+        "incVotes": 90606,
+        "vbaVotes": 18517
+      },
+      {
+        "acNo": 89,
+        "name": "Naigaon",
+        "leadParty": "INC",
+        "leadCandidate": "Vasantrao Chavan",
+        "margin": 4382,
+        "bjpVotes": 85491,
+        "incVotes": 89873,
+        "vbaVotes": 13828
+      },
+      {
+        "acNo": 90,
+        "name": "Deglur",
+        "leadParty": "INC",
+        "leadCandidate": "Vasantrao Chavan",
+        "margin": 1180,
+        "bjpVotes": 82426,
+        "incVotes": 83606,
+        "vbaVotes": 9155
+      },
+      {
+        "acNo": 91,
+        "name": "Mukhed",
+        "leadParty": "BJP",
+        "leadCandidate": "Prataprao Chikhalikar",
+        "margin": 3997,
+        "bjpVotes": 78152,
+        "incVotes": 74155,
+        "vbaVotes": 8852
+      }
+    ],
+    "factorsWorkingForNDA": [
+      {
+        "title": "Ashok Chavan Factor in Bhokar",
+        "description": "Active campaign by Shri Ashok Chavan helped the BJP flip a historic Congress lead and gain a modest 841-vote advantage in Bhokar."
+      },
+      {
+        "title": "Banjara & Dhangar Consolidation in Mukhed",
+        "description": "Aggressive ground work by BJP MLA Tushar Rathod kept Mukhed firmly in the BJP column with a 3,997-vote lead."
+      },
+      {
+        "title": "Core Urban Trading Communities",
+        "description": "Komti, Arya Vaishya, Brahmin, and business communities across Nanded city remained steadfastly with the BJP."
+      }
+    ],
+    "factorsWorkingAgainstNDA": [
+      {
+        "title": "Anti-Defection Sympathy Wave",
+        "description": "Shri Ashok Chavan's switch from Congress to BJP generated deep grassroots sympathy for Congress candidate Late Shri Vasantrao Chavan, seen as loyal."
+      },
+      {
+        "title": "Manoj Jarange Patil & Maratha Agitation",
+        "description": "Massive youth consolidation across rural Maratha belts against the state government on reservation issues."
+      },
+      {
+        "title": "Lingayat Vote Split by VBA (Avinash Bhosikar)",
+        "description": "Prominent Lingayat leader Avinash Bhosikar gathered 92,070 votes as VBA candidate, draining vital BJP votes in Naigaon, Bhokar, and City."
+      },
+      {
+        "title": "Tactical Minority & Dalit Counter-Mobilization",
+        "description": "Muslim and SC-Mahar voters consolidated behind Congress in Nanded North and South, neutralizing AIMIM's past split."
+      },
+      {
+        "title": "Agrarian Distress (Soybean & Cotton Price Crash)",
+        "description": "Severe farmer distress over crashing market prices for soybean and cotton, alongside delayed rain-damage compensations."
+      }
+    ]
+  },
+  "strategicActionables": {
+    "politicalRecommendations": [
+      {
+        "id": 1,
+        "title": "Intensive Ground Service & Beneficiary Mobilization",
+        "category": "Cadre & Field Work",
+        "target": "Rural Poor & Welfare Beneficiaries",
+        "details": "Organize mega Free Health Camps, Ayushman Bharat card distribution camps, and Labharthi Sammelans across all ACs to unify party cadre and establish direct voter contact."
+      },
+      {
+        "id": 2,
+        "title": "Campaign: 'Samajik Nyay, Sashaktikaran aani Pratinidhitwa'",
+        "category": "Dalit Outreach",
+        "target": "Scheduled Caste (SC) Communities",
+        "details": "SC Morcha to step forward with senior party leaders organizing community lunches at the homes of Dalit constituents to counter opposition disinformation."
+      },
+      {
+        "id": 3,
+        "title": "Reactivation of Mahila Morcha via Rural Networks",
+        "category": "Women Mobilization",
+        "target": "Women Electorate",
+        "details": "Counter Smt. Ameeta Chavan's women network by activating Mahila Morcha units across Nanded district with regular village-level gatherings."
+      },
+      {
+        "id": 4,
+        "title": "Reconciliation with Nanded Sikh Community Leadership",
+        "category": "Minority Outreach",
+        "target": "Sikh Community (Hazur Sahib area)",
+        "details": "Resolve internal rifts with former City President Dilip Sodhi to consolidate the influential Sikh community vote in Nanded city."
+      },
+      {
+        "id": 5,
+        "title": "Appointment & Fund Release for Basaveshwar Mahamandal",
+        "category": "Community Board",
+        "target": "Lingayat Community",
+        "details": "Expedite appointment of the President of Jagadjyoti Mahatma Basaveshwar Economic Development Corporation and release self-employment loans for Lingayat youth."
+      },
+      {
+        "id": 6,
+        "title": "High-Visibility Hoarding Campaign in Lingayat Zones",
+        "category": "Targeted Campaign",
+        "target": "Lingayat Pockets (Naigaon, City, Mukhed)",
+        "details": "Erect awareness hoardings showcasing government decisions and schemes for Lingayat Maths and religious institutions."
+      },
+      {
+        "id": 7,
+        "title": "Dhangar Community Rallies with Gopichand Padalkar",
+        "category": "OBC Outreach",
+        "target": "Hatkar-Dhangar Community",
+        "details": "Conduct massive community meetings in Naigaon and Mukhed highlighting the 13 special schemes, 75% sheep-farming subsidy, and student hostels."
+      },
+      {
+        "id": 8,
+        "title": "Elevation of Sanjay Koudage to State Prominence",
+        "category": "Organizational Elevation",
+        "target": "Lingayat Leadership",
+        "details": "Elevate Sanghatan Mantri Sanjay Koudage to state leadership to block BRS and VBA attempts to woo Lingayat voters."
+      },
+      {
+        "id": 9,
+        "title": "'Adi Mahotsav' for Tribal Artisans in Mukhed & Deglur",
+        "category": "Tribal Welfare",
+        "target": "Adivasi / ST Communities",
+        "details": "Provide platforms and direct purchasing for tribal women's self-help groups and forest produce artisans."
+      },
+      {
+        "id": 10,
+        "title": "Proactive Reservation Policy Booklets for Dalits",
+        "category": "Counter-Disinformation",
+        "target": "SC/ST/OBC Electorate",
+        "details": "Publish and distribute concise Marathi booklets clarifying government affirmative action achievements and dispelling constitutional amendment rumors."
+      },
+      {
+        "id": 11,
+        "title": "Anganwadi Outreach Camps for Women Welfare Schemes",
+        "category": "Women Welfare",
+        "target": "Rural Women Voters",
+        "details": "Mahila Morcha to organize information camps outside rural Anganwadis for Janani Suraksha, Vande Matrutwa, Ujjwala, Ladki Bahin, and Beti Bachao schemes."
+      }
+    ],
+    "administrativeRecommendations": [
+      {
+        "id": 1,
+        "title": "Fast-Track Jalna-Nanded Samruddhi Link Expressway",
+        "sector": "Road Infrastructure",
+        "department": "MSRDC & MoRTH",
+        "details": "Expedite land compensation and commencement of the ₹24,702 crore expressway linking Nanded to the Mumbai-Nagpur Samruddhi Corridor."
+      },
+      {
+        "id": 2,
+        "title": "Establishment of Banana Development Corporation",
+        "sector": "Agro-Horticulture",
+        "department": "Department of Agriculture & Horticulture",
+        "details": "Establish an autonomous Banana Development Corporation in Ardhapur with virus research facilities (Cucumber Mosaic Virus, Karpa) and cold storage."
+      },
+      {
+        "id": 3,
+        "title": "Dr. Babasaheb Ambedkar Statue in Mudkhed",
+        "sector": "Cultural & Civic",
+        "department": "Urban Development & District Collectorate",
+        "details": "Expedite statutory clearances and land allotment for the long-demanded Dr. Ambedkar statue in Mudkhed."
+      },
+      {
+        "id": 4,
+        "title": "War-Footing Completion of Lendi Irrigation Project",
+        "sector": "Water Resources",
+        "department": "Water Resources Department (WRD)",
+        "details": "Resolve final inter-state canal milestones to irrigate 27,000 acres in Nanded district before upcoming polls."
+      }
+    ]
+  },
+  "pcElectoralHistory": [
+    {
+      "election": "GE 2009",
+      "year": 2009,
+      "winner": {
+        "candidate": "Shri Bhaskarrao Bapurao Khatgaonkar",
+        "party": "INC",
+        "caste": "GEN-Maratha",
+        "votes": 346400,
+        "percentage": 44.7
+      },
+      "runnerUp": {
+        "candidate": "Shri Sambhaji Pawar",
+        "party": "BJP",
+        "caste": "GEN-Maratha",
+        "votes": 271786,
+        "percentage": 35.1
+      },
+      "secondRunnerUp": {
+        "candidate": "Md Makbul Salim Haji Md Khaja",
+        "party": "BSP",
+        "caste": "Muslim",
+        "votes": 84743,
+        "percentage": 10.9
+      },
+      "margin": 74614,
+      "winningParty": "INC"
+    },
+    {
+      "election": "GE 2014",
+      "year": 2014,
+      "winner": {
+        "candidate": "Shri Ashok Shankarrao Chavan",
+        "party": "INC",
+        "caste": "GEN-Maratha",
+        "votes": 493075,
+        "percentage": 48.7
+      },
+      "runnerUp": {
+        "candidate": "Shri D. B. Patil",
+        "party": "BJP",
+        "caste": "GEN-Maratha",
+        "votes": 411620,
+        "percentage": 40.6
+      },
+      "secondRunnerUp": {
+        "candidate": "Shri Rajratna Ambedkar",
+        "party": "BMUP",
+        "caste": "SC-Mahar",
+        "votes": 28447,
+        "percentage": 2.8
+      },
+      "margin": 81455,
+      "winningParty": "INC"
+    },
+    {
+      "election": "GE 2019",
+      "year": 2019,
+      "winner": {
+        "candidate": "Shri Prataprao Patil Chikhalikar",
+        "party": "BJP",
+        "caste": "GEN-Maratha",
+        "votes": 486806,
+        "percentage": 43.1
+      },
+      "runnerUp": {
+        "candidate": "Shri Ashok Shankarrao Chavan",
+        "party": "INC",
+        "caste": "GEN-Maratha",
+        "votes": 446658,
+        "percentage": 39.55
+      },
+      "secondRunnerUp": {
+        "candidate": "Shri Bhinge Yashpal Narsingrao",
+        "party": "VBA",
+        "caste": "OBC-Dhangar",
+        "votes": 166196,
+        "percentage": 14.71
+      },
+      "margin": 40148,
+      "winningParty": "BJP"
+    },
+    {
+      "election": "GE 2024",
+      "year": 2024,
+      "winner": {
+        "candidate": "Late Shri Vasantrao Balwantrao Chavan",
+        "party": "INC",
+        "caste": "GEN-Maratha",
+        "votes": 528894,
+        "percentage": 46.88
+      },
+      "runnerUp": {
+        "candidate": "Shri Prataprao Patil Chikhalikar",
+        "party": "BJP",
+        "caste": "GEN-Maratha",
+        "votes": 469452,
+        "percentage": 41.62
+      },
+      "secondRunnerUp": {
+        "candidate": "Shri Avinash Vishwanath Bhosikar",
+        "party": "VBA",
+        "caste": "OBC-Lingayat",
+        "votes": 92070,
+        "percentage": 8.16
+      },
+      "margin": -59442,
+      "winningParty": "INC"
+    }
+  ],
+  "partyStandings": [
+    {
+      "party": "Indian National Congress (INC)",
+      "color": "emerald",
+      "badge": "Traditional Stronghold",
+      "strengths": [
+        "Deep historical influence across Nanded City, Nanded North, Nanded South, Bhokar, Ardhapur, Umari, Deglur, and Biloli talukas.",
+        "Vast cooperative ecosystem including high schools, colleges, credit societies, and sugar factories built over decades by the Chavan family.",
+        "Formidable demographic base uniting Marathas, Muslims, SC-Mahars, and riverine backward classes.",
+        "Control over Nanded-Waghala Municipal Corporation with entrenched grassroots ward corporators."
+      ],
+      "vulnerabilities": [
+        "Post Ashok Chavan's switch to BJP, local party machinery underwent structural realignment and independent candidate claims."
+      ]
+    },
+    {
+      "party": "Bharatiya Janata Party (BJP)",
+      "color": "orange",
+      "badge": "Ruling Alliance Anchor",
+      "strengths": [
+        "Strong demographic support among Banjara, Hatkar Dhangar, Komti, Lingayat, and Vanjari communities, plus segments of Marathas.",
+        "Incumbent MLAs in Mukhed (Tushar Rathod) and Naigaon (Rajesh Pawar) commanding established rural vote-banks.",
+        "Significant expansion following Shri Ashok Chavan's entry into the party, bringing extensive cooperative connections.",
+        "Strong local organizational leadership under City President Dilip Kandkurte and South President Santukrao Hambarde."
+      ],
+      "vulnerabilities": [
+        "Factionalism between the Chikhalikar faction, Vichar Parivar loyalists, and newly inducted leaders.",
+        "Cadre vacuum in Bhokar, Mudkhed, and Ardhapur; rural Maratha reservation discontent under Manoj Jarange Patil."
+      ]
+    },
+    {
+      "party": "Shiv Sena (SHS)",
+      "color": "amber",
+      "badge": "Urban Stronghold",
+      "strengths": [
+        "Wields significant influence in Nanded North led by incumbent MLA Shri Balaji Kalyankar.",
+        "Core traditional base in Vedapuri and Sonkhed areas with lasting voter affinity for the Bow & Arrow symbol.",
+        "Former Hingoli MP Shri Hemant Patil maintains strong cooperative standing in Nanded South and adjacent border zones."
+      ],
+      "vulnerabilities": [
+        "Minimal organization in southern rural talukas (Naigaon, Mukhed, Deglur, Bhokar); absence of a pan-PC face."
+      ]
+    },
+    {
+      "party": "Bharat Rashtra Samithi (BRS)",
+      "color": "pink",
+      "badge": "Third-Front Challenger",
+      "strengths": [
+        "Initiated Maharashtra expansion specifically from Nanded, appealing to border-zone farmers and agricultural workers.",
+        "Recruited local leaders such as Shri Yashpal Bhinge (Dhangar) and actively engaged Lingayat religious Maths."
+      ],
+      "vulnerabilities": [
+        "Lack of an entrenched grassroots cadre; voter mobilization has largely remained confined to symbolic public rallies."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1118 @@
+import React, { useState, useEffect, useCallback } from "react";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+import * as XLSX from "xlsx";
+
+const PURPOSES = [
+  "MEET WITH DADA",
+  "ROAD",
+  "FOOTPATH",
+  "DRAINAGE",
+  "WATER",
+  "STORM WATER CRISIS",
+  "WASTE MANAGEMENT",
+  "FOLLIAGE MANAGEMENT",
+  "DEBRIS MANAGEMENT",
+  "TREE CUTTING",
+  "STREET LIGHTS",
+  "DEATH INTIMATION LETTER",
+  "JOB REFERENCE LETTER",
+  "MSEB",
+  "BIRTH & DEATH CERTIFICATE CORRECTION",
+  "RECOMONDATION LETTER",
+  "ADMISSION LETTER",
+  "TOILET",
+  "MEDICAL ASSIT.",
+  "AMBULANCE",
+  "RATION KIT",
+  "MONITERY HELP",
+  "CHAIRTY",
+  "IN KIND HELP",
+  "TANKER",
+  "SCHOOL / COLLEGE FEE LETTER",
+  "OTHER"
+];
+
+const purposeColors = {
+  medical:        "bg-red-100 text-red-600 border-red-200",
+  education:      "bg-blue-100 text-blue-600 border-blue-200",
+  job:            "bg-green-100 text-green-600 border-green-200",
+  schemes:        "bg-purple-100 text-purple-600 border-purple-200",
+  business:       "bg-amber-100 text-amber-600 border-amber-200",
+  utility:        "bg-cyan-100 text-cyan-600 border-cyan-200",
+  police:         "bg-slate-100 text-slate-600 border-slate-200",
+  administrative: "bg-orange-100 text-orange-600 border-orange-200",
+};
+
+/* ─── Detail Modal ─────────────────────────────────────────── */
+// const DetailModal = ({ visitor, onClose }) => {
+//   if (!visitor) return null;
+
+//   const fields = [
+//     ["Full Name", visitor.fullName],
+//     ["Email", visitor.email],
+//     ["Phone", visitor.phoneNo],
+//     ["Age", visitor.age],
+//     ["Gender", visitor.sex],
+//     ["Date of Birth", visitor.DOB ? new Date(visitor.DOB).toLocaleDateString() : "—"],
+//     ["Aadhar / Voter ID", visitor.aadharVoter],
+//     ["House No.", visitor.houseNo],
+//     ["Landmark", visitor.landmark],
+//     ["Village / Town", visitor.village],
+//     ["State", visitor.state],
+//     ["Nation", visitor.nation],
+//     ["Pincode", visitor.pincode],
+//     ["Purpose", visitor.purpose],
+//     // Purpose-specific
+//     ["Patient Name", visitor.patiantName],
+//     ["Hospital", visitor.hospitalName],
+//     ["Doctor", visitor.trackingDoctor],
+//     ["Reason", visitor.reason],
+//     ["Student Name", visitor.studentName],
+//     ["Student DOB", visitor.studentDOB ? new Date(visitor.studentDOB).toLocaleDateString() : null],
+//     ["Student Gender", visitor.studentGender],
+//     ["Student Category", visitor.studentCategory],
+//     ["Job Full Name", visitor.jobFullName],
+//     ["Position Applied", visitor.jobPosition],
+//     ["Job Department", visitor.jobDepartment],
+//     ["Preferred Location", visitor.jobLocation],
+//     ["Expected Salary", visitor.jobSalary],
+//     ["Employee Name", visitor.employeeName],
+//     ["Employee ID", visitor.employeeId],
+//     ["Emp. Department", visitor.employeeDepartment],
+//     ["Designation", visitor.employeeDesignation],
+//     ["Req. Department", visitor.employeeRDepartment],
+//     ["Req. Transfer", visitor.employeeRTransfer],
+//     ["Scheme Name", visitor.schemeName],
+//     ["Prev. Application", visitor.schemePApplication],
+//     ["Apply Date", visitor.schemeApplyDate ? new Date(visitor.schemeApplyDate).toLocaleDateString() : null],
+//     ["Marital Status", visitor.schemeMaritalStatus],
+//     ["Scheme Category", visitor.schemeCategary],
+//     ["Scheme Aadhar", visitor.schemeAddhar],
+//     ["Business Name", visitor.businessName],
+//     ["Business Type", visitor.businessType],
+//     ["Business Sector", visitor.businessSector],
+//     ["Registration No.", visitor.businessRNo],
+//     ["Date of Est.", visitor.businessDOE ? new Date(visitor.businessDOE).toLocaleDateString() : null],
+//     ["GST No.", visitor.businessGST],
+//     ["Business Address", visitor.businessAddress],
+//     ["Utility Service", visitor.utilityServiceInstallation],
+//     ["Utility Problem", visitor.utilityProblem],
+//     ["Police App. No.", visitor.policeApplicationNo],
+//     ["Police App. Date", visitor.policeApplicationDate ? new Date(visitor.policeApplicationDate).toLocaleDateString() : null],
+//     ["App. Place", visitor.policeApplicationPlace],
+//     ["Incident Details", visitor.policeIncidentDetails],
+//     ["Involved Person", visitor.policeInvolveName],
+//     ["Declaration", visitor.policeDeclaration],
+//     ["Project Name", visitor.projectName],
+//     ["Project Location", visitor.projectLocation],
+//     ["Project Problem", visitor.projectProblem],
+//     ["Message", visitor.message],
+//     ["Registered On", visitor.createdAt ? new Date(visitor.createdAt).toLocaleString() : "—"],
+//   ].filter(([, v]) => v !== null && v !== undefined && v !== "");
+
+//   return (
+   
+//   <div
+//     className="fixed inset-0 z-[9999] bg-black/50 backdrop-blur-sm overflow-y-auto"
+//     onClick={onClose}
+//   >
+//     <div className="min-h-screen flex items-start justify-center p-4 pt-8">
+//       <div
+//         className="bg-white rounded-3xl shadow-2xl w-full max-w-5xl overflow-hidden"
+//         onClick={(e) => e.stopPropagation()}
+//       >
+//         {/* Header */}
+//         <div className="sticky top-0 z-10 bg-white border-b border-orange-100 px-6 py-4 flex items-center justify-between">
+//           <div className="flex items-center gap-3">
+//             {visitor.photos ? (
+//               <img
+//                 src={visitor.photos}
+//                 alt={visitor.fullName}
+//                 className="w-12 h-12 rounded-full object-cover border-2 border-orange-200"
+//               />
+//             ) : (
+//               <div className="w-12 h-12 rounded-full bg-gradient-to-br from-orange-400 to-amber-400 flex items-center justify-center text-white font-bold">
+//                 {visitor.fullName?.[0]?.toUpperCase() || "?"}
+//               </div>
+//             )}
+
+//             <div>
+//               <h2 className="text-lg font-bold text-slate-800">
+//                 {visitor.fullName}
+//               </h2>
+
+//               <span
+//                 className={`inline-flex mt-1 text-xs px-2 py-1 rounded-full font-medium capitalize border ${
+//                   purposeColors[visitor.purpose] ||
+//                   "bg-gray-100 text-gray-600 border-gray-200"
+//                 }`}
+//               >
+//                 {visitor.purpose || "—"}
+//               </span>
+//             </div>
+//           </div>
+
+//           <button
+//             onClick={onClose}
+//             className="w-10 h-10 rounded-xl hover:bg-slate-100 flex items-center justify-center transition"
+//           >
+//             <svg
+//               className="w-5 h-5 text-slate-500"
+//               fill="none"
+//               stroke="currentColor"
+//               viewBox="0 0 24 24"
+//             >
+//               <path
+//                 strokeLinecap="round"
+//                 strokeLinejoin="round"
+//                 strokeWidth={2}
+//                 d="M6 18L18 6M6 6l12 12"
+//               />
+//             </svg>
+//           </button>
+//         </div>
+
+//         {/* Scrollable Content */}
+//         <div className="overflow-y-auto p-6 max-h-[calc(90vh-80px)]">
+//           {/* Photo */}
+//           {visitor.photos && (
+//             <div className="px-6 pt-6 flex justify-center">
+//               <img
+//                 src={visitor.photos}
+//                 alt={visitor.fullName}
+//                 className="w-32 h-32 rounded-2xl object-cover border-2 border-orange-100 shadow-md"
+//               />
+//             </div>
+//           )}
+
+//           {/* Fields */}
+//           <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+//             {fields.map(([label, value]) => (
+//               <div
+//                 key={label}
+//                 className="bg-slate-50 rounded-xl px-4 py-3 border border-slate-100"
+//               >
+//                 <p className="text-xs text-slate-400 mb-1">{label}</p>
+//                 <p className="text-sm font-medium text-slate-800 break-words">
+//                   {value}
+//                 </p>
+//               </div>
+//             ))}
+//           </div>
+
+//           {/* Footer */}
+//           <div className="sticky bottom-0 bg-white border-t border-slate-100 p-4 flex justify-end">
+//             <button
+//               onClick={onClose}
+//               className="px-5 py-2 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-medium transition"
+//             >
+//               Close
+//             </button>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   </div>
+
+//   );
+// };
+
+const DetailModal = ({ visitor, onClose }) => {
+  if (!visitor) return null;
+
+  const combinedAddress = visitor.address || [
+    visitor.houseNo,
+    visitor.landmark,
+    visitor.village,
+    visitor.pincode ? String(visitor.pincode) : ""
+  ].filter((val) => val && val.trim() !== "").join(", ");
+
+  const fields = [
+    ["Full Name", visitor.fullName],
+    ["Phone", visitor.phoneNo],
+    ["Gender", visitor.sex === "male" ? "Male" : visitor.sex === "female" ? "Female" : visitor.sex === "other" ? "Other" : visitor.sex],
+    ["Address", combinedAddress],
+    ["Nature of Work", visitor.purpose],
+    ...(visitor.customPurpose ? [["Nature of Work Details", visitor.customPurpose]] : []),
+    ...(visitor.purpose === "DRAINAGE" && visitor.subPurpose ? [["Drainage Sub-Type", visitor.subPurpose]] : []),
+    ...(visitor.purpose === "DRAINAGE" && visitor.customSubPurpose ? [["Drainage Details", visitor.customSubPurpose]] : []),
+    ["Registered By", visitor.addedBy],
+    ["Status", visitor.status || "Pending"],
+    ["Follow-up Details", visitor.followUp || "—"],
+    ["Registered On", visitor.createdAt ? new Date(visitor.createdAt).toLocaleString("en-IN") : "—"],
+  ].filter(([, value]) => value);
+
+  return (
+    <div
+      className="fixed top-24 left-64   p-4 overflow-y-auto"
+      onClick={onClose}
+    >
+      <div className="min-h-screen flex items-start justify-center py-8">
+        <div
+          className="bg-white rounded-3xl shadow-2xl w-full max-w-5xl"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Header */}
+          <div className="sticky top-0 bg-white border-b border-orange-100 px-6 py-4 flex items-center justify-between rounded-t-3xl z-10">
+            <div className="flex items-center gap-3">
+              {visitor.photos ? (
+                <img
+                  src={visitor.photos}
+                  alt={visitor.fullName}
+                  className="w-12 h-12 rounded-full object-cover border-2 border-orange-200"
+                />
+              ) : (
+                <div className="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center text-white font-bold">
+                  {visitor.fullName?.charAt(0)}
+                </div>
+              )}
+
+              <div>
+                <h2 className="text-xl font-bold text-slate-800">
+                  {visitor.fullName}
+                </h2>
+
+                <span className="inline-flex mt-1 px-3 py-1 text-xs rounded-full bg-orange-100 text-orange-700 font-semibold">
+                  {visitor.purpose}
+                  {visitor.purpose === "DRAINAGE" && visitor.subPurpose ? ` - ${visitor.subPurpose}` : ""}
+                </span>
+              </div>
+            </div>
+
+            <button
+              onClick={onClose}
+              className="text-slate-500 hover:text-slate-700 text-2xl"
+            >
+              ✕
+            </button>
+          </div>
+
+          {/* Photo */}
+          {visitor.photos && (
+            <div className="flex justify-center py-6">
+              <img
+                src={visitor.photos}
+                alt={visitor.fullName}
+                className="w-32 h-32 rounded-2xl object-cover shadow-lg border"
+              />
+            </div>
+          )}
+
+          {/* Fields */}
+          <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+            {fields.map(([label, value]) => (
+              <div
+                key={label}
+                className="bg-slate-50 rounded-xl p-4 border border-slate-100"
+              >
+                <p className="text-xs text-slate-400 mb-1">{label}</p>
+                <p className="text-slate-800 font-medium break-words">
+                  {value}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Bottom */}
+          <div className="border-t p-4 flex justify-end">
+            <button
+              onClick={onClose}
+              className="px-5 py-2 bg-orange-500 text-white rounded-xl hover:bg-orange-600"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* ─── Profile Modal (Visitor History & Activity Timeline) ─── */
+const ProfileModal = ({ visitor, onClose }) => {
+  const [history, setHistory] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchHistory = async () => {
+      try {
+        const res = await fetch(`/api/visitor-history?phone=${encodeURIComponent(visitor.phoneNo)}`);
+        const data = await res.json();
+        if (data.success) {
+          setHistory(data.visits || []);
+        }
+      } catch (err) {
+        console.error(err);
+        toast.error("Failed to load visit history.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchHistory();
+  }, [visitor]);
+
+  if (!visitor) return null;
+
+  return (
+    <div
+      className="fixed inset-0 z-[9999] bg-black/60 backdrop-blur-sm overflow-y-auto flex items-start justify-center p-4 pt-8"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden animate-fade-in"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-5 text-white flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            {visitor.photos ? (
+              <img
+                src={visitor.photos}
+                alt={visitor.fullName}
+                className="w-14 h-14 rounded-full object-cover border-2 border-white/80 shadow-md"
+              />
+            ) : (
+              <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white font-bold text-lg border border-white/30">
+                {visitor.fullName?.charAt(0).toUpperCase()}
+              </div>
+            )}
+            <div>
+              <h2 className="text-xl font-bold tracking-wide">{visitor.fullName}</h2>
+              <p className="text-orange-50 text-xs mt-0.5">{visitor.phoneNo}</p>
+            </div>
+          </div>
+          <button
+            onClick={onClose}
+            className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition text-lg font-semibold"
+          >
+            ✕
+          </button>
+        </div>
+
+        {/* Scrollable Content */}
+        <div className="p-6 space-y-6 max-h-[80vh] overflow-y-auto">
+          {/* Visitor Details */}
+          <div className="grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-100">
+            <div>
+              <p className="text-slate-400 text-xs">Gender</p>
+              <p className="text-slate-800 font-semibold text-sm capitalize">
+                {visitor.sex === "male" ? "Male" : visitor.sex === "female" ? "Female" : visitor.sex === "other" ? "Other" : visitor.sex || "—"}
+              </p>
+            </div>
+            <div>
+              <p className="text-slate-400 text-xs">Address</p>
+              <p className="text-slate-800 font-semibold text-sm truncate max-w-[200px]" title={visitor.address || [visitor.houseNo, visitor.landmark, visitor.village, visitor.pincode].filter(Boolean).join(", ")}>
+                {visitor.address || [visitor.houseNo, visitor.landmark, visitor.village, visitor.pincode].filter(Boolean).join(", ") || "—"}
+              </p>
+            </div>
+          </div>
+
+          {/* History Statistics */}
+          <div className="flex items-center justify-between border-b border-orange-100 pb-3">
+            <h3 className="text-slate-800 font-bold text-base flex items-center gap-2">
+              <svg className="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Visit Activity Timeline
+            </h3>
+            <span className="bg-orange-100 text-orange-800 text-xs font-bold px-3 py-1 rounded-full border border-orange-200">
+              {loading ? "Calculating..." : `${history.length} Visit${history.length !== 1 ? "s" : ""}`}
+            </span>
+          </div>
+
+          {/* Timeline */}
+          {loading ? (
+            <div className="flex items-center justify-center py-10">
+              <div className="animate-spin w-8 h-8 border-4 border-orange-500 border-t-transparent rounded-full" />
+            </div>
+          ) : history.length === 0 ? (
+            <p className="text-center py-10 text-slate-400 text-sm">No activity history found.</p>
+          ) : (
+            <div className="relative pl-6 border-l-2 border-orange-100 space-y-6 ml-3">
+              {history.map((visit) => {
+                const dateObj = visit.createdAt ? new Date(visit.createdAt) : null;
+                const dateStr = dateObj ? dateObj.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }) : "—";
+                const timeStr = dateObj ? dateObj.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" }) : "";
+                
+                // Color mapping for statuses
+                const status = visit.status || "Pending";
+                let statusColor = "bg-amber-50 text-amber-700 border-amber-200";
+                if (status === "In Progress") statusColor = "bg-blue-50 text-blue-700 border-blue-200";
+                if (status === "Closing Request") statusColor = "bg-purple-50 text-purple-700 border-purple-200";
+                if (status === "Completed") statusColor = "bg-green-50 text-green-700 border-green-200";
+                if (status === "Rejected") statusColor = "bg-red-50 text-red-700 border-red-200";
+
+                const beforeList = (visit.beforeImages && visit.beforeImages.length > 0)
+                  ? visit.beforeImages
+                  : (visit.photos ? [visit.photos] : []);
+                const afterList = visit.afterImages || [];
+
+                return (
+                  <div key={visit._id} className="relative group animate-fade-in">
+                    {/* Bullet marker */}
+                    <span className="absolute -left-[31px] top-1.5 w-4 h-4 rounded-full border-4 border-white bg-orange-500 shadow-md group-hover:scale-110 transition-transform" />
+                    
+                    <div className="bg-white border border-slate-100 hover:border-orange-100 hover:shadow-sm transition-all p-4 rounded-2xl space-y-2">
+                      {/* Date & Time */}
+                      <div className="flex justify-between items-center">
+                        <span className="text-slate-800 font-bold text-sm flex items-center gap-1.5">
+                          {dateStr} <span className="text-slate-400 text-xs font-normal">{timeStr}</span>
+                        </span>
+                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border uppercase ${statusColor}`}>
+                          {status}
+                        </span>
+                      </div>
+
+                      {/* Purpose & Mode */}
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <div>
+                          <p className="text-xs text-slate-400">Nature of Work</p>
+                          <p className="text-slate-700 font-medium text-sm">
+                            {visit.purpose}
+                            {visit.purpose === "DRAINAGE" && visit.subPurpose ? ` (${visit.subPurpose})` : ""}
+                          </p>
+                        </div>
+                        {visit.visitMode && (
+                          <div>
+                            <span className="text-[11px] font-semibold text-orange-700 bg-orange-50 border border-orange-200 px-2.5 py-1 rounded-lg inline-block">
+                              📍 {visit.visitMode}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Work/Purpose Details if any */}
+                      {(visit.customPurpose || visit.customSubPurpose) && (
+                        <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-100 text-xs text-slate-600">
+                          <p className="font-medium text-slate-500 mb-0.5">Details</p>
+                          <p>{visit.customPurpose || visit.customSubPurpose}</p>
+                        </div>
+                      )}
+
+                      {/* Documents / Before & After Images */}
+                      {(beforeList.length > 0 || afterList.length > 0) && (
+                        <div className="space-y-2 pt-1">
+                          {beforeList.length > 0 && (
+                            <div>
+                              <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Before Images / Documents ({beforeList.length})</p>
+                              <div className="grid grid-cols-3 gap-2">
+                                {beforeList.map((imgUrl, i) => (
+                                  <div key={i} className="relative rounded-lg overflow-hidden border border-slate-200 bg-slate-900">
+                                    <img src={imgUrl} alt={`Before ${i+1}`} className="w-full h-20 object-cover" />
+                                    <span className="absolute top-1 left-1 bg-slate-900/80 backdrop-blur-sm text-amber-400 text-[8px] font-bold px-1 rounded">📍 Geotagged</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                          {afterList.length > 0 && (
+                            <div>
+                              <p className="text-[11px] font-bold text-purple-600 uppercase tracking-wider mb-1">After Images ({afterList.length})</p>
+                              <div className="grid grid-cols-3 gap-2">
+                                {afterList.map((imgUrl, i) => (
+                                  <div key={i} className="relative rounded-lg overflow-hidden border border-purple-300 bg-slate-900">
+                                    <img src={imgUrl} alt={`After ${i+1}`} className="w-full h-20 object-cover" />
+                                    <span className="absolute top-1 left-1 bg-slate-900/80 backdrop-blur-sm text-amber-400 text-[8px] font-bold px-1 rounded">📍 Geotagged</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      {/* Tracking / Follow Up */}
+                      {visit.followUp && (
+                        <div className="bg-orange-50/30 border border-orange-100/50 p-2.5 rounded-xl text-xs text-slate-700">
+                          <p className="font-bold text-orange-800 flex items-center gap-1">
+                            <span className="w-1.5 h-1.5 rounded-full bg-orange-500" />
+                            Tracking Record
+                          </p>
+                          <p className="mt-0.5 leading-relaxed">{visit.followUp}</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+        {/* Footer */}
+        <div className="border-t border-slate-100 p-4 bg-slate-50 flex justify-end">
+          <button
+            onClick={onClose}
+            className="px-6 py-2 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-bold rounded-xl transition-all shadow-md shadow-orange-500/10"
+          >
+            Done
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* ─── Confirm Delete Modal ─────────────────────────────────── */
+const ConfirmModal = ({ name, onConfirm, onCancel }) => (
+  <div className="fixed inset-0 bg-black/50  backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div className="bg-white rounded-3xl shadow-2xl w-full max-w-sm p-8 text-center">
+      <div className="w-full h-full rounded-full bg-red-100 flex items-center justify-center mx-auto mb-4">
+        <svg className="w-7 h-7 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+        </svg>
+      </div>
+      <h3 className="text-slate-800 font-bold text-lg mb-2">Delete Visitor?</h3>
+      <p className="text-slate-500 text-sm mb-6">
+        Are you sure you want to delete <span className="font-semibold text-slate-700">{name}</span>? This cannot be undone.
+      </p>
+      <div className="flex gap-3">
+        <button
+          onClick={onCancel}
+          className="flex-1 py-2.5 rounded-xl border border-slate-200 text-slate-600 text-sm font-medium hover:bg-slate-50 transition-colors"
+        >
+          Cancel
+        </button>
+        <button
+          onClick={onConfirm}
+          className="flex-1 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-white text-sm font-semibold transition-colors"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+);
+
+/* ─── Visitor Audit Logs Modal ─────────────────────────────────────── */
+const VisitorLogsModal = ({ visitor, onClose }) => {
+  if (!visitor) return null;
+
+  const createdDateObj = visitor.createdAt ? new Date(visitor.createdAt) : null;
+  const createdDateStr = createdDateObj ? createdDateObj.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }) : "—";
+  const createdTimeStr = createdDateObj ? createdDateObj.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", hour12: true }) : "";
+
+  const creationLog = {
+    updatedBy: visitor.addedBy || "admin",
+    updatedAt: visitor.createdAt,
+    action: "🆕 Visitor Registration Created",
+    status: "Pending",
+    details: `Visitor file initially registered by ${visitor.addedBy || "admin"}. Purpose / Nature of work: ${visitor.purpose || "General Visit"}.`,
+    isCreation: true,
+  };
+
+  const updateLogs = visitor.logs || [];
+  const allLogs = [creationLog, ...updateLogs];
+
+  return (
+    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto" onClick={onClose}>
+      <div className="bg-white rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden border border-orange-100" onClick={(e) => e.stopPropagation()}>
+        {/* Header */}
+        <div className="bg-gradient-to-r from-orange-500 to-amber-500 p-6 text-white flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-xl">
+              📋
+            </div>
+            <div>
+              <h3 className="text-lg font-bold">Visitor Activity Logs</h3>
+              <p className="text-orange-100 text-xs mt-0.5">
+                {visitor.fullName} ({visitor.phoneNo}) • Registered on {createdDateStr} by <span className="font-bold text-white underline">{visitor.addedBy || "admin"}</span>
+              </p>
+            </div>
+          </div>
+          <button onClick={onClose} className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-lg font-bold">
+            ✕
+          </button>
+        </div>
+
+        {/* Content */}
+        <div className="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
+          {/* Top Banner showing Created Info */}
+          <div className="bg-emerald-50 border border-emerald-200/80 rounded-2xl p-4 flex items-center justify-between">
+            <div>
+              <p className="text-xs font-bold text-emerald-800 uppercase tracking-wider">File Registration Info</p>
+              <p className="text-sm font-semibold text-slate-800 mt-0.5">
+                Created on: <span className="text-emerald-700">{createdDateStr} at {createdTimeStr}</span>
+              </p>
+            </div>
+            <div className="text-right">
+              <span className="text-xs text-slate-400 block font-medium">Registered By</span>
+              <span className="text-xs font-bold text-emerald-900 bg-emerald-100 border border-emerald-300 px-2.5 py-1 rounded-lg">
+                👤 {visitor.addedBy || "admin"}
+              </span>
+            </div>
+          </div>
+
+          <div className="relative pl-6 border-l-2 border-orange-200 space-y-6 ml-3 py-2">
+            {allLogs.slice().reverse().map((log, idx) => {
+              const dateObj = log.updatedAt ? new Date(log.updatedAt) : null;
+              const dateStr = dateObj ? dateObj.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }) : "—";
+              const timeStr = dateObj ? dateObj.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", hour12: true }) : "";
+
+              return (
+                <div key={idx} className="relative group">
+                  <span className={`absolute -left-[31px] top-1.5 w-4 h-4 rounded-full border-4 border-white shadow-sm ${log.isCreation ? "bg-emerald-500" : "bg-orange-500"}`} />
+                  <div className={`border p-4 rounded-2xl space-y-2 ${log.isCreation ? "bg-emerald-50/40 border-emerald-200" : "bg-slate-50 border-slate-200"}`}>
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200/60 pb-2">
+                      <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                        📅 {dateStr} <span className="text-slate-400 font-normal text-[11px]">{timeStr}</span>
+                      </span>
+                      <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-md border ${log.isCreation ? "text-emerald-800 bg-emerald-100 border-emerald-200" : "text-orange-700 bg-orange-50 border-orange-200"}`}>
+                        👤 {log.isCreation ? "Created by" : "Updated by"}: {log.updatedBy || "admin"}
+                      </span>
+                    </div>
+
+                    {log.action && (
+                      <p className={`text-sm font-bold ${log.isCreation ? "text-emerald-900" : "text-slate-800"}`}>
+                        {log.action}
+                      </p>
+                    )}
+
+                    {log.status && (
+                      <div className="text-xs">
+                        <span className="text-slate-500 font-medium">Status: </span>
+                        <span className="font-semibold text-slate-700 bg-white px-2 py-0.5 rounded border border-slate-200">{log.status}</span>
+                      </div>
+                    )}
+
+                    {log.details && (
+                      <div className="bg-white p-2.5 rounded-xl border border-slate-100 text-xs text-slate-600 leading-relaxed">
+                        {log.details}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="bg-slate-50 border-t border-slate-100 p-4 flex justify-end">
+          <button onClick={onClose} className="px-5 py-2 bg-slate-800 text-white rounded-xl text-xs font-bold hover:bg-slate-900 transition-colors">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* ─── Main Page ────────────────────────────────────────────── */
+export default function VisitorTable() {
+  const router = useRouter();
+
+  const [visitors, setVisitors]     = useState([]);
+  const [loading, setLoading]       = useState(true);
+  const [total, setTotal]           = useState(0);
+  const [page, setPage]             = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  const [search, setSearch]     = useState("");
+  const [purpose, setPurpose]   = useState("");
+  const [sort, setSort]         = useState("newest");
+  const limit = 10;
+
+  const [selectedVisitor, setSelectedVisitor]   = useState(null);
+  const [profileTarget, setProfileTarget]       = useState(null);
+  const [logsTarget, setLogsTarget]             = useState(null);
+  const [deleteTarget, setDeleteTarget]         = useState(null);
+  const [deleting, setDeleting]                 = useState(false);
+
+  useEffect(() => {
+    const role = localStorage.getItem("userRole");
+    const username = localStorage.getItem("username");
+    const allowedPagesStr = localStorage.getItem("allowedPages");
+    const allowedPages = allowedPagesStr ? JSON.parse(allowedPagesStr) : [];
+
+    if (role !== "admin") {
+      router.push("/login");
+    } else if (username !== "admin" && !allowedPages.includes("/admin/visitorTable")) {
+      router.push("/admin");
+    }
+  }, [router]);
+
+  const fetchVisitors = useCallback(async () => {
+    setLoading(true);
+    try {
+      const params = new URLSearchParams({ page, limit, search, purpose, sort });
+      const res = await fetch(`/api/visitors?${params}`);
+      const data = await res.json();
+      if (data.success) {
+        setVisitors(data.visitors);
+        setTotal(data.total);
+        setTotalPages(data.totalPages);
+      }
+    } catch (e) {
+      console.error(e);
+      toast.error("Failed to fetch visitors.");
+    } finally {
+      setLoading(false);
+    }
+  }, [page, search, purpose, sort]);
+
+  useEffect(() => {
+    fetchVisitors();
+  }, [fetchVisitors]);
+
+  // Reset to page 1 when filters change
+  const handleSearch = (val) => { setSearch(val); setPage(1); };
+  const handlePurpose = (val) => { setPurpose(val); setPage(1); };
+  const handleSort = (val) => { setSort(val); setPage(1); };
+
+  const handleDelete = async () => {
+    if (!deleteTarget) return;
+    setDeleting(true);
+    const loggedAdmin = typeof window !== "undefined" ? localStorage.getItem("username") || "Admin" : "Admin";
+    try {
+      const res = await fetch(`/api/visitors?id=${deleteTarget._id}&deletedBy=${encodeURIComponent(loggedAdmin)}`, { method: "DELETE" });
+      const data = await res.json();
+      if (data.success) {
+        toast.success("Visitor deleted successfully.");
+        setDeleteTarget(null);
+        fetchVisitors();
+      } else {
+        toast.error(data.error || "Failed to delete.");
+      }
+    } catch {
+      toast.error("Error deleting visitor.");
+    } finally {
+      setDeleting(false);
+    }
+  };
+
+  const handleExport = async () => {
+    try {
+      toast.info("Fetching data for export...");
+      const params = new URLSearchParams({ page: 1, limit: 100000, search, purpose, sort });
+      const res = await fetch(`/api/visitors?${params}`);
+      const data = await res.json();
+      if (data.success && data.visitors) {
+        if (data.visitors.length === 0) {
+          toast.warning("No records to export.");
+          return;
+        }
+        
+        // Map the visitors to clean format for Excel
+        const exportData = data.visitors.map((v, idx) => {
+          const combinedAddress = v.address || [
+            v.houseNo,
+            v.landmark,
+            v.village,
+            v.pincode ? String(v.pincode) : ""
+          ].filter((val) => val && val.trim() !== "").join(", ");
+
+          return {
+            "Sr. No.": idx + 1,
+            "Full Name": v.fullName || "—",
+            "Phone Number": v.phoneNo || "—",
+            "Email": v.email || "—",
+            "Gender": v.sex ? (v.sex.charAt(0).toUpperCase() + v.sex.slice(1)) : "—",
+            "Address": combinedAddress || "—",
+            "Nature of Work": v.purpose || "—",
+            "Nature of Work Details": v.customPurpose || "—",
+            "Registered By": v.addedBy || "—",
+            "Status": v.status || "Pending",
+            "Follow-up Details": v.followUp || "—",
+            "Registered On": v.createdAt ? new Date(v.createdAt).toLocaleString("en-IN") : "—"
+          };
+        });
+
+        const ws = XLSX.utils.json_to_sheet(exportData);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Visitors");
+        XLSX.writeFile(wb, "Visitors_List.xlsx");
+        toast.success("Visitor list exported successfully!");
+      } else {
+        toast.error("Failed to fetch visitors for export.");
+      }
+    } catch (e) {
+      console.error(e);
+      toast.error("An error occurred during export.");
+    }
+  };
+
+  return (
+    <>
+      <Head>
+        <title>Visitor Manager – VisitorPass Admin</title>
+        <meta name="description" content="Manage and view all registered visitors." />
+      </Head>
+
+      
+      <div className="p-6 md:p-8 space-y-6">
+       
+
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div>
+            <h1 className="text-2xl font-bold text-slate-800">Visitor Manager</h1>
+            <p className="text-slate-500 text-sm mt-0.5">
+              {total} visitor{total !== 1 ? "s" : ""} registered
+            </p>
+          </div>
+          <div className="flex gap-2.5 self-start sm:self-auto">
+            <button
+              onClick={handleExport}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-white text-sm font-semibold hover:from-orange-600 hover:to-amber-600 transition-all shadow-md shadow-orange-500/20"
+            >
+              <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              Export to Excel
+            </button>
+            <button
+              onClick={fetchVisitors}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-orange-200 text-orange-600 text-sm font-medium hover:bg-orange-50 transition-colors"
+            >
+              <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              Refresh
+            </button>
+          </div>
+        </div>
+
+        {/* Filters */}
+        <div className="bg-white rounded-2xl border border-orange-100 shadow-sm p-4 flex flex-col md:flex-row gap-3">
+          {/* Search */}
+          <div className="flex-1 relative">
+            <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input
+              type="text"
+              placeholder="Search by name, phone, email, village..."
+              value={search}
+              onChange={(e) => handleSearch(e.target.value)}
+              className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all"
+              />
+          </div>
+
+          {/* Purpose Filter */}
+          <select
+            value={purpose}
+            onChange={(e) => handlePurpose(e.target.value)}
+            className="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all"
+            >
+            <option value="">All Purposes</option>
+            {PURPOSES.map((p) => (
+              <option key={p} value={p} className="capitalize">{p.charAt(0).toUpperCase() + p.slice(1)}</option>
+            ))}
+          </select>
+
+          {/* Sort */}
+          <select
+            value={sort}
+            onChange={(e) => handleSort(e.target.value)}
+            className="px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all"
+          >
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+          </select>
+        </div>
+
+        {/* Table */}
+        <div className="bg-white rounded-2xl border border-orange-100 shadow-sm overflow-visible">
+          
+           {selectedVisitor && <DetailModal visitor={selectedVisitor} onClose={() => setSelectedVisitor(null)} />}
+           {profileTarget && <ProfileModal visitor={profileTarget} onClose={() => setProfileTarget(null)} />}
+           {logsTarget && <VisitorLogsModal visitor={logsTarget} onClose={() => setLogsTarget(null)} />}
+      {deleteTarget && (
+        <ConfirmModal
+          name={deleteTarget.fullName}
+          onConfirm={handleDelete}
+          onCancel={() => setDeleteTarget(null)}
+        />
+      )}
+          {loading ? (
+            <div className="flex items-center justify-center h-48">
+              <div className="animate-spin w-8 h-8 border-4 border-orange-500 border-t-transparent rounded-full" />
+            </div>
+          ) : visitors.length === 0 ? (
+            <div className="flex flex-col items-center justify-center h-48 text-slate-400">
+              <svg className="w-10 h-10 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <p className="text-sm">No visitors found</p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead className="bg-orange-50/60 border-b border-orange-100">
+                  <tr>
+                    <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3">#</th>
+                    <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3">Visitor</th>
+                    <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3">Phone</th>
+                    <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3">Address</th>
+                    <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3">Purpose</th>
+                    <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3">Status</th>
+                    <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3">Registered By</th>
+                    <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3">Created At</th>
+                    <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3">Visitor Logs</th>
+                    <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3">Profile</th>
+                    <th className="text-left text-xs font-semibold text-slate-500 uppercase tracking-wider px-4 py-3">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-50">
+                  {visitors.map((v, idx) => (
+                    <tr key={v._id} className="hover:bg-orange-50/30 transition-colors">
+                      <td className="px-4 py-3 text-slate-400 text-xs">
+                        {(page - 1) * limit + idx + 1}
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-2.5">
+                          {v.photos ? (
+                            <img src={v.photos} alt={v.fullName} className="w-8 h-8 rounded-full object-cover border border-orange-100 flex-shrink-0" />
+                          ) : (
+                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-amber-400 flex items-center justify-center text-white font-bold text-xs flex-shrink-0">
+                              {v.fullName?.[0]?.toUpperCase() || "?"}
+                            </div>
+                          )}
+                          <div>
+                            <p className="text-slate-800 font-medium">{v.fullName}</p>
+                            <p className="text-slate-400 text-xs capitalize">{v.sex || ""}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3">
+                        <p className="text-slate-700">{v.phoneNo}</p>
+                      </td>
+                      <td className="px-4 py-3">
+                        <p className="text-slate-700 truncate max-w-[200px]" title={v.address || [v.houseNo, v.landmark, v.village, v.pincode].filter(Boolean).join(", ")}>
+                          {v.address || [v.houseNo, v.landmark, v.village, v.pincode].filter(Boolean).join(", ")}
+                        </p>
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className={`text-xs px-2.5 py-1 rounded-full font-medium capitalize border bg-orange-50 text-orange-700 border-orange-200`}>
+                          {v.purpose}
+                          {v.purpose === "DRAINAGE" && v.subPurpose ? ` - ${v.subPurpose}` : ""}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3">
+                        {(() => {
+                          const status = v.status || "Pending";
+                          let color = "bg-amber-100 text-amber-700 border-amber-200";
+                          if (status === "In Progress") color = "bg-blue-100 text-blue-700 border-blue-200";
+                          if (status === "Closing Request") color = "bg-purple-100 text-purple-700 border-purple-200";
+                          if (status === "Completed") color = "bg-green-100 text-green-700 border-green-200";
+                          if (status === "Rejected") color = "bg-red-100 text-red-700 border-red-200";
+                          return (
+                            <span className={`text-xs px-2.5 py-1 rounded-full font-semibold border ${color}`}>
+                              {status}
+                            </span>
+                          );
+                        })()}
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className="text-xs font-semibold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-200">
+                          {v.addedBy || "admin"}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-slate-500 text-xs whitespace-nowrap">
+                        {v.createdAt ? new Date(v.createdAt).toLocaleString("en-IN", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit", hour12: true }) : "—"}
+                      </td>
+                      <td className="px-4 py-3">
+                        <button
+                          onClick={() => setLogsTarget(v)}
+                          className="px-2.5 py-1.5 rounded-lg bg-orange-50 border border-orange-200 text-orange-700 text-xs font-bold hover:bg-orange-100 transition-colors flex items-center gap-1.5 whitespace-nowrap"
+                        >
+                          <span>📋 Visitor Logs ({v.logs ? v.logs.length : 0})</span>
+                        </button>
+                      </td>
+                      <td className="px-4 py-3">
+                        <button
+                          onClick={() => router.push(`/admin/visitor-profile/${v._id}`)}
+                          className="px-2.5 py-1.5 rounded-lg border border-orange-200 text-orange-600 text-xs font-bold hover:bg-orange-50 transition-colors whitespace-nowrap"
+                        >
+                          View Profile
+                        </button>
+                      </td>
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => setSelectedVisitor(v)}
+                            className="p-1.5 rounded-lg hover:bg-orange-100 text-orange-500 transition-colors"
+                            title="View details"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                          </button>
+                          <button
+                            onClick={() => router.push(`/edit-visitor/${v._id}`)}
+                            className="p-1.5 rounded-lg hover:bg-orange-100 text-orange-500 transition-colors"
+                            title="Edit visitor"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                          </button>
+                          <button
+                            onClick={() => setDeleteTarget(v)}
+                            className="p-1.5 rounded-lg hover:bg-red-100 text-red-400 hover:text-red-600 transition-colors"
+                            title="Delete visitor"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+          
+        </div>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex items-center justify-between">
+            <p className="text-slate-500 text-sm">
+              Showing {(page - 1) * limit + 1}–{Math.min(page * limit, total)} of {total}
+            </p>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                disabled={page === 1}
+                className="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 text-sm disabled:opacity-40 hover:bg-slate-50 transition-colors"
+              >
+                ← Prev
+              </button>
+              {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                const p = page <= 3 ? i + 1 : page - 2 + i;
+                if (p < 1 || p > totalPages) return null;
+                return (
+                  <button
+                    key={p}
+                    onClick={() => setPage(p)}
+                    className={`w-8 h-8 rounded-lg text-sm font-medium transition-colors ${
+                      p === page
+                        ? "bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-sm"
+                        : "border border-slate-200 text-slate-600 hover:bg-slate-50"
+                    }`}
+                  >
+                    {p}
+                  </button>
+                );
+              })}
+              <button
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                disabled={page === totalPages}
+                className="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 text-sm disabled:opacity-40 hover:bg-slate-50 transition-colors"
+              >
+                Next →
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </>
+  );
+}

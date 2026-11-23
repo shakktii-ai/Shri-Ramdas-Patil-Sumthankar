@@ -1,0 +1,64 @@
+{
+  "constituencyMeta": {
+    "name": "Nanded",
+    "type": "Parliamentary Constituency (PC)",
+    "pcNumber": 16,
+    "state": "Maharashtra",
+    "zone": "Marathwada",
+    "district": "Nanded",
+    "coreAssemblyConstituencies": [
+      {
+        "acNo": 85,
+        "name": "Bhokar",
+        "type": "GEN"
+      },
+      {
+        "acNo": 86,
+        "name": "Nanded North",
+        "type": "GEN"
+      },
+      {
+        "acNo": 87,
+        "name": "Nanded South",
+        "type": "GEN"
+      },
+      {
+        "acNo": 89,
+        "name": "Naigaon",
+        "type": "GEN"
+      },
+      {
+        "acNo": 90,
+        "name": "Deglur",
+        "type": "SC"
+      },
+      {
+        "acNo": 91,
+        "name": "Mukhed",
+        "type": "GEN"
+      }
+    ],
+    "referenceDistrictConstituencies": [
+      {
+        "acNo": 83,
+        "name": "Kinwat",
+        "type": "ST/GEN"
+      },
+      {
+        "acNo": 84,
+        "name": "Hadgaon",
+        "type": "GEN"
+      },
+      {
+        "acNo": 88,
+        "name": "Loha",
+        "type": "GEN"
+      }
+    ],
+    "partyLeadership": {
+      "nandedCityDistrictPresident": "Shri Dilip Kandkurte (GEN - Komti)",
+      "nandedSouthDistrictPresident": "Shri Santukrao Hambarde (GEN - Maratha)",
+      "lokSabhaIncharge": "Shri Vyankat Gojegaonkar (GEN - Maratha)"
+    }
+  }
+}

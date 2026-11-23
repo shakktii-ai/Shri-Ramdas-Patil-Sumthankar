@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/election-analytics/daily-impact?refresh=true",
+      "schedule": "30 2 * * *"
+    }
+  ]
+}
