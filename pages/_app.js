@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "@/components/navbar";
 import Navbarr from "@/components/Navbarr";
+import ElectionSidebar from "@/components/ElectionSidebar";
 import Footer from "@/components/footer";
 import { useRouter } from "next/router";
 import { ToastContainer } from "react-toastify";
@@ -12,6 +13,9 @@ export default function App({ Component, pageProps }) {
 
   const isAdminRoute = router.pathname.startsWith("/admin");
   const isLoginRoute = router.pathname === "/login";
+  const isElectionRoute = router.pathname.startsWith("/admin/election-analytics");
+  const isPortalSelectRoute = router.pathname === "/admin/portal-select";
+  const isVisitorAdminRoute = isAdminRoute && !isElectionRoute && !isPortalSelectRoute;
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -44,10 +48,13 @@ export default function App({ Component, pageProps }) {
           router.push("/login");
         } else if (username !== "admin" && router.pathname !== "/admin") {
           const hasAccess = (path) => {
-            if (path.startsWith("/admin/search")) {
+            if (path === "/admin/portal-select") {
               return true;
             }
             if (path.startsWith("/admin/election-analytics")) {
+              return allowedPages.includes("/admin/election-analytics");
+            }
+            if (path.startsWith("/admin/search")) {
               return true;
             }
             if (path.startsWith("/admin/visitorTable") || path.startsWith("/admin/addVisitor") || path.startsWith("/admin/edit-visitor") || path.startsWith("/admin/visitor-profile")) {
@@ -133,7 +140,8 @@ export default function App({ Component, pageProps }) {
     }
   }, [router.pathname, isAdminRoute, isLoginRoute]);
 
-  if (isLoginRoute) {
+  // 1. Login Page OR Portal Selection Page -> Fullscreen (ZERO sidebar)
+  if (isLoginRoute || isPortalSelectRoute) {
     return (
       <div className="min-h-screen bg-slate-50">
         <div className="page-transition">
@@ -160,7 +168,39 @@ export default function App({ Component, pageProps }) {
     );
   }
 
-  if (isAdminRoute) {
+  // 2. Election Analytics Routes -> ElectionSidebar on the left
+  if (isElectionRoute) {
+    return (
+      <div className="flex min-h-screen bg-slate-50">
+        <ElectionSidebar />
+        <main className="flex-1 min-h-screen overflow-y-auto">
+          <div className="page-transition">
+            <Component {...pageProps} />
+          </div>
+        </main>
+        <ToastContainer
+          position="bottom-right"
+          theme="light"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          toastStyle={{
+            background: "#FFFFFF",
+            border: "1px solid rgba(249, 115, 22, 0.15)",
+            borderRadius: "12px",
+            color: "#1E293B",
+          }}
+        />
+      </div>
+    );
+  }
+
+  // 3. Visitor Management Admin Routes -> Navbarr on the left
+  if (isVisitorAdminRoute) {
     return (
       <div className="flex min-h-screen bg-slate-50">
         <Navbarr />
@@ -190,6 +230,7 @@ export default function App({ Component, pageProps }) {
     );
   }
 
+  // 4. Default / User Routes -> Navbar on top
   return (
     <div className="flex flex-col min-h-screen bg-slate-50">
       <Navbar />
@@ -198,7 +239,6 @@ export default function App({ Component, pageProps }) {
           <Component {...pageProps} />
         </div>
       </main>
-       {/* <Footer /> */}
       <ToastContainer
         position="bottom-right"
         theme="light"

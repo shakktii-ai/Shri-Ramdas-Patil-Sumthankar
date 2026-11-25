@@ -42,6 +42,10 @@ const DailyElectionImpactSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.Mixed,
       default: {},
     },
+    timelineTrend: {
+      type: mongoose.Schema.Types.Mixed,
+      default: [],
+    },
   },
   {
     timestamps: true,

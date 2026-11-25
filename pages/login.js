@@ -37,7 +37,15 @@ export default function Login() {
           localStorage.removeItem("allowedPages");
         }
         toast.success("Login successful!");
-        if (data.role === "admin") {
+        const allowedPages = data.allowedPages || [];
+        const hasElectionAccess =
+          data.role === "admin" ||
+          data.username === "admin" ||
+          (Array.isArray(allowedPages) && allowedPages.includes("/admin/election-analytics"));
+
+        if (hasElectionAccess) {
+          router.push("/admin/portal-select");
+        } else if (data.role === "admin") {
           router.push("/admin");
         } else {
           router.push("/");

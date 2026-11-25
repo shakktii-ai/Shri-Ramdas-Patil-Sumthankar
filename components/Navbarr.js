@@ -8,12 +8,22 @@ const Navbarr = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [username, setUsername] = useState("");
   const [allowedPages, setAllowedPages] = useState([]);
+  const [hasElectionAccess, setHasElectionAccess] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setUsername(localStorage.getItem("username") || "");
+      const user = localStorage.getItem("username") || "";
+      const role = localStorage.getItem("userRole") || "";
       const pagesStr = localStorage.getItem("allowedPages");
-      setAllowedPages(pagesStr ? JSON.parse(pagesStr) : []);
+      const pages = pagesStr ? JSON.parse(pagesStr) : [];
+      setUsername(user);
+      setAllowedPages(pages);
+
+      const hasAccess =
+        role === "admin" ||
+        user === "admin" ||
+        (Array.isArray(pages) && pages.includes("/admin/election-analytics"));
+      setHasElectionAccess(hasAccess);
     }
   }, []);
 
@@ -21,12 +31,13 @@ const Navbarr = () => {
     localStorage.removeItem("userRole");
     localStorage.removeItem("username");
     localStorage.removeItem("allowedPages");
+    localStorage.removeItem("activePortal");
     router.push("/login");
   };
 
+  // Pure Visitor Management Portal Navigation Links (Election Analytics separated)
   const navLinks = [
     { href: "/admin", label: "Dashboard", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
-    { href: "/admin/election-analytics", label: "Election Intelligence", icon: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" },
     { href: "/admin/search", label: "Global Search", icon: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" },
     { href: "/admin/visitorTable", label: "Visitors", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" },
     { href: "/admin/visitor-profile", label: "Visitor Profile", icon: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" },
@@ -49,7 +60,6 @@ const Navbarr = () => {
     if (username === "admin") return true;
     if (href === "/admin/workers" || href === "/admin/addWorker") return false;
     if (href === "/admin") return true;
-    if (href === "/admin/election-analytics") return true;
     if (href === "/admin/search") return true;
     if (href === "/admin/visitorTable" || href === "/admin/visitor-profile" || href === "/admin/addVisitor") return allowedPages.includes("/admin/visitorTable");
     if (href === "/admin/addWorker") return allowedPages.includes("/admin/workers");
@@ -79,14 +89,14 @@ const Navbarr = () => {
         {!collapsed && (
           <div className="leading-tight min-w-0 flex-1">
             <p className="text-slate-800 font-bold text-sm truncate" title="Shri Ramdas Patil Sumthankar">
-                Shri Ramdas Patil Sumthankar
+              Shri Ramdas Patil
             </p>
-            <p className="text-slate-400 text-[10px] font-medium">Admin Panel</p>
+            <p className="text-orange-600 text-[10px] font-bold">अभ्यागत पोर्टल</p>
           </div>
         )}
         <button
           onClick={() => setCollapsed((v) => !v)}
-          className="p-1 rounded-lg text-slate-400 hover:bg-orange-50 hover:text-orange-500 transition-colors flex-shrink-0"
+          className="p-1 rounded-lg text-slate-400 hover:bg-orange-50 hover:text-orange-500 transition-colors flex-shrink-0 cursor-pointer"
           aria-label="Toggle sidebar"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -96,7 +106,7 @@ const Navbarr = () => {
       </div>
 
       {/* Nav Links */}
-      <nav className="flex-1 py-4 space-y-1 px-2">
+      <nav className="flex-1 py-4 space-y-1 px-2 overflow-y-auto">
         {filteredLinks.map(({ href, label, icon }) => {
           const active = router.pathname === href || router.pathname.startsWith(href + "/");
           return (
@@ -121,19 +131,49 @@ const Navbarr = () => {
         })}
       </nav>
 
-      {/* Logout */}
-      <div className="px-2 pb-4 border-t border-orange-50 pt-3">
+      {/* Portal Switcher & Logout */}
+      <div className="px-2 pb-4 border-t border-orange-50 pt-3 space-y-1.5">
+        {hasElectionAccess && (
+          <>
+            <Link
+              href="/admin/election-analytics"
+              className={`flex items-center rounded-xl text-xs font-bold transition-all duration-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200 shadow-2xs p-2.5 ${
+                collapsed ? "justify-center" : "gap-2 px-3"
+              }`}
+              title={collapsed ? "निवडणूक विश्लेषण पोर्टल" : ""}
+            >
+              <svg className="w-4 h-4 flex-shrink-0 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+              {!collapsed && <span className="truncate">निवडणूक पोर्टल ➔</span>}
+            </Link>
+
+            <Link
+              href="/admin/portal-select"
+              className={`flex items-center rounded-xl text-xs font-semibold text-slate-500 hover:text-orange-600 hover:bg-orange-50 transition-all p-2 ${
+                collapsed ? "justify-center" : "gap-2 px-3"
+              }`}
+              title={collapsed ? "पोर्टल निवडा (Switch Portal)" : ""}
+            >
+              <svg className="w-4 h-4 flex-shrink-0 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+              </svg>
+              {!collapsed && <span>पोर्टल निवडा</span>}
+            </Link>
+          </>
+        )}
+
         <button
           onClick={handleLogout}
-          className={`flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50 transition-colors ${
+          className={`flex items-center gap-3 w-full px-3 py-2 rounded-xl text-xs font-bold text-red-500 hover:bg-red-50 transition-colors cursor-pointer ${
             collapsed ? "justify-center" : ""
           }`}
           title={collapsed ? "Logout" : ""}
         >
-          <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
           </svg>
-          {!collapsed && <span>Logout</span>}
+          {!collapsed && <span>लॉगआउट (Logout)</span>}
         </button>
       </div>
     </aside>

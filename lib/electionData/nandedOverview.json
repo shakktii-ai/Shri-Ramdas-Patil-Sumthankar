@@ -2633,7 +2633,7 @@
               "candidate": "Pawar Madhavrao Nivrutirao",
               "party": "INC",
               "votes": 74325,
-              "percentage": 38.0
+              "percentage": 38
             },
             {
               "rank": 2,
@@ -2791,7 +2791,7 @@
               "candidate": "Chikhalikar Prataprao Govindrao",
               "party": "SHS",
               "votes": 92435,
-              "percentage": 47.0
+              "percentage": 47
             },
             {
               "rank": 2,
@@ -3263,5 +3263,13 @@
         "Lack of an entrenched grassroots cadre; voter mobilization has largely remained confined to symbolic public rallies."
       ]
     }
-  ]
+  ],
+  "candidateName": "श्री रामदास पाटील सुमठाणकर (Shri Ramdas Patil Sumthankar)",
+  "candidacyType": "Independent (अपक्ष)",
+  "independentStrategy": {
+    "candidateName": "श्री रामदास पाटील सुमठाणकर (Shri Ramdas Patil Sumthankar)",
+    "candidacyType": "Independent (अपक्ष उमेदवार / स्वतंत्र लोकनेते)",
+    "slogan": "न पक्षाची मक्तेदारी, न राजकीय घराणेशाही — थेट जनतेचा नेता, नांदेडचा विकास!",
+    "winningTarget": "३,४०,००० ते ३,६०,००० मते (३५% व्होट शेअर)"
+  }
 }
