@@ -27,6 +27,7 @@ import {
   Filler
 } from "chart.js";
 import { Line, Bar, Doughnut } from "react-chartjs-2";
+import { useElectionLanguage } from "@/context/ElectionLanguageContext";
 
 ChartJS.register(
   CategoryScale,
@@ -41,6 +42,7 @@ ChartJS.register(
 );
 
 export default function DailyImpactPage() {
+  const { lang, isMr, isEn, t } = useElectionLanguage();
   const [dailyImpact, setDailyImpact] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -83,11 +85,11 @@ export default function DailyImpactPage() {
       const data = await res.json();
       if (data && data.acImpactScorecard) {
         setDailyImpact(data);
-        setRefreshMsg(data.message || "Fresh intelligence fetched!");
+        setRefreshMsg(data.message || (isMr ? "ताजी माहिती अपडेट झाली!" : "Fresh intelligence fetched!"));
       }
     } catch (err) {
       console.error("Refresh error:", err);
-      setRefreshMsg("Refresh failed. Displaying cached data.");
+      setRefreshMsg(isMr ? "रिफ्रेश अयशस्वी. साठवलेला डेटा दाखवत आहे." : "Refresh failed. Displaying cached data.");
     } finally {
       setIsRefreshing(false);
     }
@@ -105,7 +107,7 @@ export default function DailyImpactPage() {
       labels: trend.map((t) => t.date),
       datasets: [
         {
-          label: "Positive Sentiment (%)",
+          label: isMr ? "सकारात्मक जनभावना (%)" : "Positive Sentiment (%)",
           data: trend.map((t) => t.positive),
           borderColor: "#10b981",
           backgroundColor: "rgba(16, 185, 129, 0.15)",
@@ -115,7 +117,7 @@ export default function DailyImpactPage() {
           pointRadius: 4
         },
         {
-          label: "Heat Score",
+          label: isMr ? "उष्णता निर्देशांक (Heat Score)" : "Heat Score",
           data: trend.map((t) => t.heatScore),
           borderColor: "#ef4444",
           borderDash: [5, 5],
@@ -124,7 +126,7 @@ export default function DailyImpactPage() {
           pointRadius: 4
         },
         {
-          label: "Negative Sentiment (%)",
+          label: isMr ? "नकारात्मक जनभावना (%)" : "Negative Sentiment (%)",
           data: trend.map((t) => t.negative),
           borderColor: "#f97316",
           tension: 0.35,
@@ -133,7 +135,7 @@ export default function DailyImpactPage() {
         }
       ]
     };
-  }, [dailyImpact]);
+  }, [dailyImpact, isMr]);
 
   // AC Heat Score Chart Data
   const acHeatChartData = useMemo(() => {
@@ -142,7 +144,7 @@ export default function DailyImpactPage() {
       labels: list.map((ac) => ac.acName),
       datasets: [
         {
-          label: "Heat Score (0-100)",
+          label: isMr ? "उष्णता गुणांक (०-१००)" : "Heat Score (0-100)",
           data: list.map((ac) => ac.heatScore),
           backgroundColor: list.map((ac) =>
             ac.heatScore >= 80 ? "#ef4444" : ac.heatScore >= 70 ? "#f97316" : "#eab308"
@@ -151,14 +153,14 @@ export default function DailyImpactPage() {
         }
       ]
     };
-  }, [dailyImpact]);
+  }, [dailyImpact, isMr]);
 
   const allSocialList = dailyImpact?.socialMediaPulse?.socialSignals || [];
   const allHeadlinesList = dailyImpact?.curatedTopHeadlines || [];
 
   return (
     <ElectionAnalyticsLayout
-      pageTitle="Daily Media & AC Impact – Shri Ramdas Patil Sumthankar"
+      pageTitle={isMr ? "थेट पडसाद व बातम्या" : "Daily Media & AC Impact"}
       activePage="/admin/election-analytics/daily-impact"
     >
       {/* Top Banner with 4-Call Refresh Button - Clean White Theme */}
@@ -167,19 +169,19 @@ export default function DailyImpactPage() {
           <div className="flex items-center gap-2">
             <span className="px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200 flex items-center gap-1.5">
               <HiLightningBolt className="w-3.5 h-3.5 text-blue-600" />
-              दैनिक ४-कॉल इंटेलिजन्स पाईपलाईन (Daily 4-Call Pulse)
+              {t("dailyPipelineBadge")}
             </span>
             <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-              MongoDB Atlas Live
+              {t("dbLive")}
             </span>
           </div>
 
           <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
-            थेट सोशल मीडिया व वृत्तपत्रीय पडसाद विश्लेषण
+            {t("dailyTitle")}
           </h2>
           <p className="text-xs md:text-sm text-slate-600 leading-relaxed">
-            नांदेड लोकसभा मतदारसंघामध्ये Facebook, Instagram, Twitter (X), YouTube आणि प्रादेशिक वृत्तपत्रांमध्ये उमटणारे ताजे पडसाद व जनभावनेचा दैनिक आलेख.
+            {t("dailySub")}
           </p>
         </div>
 
@@ -190,7 +192,7 @@ export default function DailyImpactPage() {
             className="flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-extrabold text-xs shadow-lg shadow-orange-500/20 transition-all cursor-pointer disabled:opacity-50"
           >
             <HiRefresh className={`w-4 h-4 ${isRefreshing ? "animate-spin" : ""}`} />
-            <span>{isRefreshing ? "विश्लेषण सुरू आहे..." : "ताजी माहिती फेच करा (४-Call Refresh)"}</span>
+            <span>{isRefreshing ? t("refreshing") : t("refreshButton")}</span>
           </button>
         </div>
       </div>
@@ -206,7 +208,7 @@ export default function DailyImpactPage() {
       <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           <HiGlobeAlt className="w-5 h-5 text-indigo-600" />
-          <span className="text-xs font-bold text-slate-800">तारीख निवडा (Date Selector):</span>
+          <span className="text-xs font-bold text-slate-800">{t("dateSelector")}</span>
         </div>
 
         <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
@@ -219,16 +221,16 @@ export default function DailyImpactPage() {
             }`}
           >
             <HiGlobeAlt className="w-3.5 h-3.5" />
-            <span>सर्व एकत्रित फीड (All Combined: {allSocialList.length + allHeadlinesList.length})</span>
+            <span>{t("allCombinedFeed")} ({allSocialList.length + allHeadlinesList.length})</span>
           </button>
 
           {availableDates.map((dt) => {
             const isSelected = selectedDate === dt;
             const label =
               dt === "2026-11-25"
-                ? "📅 २५ नोव्हेंबर (ताजी बातमी)"
+                ? isMr ? "📅 २५ नोव्हेंबर (ताजी बातमी)" : "📅 25 Nov (Latest)"
                 : dt === "2026-11-24"
-                ? "📅 २४ नोव्हेंबर"
+                ? isMr ? "📅 २४ नोव्हेंबर" : "📅 24 Nov"
                 : `📅 ${dt}`;
 
             return (
@@ -255,14 +257,14 @@ export default function DailyImpactPage() {
           <div className="flex items-center justify-between pb-3 border-b border-slate-100">
             <div>
               <h3 className="text-base font-extrabold text-slate-800">
-                ७-दिवसीय जनभावना व राजकीय उष्णता कल (Dynamic 7-Day Trend)
+                {t("timelineTrendTitle")}
               </h3>
               <p className="text-xs text-slate-500">
-                MongoDB Atlas मधील वास्तविक नोंदींवरून थेट तयार झालेला जनभावनेचा आलेख.
+                {t("timelineTrendSub")}
               </p>
             </div>
             <span className="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-emerald-100 text-emerald-800">
-              Dynamic MongoDB Live
+              {t("dbLive")}
             </span>
           </div>
 
@@ -290,9 +292,11 @@ export default function DailyImpactPage() {
         <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs flex flex-col justify-between">
           <div className="pb-3 border-b border-slate-100">
             <h3 className="text-base font-extrabold text-slate-800">
-              विधानसभा मतदारसंघ राजकीय उष्णता (AC Heat Scores)
+              {isMr ? "विधानसभा मतदारसंघ राजकीय उष्णता" : "Assembly Constituencies Political Heat Score"}
             </h3>
-            <p className="text-xs text-slate-500">६ मतदारसंघांमधील घडामोडींची तीव्रता</p>
+            <p className="text-xs text-slate-500">
+              {isMr ? "६ मतदारसंघांमधील घडामोडींची तीव्रता" : "Intensity of political developments across 6 ACs"}
+            </p>
           </div>
 
           <div className="h-64 sm:h-72 w-full pt-4">
@@ -326,22 +330,22 @@ export default function DailyImpactPage() {
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="text-base md:text-lg font-extrabold text-slate-900">
-                  थेट सोशल मीडिया व वृत्तपत्रीय फीड (Live Feed & Signals Hub)
+                  {t("feedHubTitle")}
                 </h3>
                 <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                  MongoDB Atlas Live
+                  {t("dbLive")}
                 </span>
               </div>
               <p className="text-xs text-slate-600 mt-0.5">
-                नांदेड लोकसभा मतदारसंघ: Facebook, Instagram, X (Twitter), YouTube आणि प्रादेशिक वृत्तपत्रांमधील पडसाद.
+                {t("feedHubSub")}
               </p>
             </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-2 text-xs">
-            <span className="px-3 py-1.5 rounded-xl bg-white/10 text-slate-200 border border-white/10 font-medium">
-              उपलब्ध: <strong className="text-amber-300">{allSocialList.length}</strong> सोशल पोस्ट्स • <strong className="text-amber-300">{allHeadlinesList.length}</strong> बातम्या
+            <span className="px-3 py-1.5 rounded-xl bg-white text-slate-700 border border-slate-200 font-medium shadow-2xs">
+              {isMr ? "उपलब्ध:" : "Available:"} <strong className="text-orange-600">{allSocialList.length}</strong> {isMr ? "सोशल पोस्ट्स" : "Social Posts"} • <strong className="text-orange-600">{allHeadlinesList.length}</strong> {isMr ? "बातम्या" : "Press News"}
             </span>
           </div>
         </div>
@@ -352,10 +356,10 @@ export default function DailyImpactPage() {
             <HiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input
               type="text"
-              placeholder="फीड मध्ये शोधा (उदा. शेतकरी, आरक्षण, रिंग रोड, रुग्णालय, चव्हाण, चिखलीकर, नायगाव, भोकर)..."
+              placeholder={isMr ? "फीड मध्ये शोधा (उदा. शेतकरी, हमीभाव, आरक्षण, रुग्णालय, कापूस)..." : "Search in feed (e.g. Farmers, MSP, Hospital, Cotton)..."}
               value={feedSearchQuery}
               onChange={(e) => setFeedSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-8 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 text-xs md:text-sm text-slate-800 placeholder-slate-400 transition-all outline-hidden"
+              className="w-full pl-10 pr-8 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-orange-500 focus:ring-2 focus:ring-orange-100 text-xs md:text-sm text-slate-800 placeholder-slate-400 transition-all outline-hidden"
             />
             {feedSearchQuery && (
               <button
@@ -371,16 +375,16 @@ export default function DailyImpactPage() {
             <select
               value={feedSelectedAc}
               onChange={(e) => setFeedSelectedAc(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-indigo-500 text-xs md:text-sm text-slate-700 font-semibold transition-all outline-hidden cursor-pointer"
+              className="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-orange-500 text-xs md:text-sm text-slate-700 font-semibold transition-all outline-hidden cursor-pointer"
             >
-              <option value="all">सर्व मतदारसंघ (All Constituencies)</option>
-              <option value="Nanded North">८६ नांदेड उत्तर (Nanded North)</option>
-              <option value="Nanded South">८७ नांदेड दक्षिण (Nanded South)</option>
-              <option value="Bhokar">८५ भोकर (Bhokar)</option>
-              <option value="Naigaon">८९ नायगाव (Naigaon)</option>
-              <option value="Deglur">९० देगलूर (Deglur)</option>
-              <option value="Mukhed">९१ मुखेड (Mukhed)</option>
-              <option value="Nanded PC">नांदेड लोकसभा (Nanded PC)</option>
+              <option value="all">{isMr ? "सर्व मतदारसंघ (All Constituencies)" : "All Constituencies"}</option>
+              <option value="Nanded North">{isMr ? "८६ नांदेड उत्तर" : "86 Nanded North"}</option>
+              <option value="Nanded South">{isMr ? "८७ नांदेड दक्षिण" : "87 Nanded South"}</option>
+              <option value="Bhokar">{isMr ? "८५ भोकर" : "85 Bhokar"}</option>
+              <option value="Naigaon">{isMr ? "८९ नायगाव" : "89 Naigaon"}</option>
+              <option value="Deglur">{isMr ? "९० देगलूर" : "90 Deglur"}</option>
+              <option value="Mukhed">{isMr ? "९१ मुखेड" : "91 Mukhed"}</option>
+              <option value="Nanded PC">{isMr ? "नांदेड लोकसभा" : "Nanded PC"}</option>
             </select>
           </div>
         </div>
@@ -395,7 +399,7 @@ export default function DailyImpactPage() {
                 selectedPlatform === "all" ? "bg-white text-slate-900 shadow-xs" : "text-slate-600 hover:text-slate-900"
               }`}
             >
-              All ({allSocialList.length + allHeadlinesList.length})
+              {isMr ? "सर्व" : "All"} ({allSocialList.length + allHeadlinesList.length})
             </button>
             <button
               onClick={() => setSelectedPlatform("facebook")}
@@ -403,7 +407,7 @@ export default function DailyImpactPage() {
                 selectedPlatform === "facebook" ? "bg-[#1877F2] text-white shadow-xs" : "text-slate-600 hover:text-[#1877F2]"
               }`}
             >
-              <FaFacebook className="w-3.5 h-3.5" /> FB ({allSocialList.filter((s) => (s.platform || "").toLowerCase().includes("facebook")).length})
+              <FaFacebook className="w-3.5 h-3.5" /> {isMr ? "फेसबुक" : "FB"} ({allSocialList.filter((s) => (s.platform || "").toLowerCase().includes("facebook")).length})
             </button>
             <button
               onClick={() => setSelectedPlatform("instagram")}
@@ -411,7 +415,7 @@ export default function DailyImpactPage() {
                 selectedPlatform === "instagram" ? "bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-xs" : "text-slate-600 hover:text-pink-600"
               }`}
             >
-              <FaInstagram className="w-3.5 h-3.5" /> Insta ({allSocialList.filter((s) => (s.platform || "").toLowerCase().includes("instagram")).length})
+              <FaInstagram className="w-3.5 h-3.5" /> {isMr ? "इन्स्टा" : "Insta"} ({allSocialList.filter((s) => (s.platform || "").toLowerCase().includes("instagram")).length})
             </button>
             <button
               onClick={() => setSelectedPlatform("twitter")}
@@ -419,7 +423,7 @@ export default function DailyImpactPage() {
                 selectedPlatform === "twitter" ? "bg-sky-500 text-white shadow-xs" : "text-slate-600 hover:text-sky-600"
               }`}
             >
-              <FaTwitter className="w-3.5 h-3.5" /> X ({allSocialList.filter((s) => (s.platform || "").toLowerCase().includes("twitter") || (s.platform || "").toLowerCase().includes("x")).length})
+              <FaTwitter className="w-3.5 h-3.5" /> {isMr ? "ट्विटर (X)" : "X"} ({allSocialList.filter((s) => (s.platform || "").toLowerCase().includes("twitter") || (s.platform || "").toLowerCase().includes("x")).length})
             </button>
             <button
               onClick={() => setSelectedPlatform("youtube")}
@@ -427,7 +431,7 @@ export default function DailyImpactPage() {
                 selectedPlatform === "youtube" ? "bg-red-600 text-white shadow-xs" : "text-slate-600 hover:text-red-600"
               }`}
             >
-              <FaYoutube className="w-3.5 h-3.5" /> YT ({allSocialList.filter((s) => (s.platform || "").toLowerCase().includes("youtube")).length})
+              <FaYoutube className="w-3.5 h-3.5" /> {isMr ? "युट्यूब" : "YT"} ({allSocialList.filter((s) => (s.platform || "").toLowerCase().includes("youtube")).length})
             </button>
             <button
               onClick={() => setSelectedPlatform("news")}
@@ -435,7 +439,7 @@ export default function DailyImpactPage() {
                 selectedPlatform === "news" ? "bg-orange-600 text-white shadow-xs" : "text-slate-600 hover:text-orange-600"
               }`}
             >
-              <HiNewspaper className="w-3.5 h-3.5" /> Press ({allHeadlinesList.length})
+              <HiNewspaper className="w-3.5 h-3.5" /> {isMr ? "वृत्तपत्रे" : "Press"} ({allHeadlinesList.length})
             </button>
           </div>
 
@@ -447,7 +451,7 @@ export default function DailyImpactPage() {
                 selectedSentiment === "all" ? "bg-white text-slate-900 shadow-2xs" : "text-slate-500"
               }`}
             >
-              All Sentiments
+              {isMr ? "सर्व जनभावना" : "All Sentiments"}
             </button>
             <button
               onClick={() => setSelectedSentiment("positive")}
@@ -455,7 +459,7 @@ export default function DailyImpactPage() {
                 selectedSentiment === "positive" ? "bg-emerald-600 text-white shadow-2xs" : "text-emerald-700"
               }`}
             >
-              Positive
+              {isMr ? "सकारात्मक" : "Positive"}
             </button>
             <button
               onClick={() => setSelectedSentiment("neutral")}
@@ -463,7 +467,7 @@ export default function DailyImpactPage() {
                 selectedSentiment === "neutral" ? "bg-amber-500 text-white shadow-2xs" : "text-amber-700"
               }`}
             >
-              Neutral
+              {isMr ? "तटस्थ" : "Neutral"}
             </button>
             <button
               onClick={() => setSelectedSentiment("negative")}
@@ -471,7 +475,7 @@ export default function DailyImpactPage() {
                 selectedSentiment === "negative" ? "bg-red-600 text-white shadow-2xs" : "text-red-700"
               }`}
             >
-              Negative
+              {isMr ? "नकारात्मक" : "Negative"}
             </button>
           </div>
         </div>
@@ -485,7 +489,7 @@ export default function DailyImpactPage() {
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-blue-600" />
                   <h4 className="text-sm font-extrabold text-slate-800 uppercase tracking-wide">
-                    सोशल मीडिया सिग्नल्स (Facebook, Instagram, X, YouTube)
+                    {isMr ? "सोशल मीडिया सिग्नल्स (Facebook, Instagram, X, YouTube)" : "Social Media Signals (Facebook, Instagram, X, YouTube)"}
                   </h4>
                 </div>
               </div>
@@ -526,6 +530,13 @@ export default function DailyImpactPage() {
                     const isTw = soc.platform.includes("X") || soc.platform.includes("Twitter");
                     const isYt = soc.platform.includes("YouTube");
 
+                    const sentText =
+                      soc.sentiment === "Positive"
+                        ? isMr ? "सकारात्मक" : "Positive"
+                        : soc.sentiment === "Negative"
+                        ? isMr ? "नकारात्मक" : "Negative"
+                        : isMr ? "तटस्थ" : "Neutral";
+
                     return (
                       <div
                         key={soc.id}
@@ -553,7 +564,7 @@ export default function DailyImpactPage() {
 
                             <div className="flex items-center gap-1.5">
                               <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-100">
-                                📅 {soc.dateLabel || soc.date || "२५ नोव्हेंबर"}
+                                📅 {soc.dateLabel || soc.date || (isMr ? "२५ नोव्हेंबर" : "25 Nov")}
                               </span>
                               <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-slate-100 text-slate-700">
                                 {soc.mappedAc}
@@ -590,7 +601,7 @@ export default function DailyImpactPage() {
                                   : "bg-amber-50 text-amber-700 border-amber-200"
                               }`}
                             >
-                              {soc.sentiment}
+                              {sentText}
                             </span>
                             <span className="text-[10px] text-slate-400 font-medium">
                               {soc.engagement}
@@ -604,7 +615,7 @@ export default function DailyImpactPage() {
                               rel="noopener noreferrer"
                               className="flex items-center gap-1 text-xs font-bold text-indigo-600 hover:text-indigo-800"
                             >
-                              {isFb ? "View FB Post" : isIg ? "Watch Reel" : isTw ? "Open on X" : "Watch Video"}{" "}
+                              {isFb ? (isMr ? "फेसबुक पोस्ट पहा" : "View FB Post") : isIg ? (isMr ? "रील पहा" : "Watch Reel") : isTw ? (isMr ? "ट्विटरवर पहा" : "Open on X") : (isMr ? "व्हिडिओ पहा" : "Watch Video")}{" "}
                               <HiExternalLink className="w-3.5 h-3.5" />
                             </a>
                           )}
@@ -623,7 +634,9 @@ export default function DailyImpactPage() {
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-orange-600" />
                   <h4 className="text-sm font-extrabold text-slate-800 uppercase tracking-wide">
-                    Regional Press & Vernacular News (पुढारी, सकाळ, ॲग्रोवन, सरकारनामा, एबीपी माझा)
+                    {isMr
+                      ? "स्थानिक वृत्तपत्रे व माध्यम मथळे (पुढारी, सकाळ, ॲग्रोवन, सरकारनामा, एबीपी माझा)"
+                      : "Regional Press & Vernacular News (Pudhari, Sakal, AgroWon, Sarkarnama, ABP Majha)"}
                   </h4>
                 </div>
               </div>
@@ -658,7 +671,7 @@ export default function DailyImpactPage() {
                           </span>
                           <div className="flex items-center gap-1.5">
                             <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-orange-50 text-orange-700 border border-orange-100">
-                              📅 {head.dateLabel || head.date || "२५ नोव्हेंबर"}
+                              📅 {head.dateLabel || head.date || (isMr ? "२५ नोव्हेंबर" : "25 Nov")}
                             </span>
                             <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-orange-100 text-orange-800">
                               {head.mappedAc}
@@ -675,7 +688,7 @@ export default function DailyImpactPage() {
 
                       <div className="pt-2 border-t border-slate-200 flex items-center justify-between">
                         <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wide">
-                          Verified News Citation
+                          {isMr ? "प्रमाणित बातमी संदर्भ" : "Verified News Citation"}
                         </span>
                         {head.link && head.link !== "#" ? (
                           <a
@@ -684,10 +697,10 @@ export default function DailyImpactPage() {
                             rel="noopener noreferrer"
                             className="flex items-center gap-1 text-xs font-bold text-slate-800 hover:text-orange-600"
                           >
-                            Read Source Article <HiExternalLink className="w-3.5 h-3.5" />
+                            {isMr ? "मूळ बातमी वाचा" : "Read Source Article"} <HiExternalLink className="w-3.5 h-3.5" />
                           </a>
                         ) : (
-                          <span className="text-xs text-slate-400">Archived feed</span>
+                          <span className="text-xs text-slate-400">{isMr ? "संग्रहित फीड" : "Archived feed"}</span>
                         )}
                       </div>
                     </div>

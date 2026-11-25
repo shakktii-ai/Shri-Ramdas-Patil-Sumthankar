@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import ElectionAnalyticsLayout from "@/components/ElectionAnalyticsLayout";
+import { useElectionLanguage } from "@/context/ElectionLanguageContext";
 import {
   HiLocationMarker,
   HiUsers,
@@ -14,6 +15,7 @@ import {
 import { FaBullseye } from "react-icons/fa";
 
 export default function AssemblySegmentsPage() {
+  const { isMr, t } = useElectionLanguage();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedAcNo, setSelectedAcNo] = useState(86);
@@ -51,12 +53,14 @@ export default function AssemblySegmentsPage() {
   if (loading) {
     return (
       <ElectionAnalyticsLayout
-        pageTitle="Assembly Segments (6 ACs) – Shri Ramdas Patil Sumthankar"
+        pageTitle={isMr ? "६ विधानसभा मतदारसंघ" : "Assembly Segments (6 ACs)"}
         activePage="/admin/election-analytics/assembly-segments"
       >
         <div className="flex flex-col items-center justify-center py-24 space-y-3">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
-          <p className="text-xs text-slate-500 font-bold">MongoDB Atlas वरून विधानसभा मतदारसंघ डेटा लोड होत आहे...</p>
+          <p className="text-xs text-slate-500 font-bold">
+            {isMr ? "MongoDB Atlas वरून विधानसभा मतदारसंघ डेटा लोड होत आहे..." : "Loading Assembly Segments data from MongoDB Atlas..."}
+          </p>
         </div>
       </ElectionAnalyticsLayout>
     );
@@ -66,7 +70,7 @@ export default function AssemblySegmentsPage() {
 
   return (
     <ElectionAnalyticsLayout
-      pageTitle="Assembly Segments (6 ACs) – Shri Ramdas Patil Sumthankar"
+      pageTitle={isMr ? "६ विधानसभा मतदारसंघ" : "Assembly Segments (6 ACs)"}
       activePage="/admin/election-analytics/assembly-segments"
     >
       {/* Top Banner - Clean White Theme */}
@@ -74,18 +78,20 @@ export default function AssemblySegmentsPage() {
         <div className="flex items-center gap-2">
           <span className="px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 flex items-center gap-1.5">
             <HiLocationMarker className="w-3.5 h-3.5 text-indigo-600" />
-            ६ विधानसभा मतदारसंघ मायक्रो-ऍनालिसिस (Micro Constituency Intelligence)
+            {isMr ? "६ विधानसभा मतदारसंघ सखोल विश्लेषण" : "6 Assembly Constituencies Micro-Intelligence"}
           </span>
           <span className="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300">
-            अपक्ष रणनीतिक लक्ष्य
+            {isMr ? "अपक्ष रणनीतिक लक्ष्य" : "Independent Strategic Targets"}
           </span>
         </div>
 
         <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
-          नांदेड लोकसभा: ६ विधानसभा मतदारसंघ सखोल राजकीय समीकरणे
+          {isMr ? "नांदेड लोकसभा: ६ विधानसभा मतदारसंघ सखोल राजकीय समीकरणे" : "Nanded Parliamentary Constituency: 6 Assembly Segments Micro-Dynamics"}
         </h2>
         <p className="text-xs md:text-sm text-slate-600 max-w-3xl leading-relaxed">
-          प्रत्येक मतदारसंघाची मतदार संख्या, विद्यमान आमदार, सामाजिक व जातीय रचना, निवडणूक निकाल इतिहास आणि श्री रामदास पाटील सुमठाणकर यांच्या अपक्ष विजयासाठीचे रणनीतिक लक्ष्य.
+          {isMr
+            ? "प्रत्येक मतदारसंघाची मतदार संख्या, विद्यमान आमदार, सामाजिक व जातीय रचना, निवडणूक निकाल इतिहास आणि श्री रामदास पाटील सुमठाणकर यांच्या अपक्ष विजयासाठीचे रणनीतिक लक्ष्य."
+            : "Voter strength, incumbent MLAs, social & caste demographics, electoral history, and strategic victory targets for Independent Candidate Shri Ramdas Patil Sumthankar across all 6 segments."}
         </p>
       </div>
 
@@ -93,7 +99,7 @@ export default function AssemblySegmentsPage() {
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <span className="text-xs font-extrabold text-slate-700 uppercase tracking-wider">
-            नांदेड लोकसभा क्षेत्रातील ६ प्रमुख विधानसभा मतदारसंघ (Core ACs):
+            {isMr ? "नांदेड लोकसभा क्षेत्रातील ६ प्रमुख विधानसभा मतदारसंघ:" : "Core Assembly Constituencies of Nanded Parliamentary Constituency:"}
           </span>
         </div>
 
@@ -127,10 +133,10 @@ export default function AssemblySegmentsPage() {
                   isSelected ? "border-white/20" : "border-slate-100"
                 }`}>
                   <span className={isSelected ? "text-orange-100" : "text-slate-500"}>
-                    {ac.acNo === 90 ? "SC राखीव" : "खुला प्रवर्ग"}
+                    {ac.acNo === 90 ? (isMr ? "अनु. जाती राखीव" : "SC Reserved") : (isMr ? "खुला प्रवर्ग" : "General Category")}
                   </span>
                   <span className={`font-bold ${isSelected ? "text-white" : "text-orange-600"}`}>
-                    {targetObj ? `${(targetObj.targetVotes / 1000).toFixed(0)}k लक्ष्य` : "माहिती"}
+                    {targetObj ? (isMr ? `${(targetObj.targetVotes / 1000).toFixed(0)}k लक्ष्य` : `${(targetObj.targetVotes / 1000).toFixed(0)}k Target`) : (isMr ? "माहिती" : "Details")}
                   </span>
                 </div>
               </button>
@@ -147,25 +153,25 @@ export default function AssemblySegmentsPage() {
             <div>
               <div className="flex items-center gap-2">
                 <span className="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-800">
-                  मतदारसंघ क्रमांक {currentAc.acNo}
+                  {isMr ? `मतदारसंघ क्रमांक ${currentAc.acNo}` : `Constituency No. ${currentAc.acNo}`}
                 </span>
                 <span className="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700">
-                  {currentAc.acNo === 90 ? "SC Reserved (राखीव)" : "General (खुला प्रवर्ग)"}
+                  {currentAc.acNo === 90 ? (isMr ? "अनु. जाती राखीव" : "SC Reserved") : (isMr ? "खुला प्रवर्ग" : "General Category")}
                 </span>
                 {currentAc.isCorePC && (
                   <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">
-                    नांदेड लोकसभा मतदारसंघ
+                    {isMr ? "नांदेड लोकसभा मतदारसंघ" : "Nanded Parliamentary Constituency"}
                   </span>
                 )}
               </div>
 
               <h3 className="text-2xl md:text-3xl font-extrabold text-slate-900 mt-2">
-                {currentAc.name} विधानसभा मतदारसंघ
+                {currentAc.name} {isMr ? "विधानसभा मतदारसंघ" : "Assembly Segment"}
               </h3>
 
               {currentAc.incumbentMLA && (
                 <p className="text-xs md:text-sm text-slate-600 mt-1">
-                  <strong>विद्यमान आमदार (Incumbent MLA):</strong> {currentAc.incumbentMLA}
+                  <strong>{isMr ? "विद्यमान आमदार:" : "Incumbent MLA:"}</strong> {currentAc.incumbentMLA}
                 </p>
               )}
             </div>
@@ -173,20 +179,28 @@ export default function AssemblySegmentsPage() {
             <div className="flex flex-wrap items-center gap-3">
               {latestGe && (
                 <div className="bg-slate-50 border border-slate-200 px-4 py-2.5 rounded-2xl text-center">
-                  <span className="text-[10px] text-slate-400 font-bold uppercase block">२०२४ मतदान (GE Votes)</span>
-                  <span className="text-lg font-extrabold text-slate-900">
-                    {latestGe.totalVotes ? latestGe.totalVotes.toLocaleString("en-IN") : "-"}
+                  <span className="text-[10px] text-slate-400 font-bold uppercase block">
+                    {isMr ? "२०२४ मतदान" : "2024 GE Votes"}
                   </span>
-                  <span className="text-[10px] text-slate-500 block">टक्केवारी: {latestGe.turnout || "-"}</span>
+                  <span className="text-lg font-extrabold text-slate-900">
+                    {latestGe.totalVotes ? latestGe.totalVotes.toLocaleString(isMr ? "en-IN" : "en-US") : "-"}
+                  </span>
+                  <span className="text-[10px] text-slate-500 block">
+                    {isMr ? "टक्केवारी:" : "Turnout:"} {latestGe.turnout || "-"}
+                  </span>
                 </div>
               )}
 
               <div className="bg-amber-50 border border-amber-300 px-4 py-2.5 rounded-2xl text-center">
-                <span className="text-[10px] text-amber-700 font-bold uppercase block">अपक्ष विजयी टार्गेट</span>
-                <span className="text-lg font-extrabold text-amber-900">
-                  {currentAcTarget?.targetVotes ? `${currentAcTarget.targetVotes.toLocaleString("en-IN")} मते` : "६०,००० मते"}
+                <span className="text-[10px] text-amber-700 font-bold uppercase block">
+                  {isMr ? "अपक्ष विजयी टार्गेट" : "Independent Victory Target"}
                 </span>
-                <span className="text-[10px] text-amber-800 block font-semibold">श्री रामदास पाटील</span>
+                <span className="text-lg font-extrabold text-amber-900">
+                  {currentAcTarget?.targetVotes ? `${currentAcTarget.targetVotes.toLocaleString(isMr ? "en-IN" : "en-US")} ${isMr ? "मते" : "Votes"}` : (isMr ? "६०,००० मते" : "60,000 Votes")}
+                </span>
+                <span className="text-[10px] text-amber-800 block font-semibold">
+                  {isMr ? "श्री रामदास पाटील" : "Shri Ramdas Patil"}
+                </span>
               </div>
             </div>
           </div>
@@ -198,13 +212,15 @@ export default function AssemblySegmentsPage() {
               <div className="flex items-center gap-2">
                 <HiUsers className="w-5 h-5 text-indigo-600" />
                 <h4 className="text-sm font-extrabold text-slate-900 uppercase tracking-wide">
-                  सामाजिक व जातीय रचना (Demographics)
+                  {isMr ? "सामाजिक व जातीय रचना" : "Social & Caste Demographics"}
                 </h4>
               </div>
 
               {currentAc.casteDemography?.length ? (
                 <div className="space-y-2">
-                  <span className="text-xs font-bold text-slate-700 block">जातीय टक्केवारी (Caste Share):</span>
+                  <span className="text-xs font-bold text-slate-700 block">
+                    {isMr ? "जातीय टक्केवारी:" : "Caste Demography Share:"}
+                  </span>
                   <div className="space-y-1.5">
                     {currentAc.casteDemography.map((c, i) => (
                       <div key={i} className="flex items-center justify-between text-xs bg-white p-2 rounded-xl border border-slate-200">
@@ -216,7 +232,9 @@ export default function AssemblySegmentsPage() {
                 </div>
               ) : currentAc.dominantCastes?.length ? (
                 <div className="space-y-2">
-                  <span className="text-xs font-bold text-slate-700 block">प्रमुख सामाजिक घटक:</span>
+                  <span className="text-xs font-bold text-slate-700 block">
+                    {isMr ? "प्रमुख सामाजिक घटक:" : "Dominant Communities:"}
+                  </span>
                   <div className="flex flex-wrap gap-1.5">
                     {currentAc.dominantCastes.map((c, i) => (
                       <span key={i} className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-800">
@@ -226,7 +244,9 @@ export default function AssemblySegmentsPage() {
                   </div>
                 </div>
               ) : (
-                <p className="text-xs text-slate-500">सामाजिक डेटा उपलब्ध नाही.</p>
+                <p className="text-xs text-slate-500">
+                  {isMr ? "सामाजिक डेटा उपलब्ध नाही." : "Demographic data not available."}
+                </p>
               )}
             </div>
 
@@ -235,7 +255,7 @@ export default function AssemblySegmentsPage() {
               <div className="flex items-center gap-2">
                 <HiScale className="w-5 h-5 text-indigo-600" />
                 <h4 className="text-sm font-extrabold text-slate-900 uppercase tracking-wide">
-                  स्थानिक राजकीय समीकरणे (Ground Dynamics)
+                  {isMr ? "स्थानिक राजकीय समीकरणे" : "Ground Political Dynamics"}
                 </h4>
               </div>
 
@@ -249,7 +269,9 @@ export default function AssemblySegmentsPage() {
                   ))}
                 </ul>
               ) : (
-                <p className="text-xs text-slate-500">राजकीय समीकरणे डेटा उपलब्ध नाही.</p>
+                <p className="text-xs text-slate-500">
+                  {isMr ? "राजकीय समीकरणे डेटा उपलब्ध नाही." : "Political dynamics data not available."}
+                </p>
               )}
             </div>
 
@@ -258,7 +280,7 @@ export default function AssemblySegmentsPage() {
               <div className="flex items-center gap-2">
                 <HiShieldCheck className="w-5 h-5 text-amber-700" />
                 <h4 className="text-sm font-extrabold text-amber-900 uppercase tracking-wide">
-                  श्री रामदास पाटील - अपक्ष रणनीती
+                  {isMr ? "श्री रामदास पाटील - अपक्ष रणनीती" : "Shri Ramdas Patil - Independent Playbook"}
                 </h4>
               </div>
 
@@ -266,7 +288,7 @@ export default function AssemblySegmentsPage() {
                 {currentAcTarget ? (
                   <div className="p-3 bg-white rounded-xl border border-amber-200 space-y-1.5">
                     <span className="text-[10px] font-extrabold uppercase text-amber-700 tracking-wider block">
-                      मतदारसंघ लक्ष्यित मोहीम:
+                      {isMr ? "मतदारसंघ लक्ष्यित मोहीम:" : "Constituency Target Campaign:"}
                     </span>
                     <p className="text-xs text-slate-800 leading-relaxed">
                       {currentAcTarget.strategy}
@@ -276,19 +298,23 @@ export default function AssemblySegmentsPage() {
 
                 <div className="p-3 bg-white rounded-xl border border-amber-200 space-y-1.5">
                   <span className="text-[10px] font-extrabold uppercase text-amber-700 tracking-wider block">
-                    विरोधक काउंटर:
+                    {isMr ? "विरोधक काउंटर रणनीती:" : "Opposition Counter Strategy:"}
                   </span>
                   <p className="text-xs text-slate-700 leading-relaxed">
-                    भाजप आणि काँग्रेस या दोन्ही पक्षांच्या अंतर्गत कलहातील नाराज स्थानिक नेत्यांशी थेट समन्वय साधून क्रॉस-व्होटिंग घडवणे.
+                    {isMr
+                      ? "भाजप आणि काँग्रेस या दोन्ही पक्षांच्या अंतर्गत कलहातील नाराज स्थानिक नेत्यांशी थेट समन्वय साधून क्रॉस-व्होटिंग घडवणे."
+                      : "Capitalize on internal discord within both BJP and Congress, coordinating directly with disaffected local grassroots leaders for cross-voting."}
                   </p>
                 </div>
 
                 <div className="p-3 bg-white rounded-xl border border-amber-200 space-y-1.5">
                   <span className="text-[10px] font-extrabold uppercase text-amber-700 tracking-wider block">
-                    बूथ मोहीम:
+                    {isMr ? "बूथ व्यवस्थापन:" : "Booth Level Mobilization:"}
                   </span>
                   <p className="text-xs text-slate-700 leading-relaxed">
-                    प्रत्येक मतदान केंद्रावर ५ निष्ठावंत स्थानिक तरुणांची फळी नेमून घरोघरी अपक्ष प्रचार पोहोचवणे.
+                    {isMr
+                      ? "प्रत्येक मतदान केंद्रावर ५ निष्ठावंत स्थानिक तरुणांची फळी नेमून घरोघरी अपक्ष प्रचार पोहोचवणे."
+                      : "Deploy 5 committed local grassroots youth at every polling station to lead door-to-door independent voter contact."}
                   </p>
                 </div>
               </div>
@@ -301,14 +327,16 @@ export default function AssemblySegmentsPage() {
       {referenceAcs.length > 0 && (
         <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs space-y-3">
           <h4 className="text-sm font-extrabold text-slate-800">
-            नांदेड जिल्ह्यातील इतर शेजारील विधानसभा मतदारसंघ (Reference Constituencies):
+            {isMr ? "नांदेड जिल्ह्यातील इतर शेजारील विधानसभा मतदारसंघ:" : "Other Assembly Constituencies in Nanded District (Reference):"}
           </h4>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {referenceAcs.map((ac) => (
               <div key={ac.acNo} className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-700">
                 <span className="font-extrabold text-slate-900 block">{ac.name} (AC {ac.acNo})</span>
                 <span className="text-[11px] text-slate-500">
-                  {ac.acNo === 83 || ac.acNo === 84 ? "हिंगोली लोकसभा क्षेत्रात समाविष्ट" : "लातूर लोकसभा क्षेत्रात समाविष्ट"}
+                  {ac.acNo === 83 || ac.acNo === 84
+                    ? (isMr ? "हिंगोली लोकसभा क्षेत्रात समाविष्ट" : "Part of Hingoli Parliamentary Constituency")
+                    : (isMr ? "लातूर लोकसभा क्षेत्रात समाविष्ट" : "Part of Latur Parliamentary Constituency")}
                 </span>
               </div>
             ))}

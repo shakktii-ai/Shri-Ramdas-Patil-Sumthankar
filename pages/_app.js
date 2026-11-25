@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Navbar from "@/components/navbar";
 import Navbarr from "@/components/Navbarr";
 import ElectionSidebar from "@/components/ElectionSidebar";
+import { ElectionLanguageProvider } from "@/context/ElectionLanguageContext";
 import Footer from "@/components/footer";
 import { useRouter } from "next/router";
 import { ToastContainer } from "react-toastify";
@@ -171,31 +172,33 @@ export default function App({ Component, pageProps }) {
   // 2. Election Analytics Routes -> ElectionSidebar on the left
   if (isElectionRoute) {
     return (
-      <div className="flex min-h-screen bg-slate-50">
-        <ElectionSidebar />
-        <main className="flex-1 min-h-screen overflow-y-auto">
-          <div className="page-transition">
-            <Component {...pageProps} />
-          </div>
-        </main>
-        <ToastContainer
-          position="bottom-right"
-          theme="light"
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop
-          closeOnClick
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          toastStyle={{
-            background: "#FFFFFF",
-            border: "1px solid rgba(249, 115, 22, 0.15)",
-            borderRadius: "12px",
-            color: "#1E293B",
-          }}
-        />
-      </div>
+      <ElectionLanguageProvider>
+        <div className="flex min-h-screen bg-slate-50">
+          <ElectionSidebar />
+          <main className="flex-1 min-h-screen overflow-y-auto">
+            <div className="page-transition">
+              <Component {...pageProps} />
+            </div>
+          </main>
+          <ToastContainer
+            position="bottom-right"
+            theme="light"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            toastStyle={{
+              background: "#FFFFFF",
+              border: "1px solid rgba(249, 115, 22, 0.15)",
+              borderRadius: "12px",
+              color: "#1E293B",
+            }}
+          />
+        </div>
+      </ElectionLanguageProvider>
     );
   }
 

@@ -11,14 +11,16 @@ import {
   HiBriefcase,
   HiSparkles,
   HiLogout,
-  HiSwitchHorizontal
+  HiSwitchHorizontal,
+  HiGlobeAlt
 } from "react-icons/hi";
+import { useElectionLanguage } from "@/context/ElectionLanguageContext";
 
 export const ELECTION_NAV_LINKS = [
   {
     href: "/admin/election-analytics",
     label: "Executive & 2024 GE",
-    marathi: "कार्यकारी सारांश व २०२४",
+    marathi: "कार्यकारी सारांश व २०२४ निकाल",
     icon: HiChartBar,
   },
   {
@@ -26,7 +28,7 @@ export const ELECTION_NAV_LINKS = [
     label: "Daily Media & AC Impact",
     marathi: "थेट पडसाद व बातम्या",
     icon: HiLightningBolt,
-    badge: "Live"
+    badge: { en: "Live", mr: "लाईव्ह" }
   },
   {
     href: "/admin/election-analytics/assembly-segments",
@@ -48,7 +50,7 @@ export const ELECTION_NAV_LINKS = [
   },
   {
     href: "/admin/election-analytics/economy",
-    label: "Economy & Industry",
+    label: "Economy & Industry Profile",
     marathi: "आर्थिक, शेती व उद्योग",
     icon: HiBriefcase
   },
@@ -58,7 +60,7 @@ export const ELECTION_NAV_LINKS = [
     marathi: "अपक्ष विजयी रणनीती",
     icon: HiSparkles,
     highlight: true,
-    badge: "अपक्ष"
+    badge: { en: "Strategy", mr: "अपक्ष" }
   }
 ];
 
@@ -67,6 +69,7 @@ export const ELECTION_PAGES = ELECTION_NAV_LINKS;
 export default function ElectionSidebar() {
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(false);
+  const { lang, setLanguage, isMr, isEn, t } = useElectionLanguage();
 
   const handleLogout = () => {
     if (typeof window !== "undefined") {
@@ -100,14 +103,16 @@ export default function ElectionSidebar() {
         </div>
         {!collapsed && (
           <div className="leading-tight min-w-0 flex-1">
-            <p className="text-slate-900 font-extrabold text-sm truncate" title="श्री रामदास पाटील सुमठाणकर">
-              रामदास पाटील सुमठाणकर
+            <p className="text-slate-900 font-extrabold text-sm truncate" title={isMr ? "श्री रामदास पाटील सुमठाणकर" : "Shri Ramdas Patil Sumthankar"}>
+              {isMr ? "रामदास पाटील सुमठाणकर" : "Ramdas Patil Sumthankar"}
             </p>
             <div className="flex items-center gap-1.5 mt-0.5">
               <span className="px-1.5 py-0.2 rounded-md text-[9px] font-extrabold bg-amber-100 text-amber-900 border border-amber-200">
-                अपक्ष उमेदवार
+                {isMr ? "अपक्ष उमेदवार" : "Independent"}
               </span>
-              <span className="text-[10px] text-slate-500 font-medium">नांदेड लोकसभा</span>
+              <span className="text-[10px] text-slate-500 font-medium">
+                {isMr ? "नांदेड लोकसभा" : "Nanded PC"}
+              </span>
             </div>
           </div>
         )}
@@ -122,17 +127,47 @@ export default function ElectionSidebar() {
         </button>
       </div>
 
+      {/* Language Switcher Pill in Sidebar */}
+      {!collapsed && (
+        <div className="px-3 pt-3">
+          <div className="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200">
+            <button
+              onClick={() => setLanguage("mr")}
+              className={`flex-1 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1 ${
+                isMr
+                  ? "bg-white text-orange-600 shadow-2xs font-extrabold"
+                  : "text-slate-500 hover:text-slate-900"
+              }`}
+            >
+              <span>मराठी</span>
+            </button>
+            <button
+              onClick={() => setLanguage("en")}
+              className={`flex-1 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1 ${
+                isEn
+                  ? "bg-white text-orange-600 shadow-2xs font-extrabold"
+                  : "text-slate-500 hover:text-slate-900"
+              }`}
+            >
+              <span>English</span>
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Navigation Links (7 Dedicated Election Pages) */}
-      <nav className="flex-1 py-4 space-y-1.5 px-2.5 overflow-y-auto scrollbar-none">
+      <nav className="flex-1 py-3 space-y-1.5 px-2.5 overflow-y-auto scrollbar-none">
         {!collapsed && (
-          <div className="px-2 pb-2 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
-            निवडणूक विश्लेषण दालने
+          <div className="px-2 pb-1.5 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
+            {t("navTitle")}
           </div>
         )}
 
         {ELECTION_NAV_LINKS.map((link) => {
           const isActive = router.pathname === link.href;
           const Icon = link.icon;
+          const displayLabel = isMr ? link.marathi : link.label;
+          const badgeText = link.badge ? (typeof link.badge === "object" ? link.badge[lang] : link.badge) : null;
 
           return (
             <Link
@@ -147,7 +182,7 @@ export default function ElectionSidebar() {
                   ? "bg-amber-50/70 text-amber-900 hover:bg-amber-100/70 border border-amber-200"
                   : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
               }`}
-              title={collapsed ? `${link.label} (${link.marathi})` : ""}
+              title={collapsed ? displayLabel : ""}
             >
               <Icon
                 className={`w-4 h-4 flex-shrink-0 ${
@@ -162,28 +197,21 @@ export default function ElectionSidebar() {
               {!collapsed && (
                 <div className="leading-tight min-w-0 flex-1">
                   <div className="flex items-center justify-between gap-1">
-                    <span className="truncate">{link.label}</span>
-                    {link.badge && (
+                    <span className="truncate">{displayLabel}</span>
+                    {badgeText && (
                       <span
                         className={`px-1.5 py-0.2 rounded-full text-[9px] font-extrabold uppercase ${
                           isActive
                             ? "bg-orange-500 text-white"
-                            : link.badge === "Live"
+                            : badgeText === "Live" || badgeText === "लाईव्ह"
                             ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
                             : "bg-amber-100 text-amber-800 border border-amber-300"
                         }`}
                       >
-                        {link.badge}
+                        {badgeText}
                       </span>
                     )}
                   </div>
-                  <span
-                    className={`text-[10px] block truncate ${
-                      isActive ? "text-orange-700/80" : "text-slate-400"
-                    }`}
-                  >
-                    {link.marathi}
-                  </span>
                 </div>
               )}
             </Link>
@@ -199,12 +227,12 @@ export default function ElectionSidebar() {
           className={`flex items-center rounded-xl text-xs font-bold transition-all duration-200 bg-orange-500 hover:bg-orange-600 text-white shadow-xs p-2.5 cursor-pointer ${
             collapsed ? "justify-center" : "gap-2.5 px-3"
           }`}
-          title={collapsed ? "अभ्यागत व्यवस्थापन पोर्टलवर जा" : ""}
+          title={collapsed ? t("switchVisitor") : ""}
         >
           <svg className="w-4 h-4 flex-shrink-0 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
-          {!collapsed && <span className="truncate">अभ्यागत पोर्टल ➔</span>}
+          {!collapsed && <span className="truncate">{t("switchVisitor")}</span>}
         </Link>
 
         {/* Portal Select Link */}
@@ -213,10 +241,10 @@ export default function ElectionSidebar() {
           className={`flex items-center rounded-xl text-xs font-semibold text-slate-500 hover:text-orange-600 hover:bg-orange-50 transition-all p-2 cursor-pointer ${
             collapsed ? "justify-center" : "gap-2 px-3"
           }`}
-          title={collapsed ? "पोर्टल निवडा" : ""}
+          title={collapsed ? t("switchPortal") : ""}
         >
           <HiSwitchHorizontal className="w-4 h-4 flex-shrink-0 text-slate-400" />
-          {!collapsed && <span>पोर्टल बदला (Switch)</span>}
+          {!collapsed && <span>{t("switchPortal")}</span>}
         </Link>
 
         {/* Logout */}
@@ -225,10 +253,10 @@ export default function ElectionSidebar() {
           className={`flex items-center gap-2 w-full px-3 py-2 rounded-xl text-xs font-bold text-red-500 hover:bg-red-50 transition-colors cursor-pointer ${
             collapsed ? "justify-center" : ""
           }`}
-          title={collapsed ? "Logout" : ""}
+          title={collapsed ? t("logout") : ""}
         >
           <HiLogout className="w-4 h-4 flex-shrink-0" />
-          {!collapsed && <span>लॉगआउट (Logout)</span>}
+          {!collapsed && <span>{t("logout")}</span>}
         </button>
       </div>
     </aside>
