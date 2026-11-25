@@ -73,6 +73,8 @@ export default function ElectionAnalyticsDashboard() {
   const [impactRefreshMsg, setImpactRefreshMsg] = useState("");
   const [selectedPlatform, setSelectedPlatform] = useState("all"); // 'all' | 'facebook' | 'instagram' | 'twitter' | 'youtube' | 'news'
   const [selectedSentiment, setSelectedSentiment] = useState("all"); // 'all' | 'positive' | 'neutral' | 'negative'
+  const [feedSearchQuery, setFeedSearchQuery] = useState("");
+  const [feedSelectedAc, setFeedSelectedAc] = useState("all");
 
   const {
     constituencyMeta = {},
@@ -94,7 +96,7 @@ export default function ElectionAnalyticsDashboard() {
 
   // Client-side render & Date-wise historical state
   const [isClient, setIsClient] = useState(false);
-  const [selectedDate, setSelectedDate] = useState("2026-11-24");
+  const [selectedDate, setSelectedDate] = useState("all");
   const [availableDates, setAvailableDates] = useState(["2026-11-24"]);
   const [timelineTrend, setTimelineTrend] = useState([]);
 
@@ -107,7 +109,7 @@ export default function ElectionAnalyticsDashboard() {
       try {
         const [overviewRes, dailyRes] = await Promise.all([
           fetch("/api/election-analytics/nanded").then((r) => r.json()),
-          fetch("/api/election-analytics/daily-impact").then((r) => r.json())
+          fetch("/api/election-analytics/daily-impact?date=all").then((r) => r.json())
         ]);
 
         if (!isMounted) return;
@@ -118,6 +120,7 @@ export default function ElectionAnalyticsDashboard() {
 
         if (dailyRes && (dailyRes.acImpactScorecard || dailyRes.overallSentiment)) {
           setDailyImpact(dailyRes);
+          if (dailyRes.date) setSelectedDate(dailyRes.date);
           if (dailyRes.availableDates?.length) setAvailableDates(dailyRes.availableDates);
           if (dailyRes.timelineTrend?.length) setTimelineTrend(dailyRes.timelineTrend);
         }
@@ -1111,11 +1114,27 @@ export default function ElectionAnalyticsDashboard() {
               </div>
 
               <div className="flex items-center gap-2 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
+                <button
+                  onClick={() => handleDateChange("all")}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
+                    selectedDate === "all"
+                      ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-sm shadow-blue-500/25"
+                      : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                  }`}
+                >
+                  <HiGlobeAlt className="w-3.5 h-3.5" />
+                  <span>सर्व एकत्रित फीड (All Combined)</span>
+                </button>
                 {availableDates.map((dt) => {
                   const isSelected = selectedDate === dt;
+                  const label =
+                    dt === "2026-11-25"
+                      ? "📅 २५ नोव्हेंबर (ताजी बातमी)"
+                      : dt === "2026-11-24"
+                      ? "📅 २४ नोव्हेंबर"
+                      : `📅 ${dt}`;
 
-
-  return (
+                  return (
                     <button
                       key={dt}
                       onClick={() => handleDateChange(dt)}
@@ -1125,7 +1144,7 @@ export default function ElectionAnalyticsDashboard() {
                           : "bg-slate-100 text-slate-700 hover:bg-slate-200"
                       }`}
                     >
-                      {dt === "2026-11-24" ? "📅 २४ नोव्हेंबर (आज)" : `📅 ${dt}`}
+                      {label}
                     </button>
                   );
                 })}
@@ -1783,108 +1802,165 @@ export default function ElectionAnalyticsDashboard() {
 
             {/* Live Media & Social Signals Feed with Filter Pills */}
             <div className="bg-white rounded-3xl border border-slate-200 p-6 md:p-8 shadow-sm space-y-6">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                  <span className="px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-700">
-                    Live Signals Feed
-                  </span>
-                  <h3 className="text-xl md:text-2xl font-extrabold text-slate-900 mt-1">
-                    थेट सोशल मीडिया व वृत्तपत्रीय फीड (Live Feed & Signals)
-                  </h3>
-                  <p className="text-xs text-slate-500 mt-1">
-                    Facebook, Instagram, X (Twitter), YouTube आणि प्रादेशिक वृत्तपत्रांमधील पडसाद.
-                  </p>
+              {/* Top Banner with Count & Status */}
+              <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white rounded-2xl p-4 md:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-xl bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                    <HiSparkles className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-base md:text-lg font-extrabold text-white">
+                        थेट सोशल मीडिया व वृत्तपत्रीय फीड (Live Feed & Signals)
+                      </h3>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        MongoDB Atlas Live
+                      </span>
+                    </div>
+                    <p className="text-xs text-slate-300 mt-1">
+                      नांदेड लोकसभा मतदारसंघ: Facebook, Instagram, X (Twitter), YouTube आणि प्रादेशिक वृत्तपत्रांमधील पडसाद.
+                    </p>
+                  </div>
                 </div>
 
-                {/* Filters */}
-                <div className="flex flex-wrap items-center gap-2">
-                  {/* Platform Pills */}
-                  <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl">
-                    <button
-                      onClick={() => setSelectedPlatform("all")}
-                      className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
-                        selectedPlatform === "all" ? "bg-white text-slate-900 shadow-2xs" : "text-slate-600 hover:text-slate-900"
-                      }`}
-                    >
-                      All
-                    </button>
-                    <button
-                      onClick={() => setSelectedPlatform("facebook")}
-                      className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
-                        selectedPlatform === "facebook" ? "bg-[#1877F2] text-white shadow-2xs" : "text-slate-600 hover:text-[#1877F2]"
-                      }`}
-                    >
-                      <FaFacebook className="w-3 h-3" /> FB
-                    </button>
-                    <button
-                      onClick={() => setSelectedPlatform("instagram")}
-                      className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
-                        selectedPlatform === "instagram" ? "bg-pink-600 text-white shadow-2xs" : "text-slate-600 hover:text-pink-600"
-                      }`}
-                    >
-                      <FaInstagram className="w-3 h-3" /> Insta
-                    </button>
-                    <button
-                      onClick={() => setSelectedPlatform("twitter")}
-                      className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
-                        selectedPlatform === "twitter" ? "bg-slate-900 text-white shadow-2xs" : "text-slate-600 hover:text-sky-600"
-                      }`}
-                    >
-                      <FaTwitter className="w-3 h-3" /> X
-                    </button>
-                    <button
-                      onClick={() => setSelectedPlatform("youtube")}
-                      className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
-                        selectedPlatform === "youtube" ? "bg-red-600 text-white shadow-2xs" : "text-slate-600 hover:text-red-600"
-                      }`}
-                    >
-                      <FaYoutube className="w-3 h-3" /> YT
-                    </button>
-                    <button
-                      onClick={() => setSelectedPlatform("news")}
-                      className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
-                        selectedPlatform === "news" ? "bg-slate-800 text-white shadow-2xs" : "text-slate-600 hover:text-slate-900"
-                      }`}
-                    >
-                      <HiNewspaper className="w-3 h-3" /> Press
-                    </button>
-                  </div>
+                <div className="flex flex-wrap items-center gap-2 text-xs">
+                  <span className="px-3 py-1.5 rounded-xl bg-white/10 text-slate-200 border border-white/10 font-medium">
+                    उपलब्ध: <strong className="text-amber-300">{dailyImpact?.socialMediaPulse?.socialSignals?.length || 0}</strong> सोशल पोस्ट्स • <strong className="text-amber-300">{dailyImpact?.curatedTopHeadlines?.length || 0}</strong> बातम्या
+                  </span>
+                  <span className="px-3 py-1.5 rounded-xl bg-indigo-500/30 text-indigo-200 border border-indigo-400/30 font-bold">
+                    तारीख: {selectedDate === "all" ? "सर्व एकत्रित (All Dates)" : selectedDate === "2026-11-25" ? "२५ नोव्हेंबर २०२६" : selectedDate === "2026-11-24" ? "२४ नोव्हेंबर २०२६" : selectedDate}
+                  </span>
+                </div>
+              </div>
 
-                  {/* Sentiment Filter */}
-                  <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl">
+              {/* Search & Assembly Constituency Filter Bar */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className="md:col-span-2 relative">
+                  <HiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                  <input
+                    type="text"
+                    placeholder="फीड मध्ये शोधा (उदा. शेतकरी, आरक्षण, रिंग रोड, रुग्णालय, चव्हाण, चिखलीकर, नायगाव, भोकर)..."
+                    value={feedSearchQuery}
+                    onChange={(e) => setFeedSearchQuery(e.target.value)}
+                    className="w-full pl-10 pr-8 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 text-xs md:text-sm text-slate-800 placeholder-slate-400 transition-all outline-hidden"
+                  />
+                  {feedSearchQuery && (
                     <button
-                      onClick={() => setSelectedSentiment("all")}
-                      className={`px-2 py-1 rounded-lg text-xs font-bold transition-all ${
-                        selectedSentiment === "all" ? "bg-white text-slate-900 shadow-2xs" : "text-slate-500"
-                      }`}
+                      onClick={() => setFeedSearchQuery("")}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-slate-600 font-bold cursor-pointer"
                     >
-                      All Sentiments
+                      ✕
                     </button>
-                    <button
-                      onClick={() => setSelectedSentiment("positive")}
-                      className={`px-2 py-1 rounded-lg text-xs font-bold transition-all ${
-                        selectedSentiment === "positive" ? "bg-emerald-600 text-white shadow-2xs" : "text-emerald-700"
-                      }`}
-                    >
-                      Positive
-                    </button>
-                    <button
-                      onClick={() => setSelectedSentiment("neutral")}
-                      className={`px-2 py-1 rounded-lg text-xs font-bold transition-all ${
-                        selectedSentiment === "neutral" ? "bg-amber-500 text-white shadow-2xs" : "text-amber-700"
-                      }`}
-                    >
-                      Neutral
-                    </button>
-                    <button
-                      onClick={() => setSelectedSentiment("negative")}
-                      className={`px-2 py-1 rounded-lg text-xs font-bold transition-all ${
-                        selectedSentiment === "negative" ? "bg-red-600 text-white shadow-2xs" : "text-red-700"
-                      }`}
-                    >
-                      Negative
-                    </button>
-                  </div>
+                  )}
+                </div>
+
+                <div className="relative">
+                  <select
+                    value={feedSelectedAc}
+                    onChange={(e) => setFeedSelectedAc(e.target.value)}
+                    className="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-indigo-500 text-xs md:text-sm text-slate-700 font-semibold transition-all outline-hidden cursor-pointer"
+                  >
+                    <option value="all">सर्व मतदारसंघ (All Constituencies)</option>
+                    <option value="Nanded North">८६ नांदेड उत्तर (Nanded North)</option>
+                    <option value="Nanded South">८७ नांदेड दक्षिण (Nanded South)</option>
+                    <option value="Bhokar">८५ भोकर (Bhokar)</option>
+                    <option value="Naigaon">८९ नायगाव (Naigaon)</option>
+                    <option value="Deglur">९० देगलूर (Deglur)</option>
+                    <option value="Mukhed">९१ मुखेड (Mukhed)</option>
+                    <option value="Nanded PC">नांदेड लोकसभा (Nanded PC)</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Platform & Sentiment Filter Pills */}
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pt-1">
+                {/* Platform Pills with live counts */}
+                <div className="flex flex-wrap items-center gap-1.5 bg-slate-100 p-1.5 rounded-2xl">
+                  <button
+                    onClick={() => setSelectedPlatform("all")}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      selectedPlatform === "all" ? "bg-white text-slate-900 shadow-xs" : "text-slate-600 hover:text-slate-900"
+                    }`}
+                  >
+                    All ({(dailyImpact?.socialMediaPulse?.socialSignals?.length || 0) + (dailyImpact?.curatedTopHeadlines?.length || 0)})
+                  </button>
+                  <button
+                    onClick={() => setSelectedPlatform("facebook")}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      selectedPlatform === "facebook" ? "bg-[#1877F2] text-white shadow-xs" : "text-slate-600 hover:text-[#1877F2]"
+                    }`}
+                  >
+                    <FaFacebook className="w-3.5 h-3.5" /> FB ({(dailyImpact?.socialMediaPulse?.socialSignals || []).filter((s) => (s.platform || "").toLowerCase().includes("facebook")).length})
+                  </button>
+                  <button
+                    onClick={() => setSelectedPlatform("instagram")}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      selectedPlatform === "instagram" ? "bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-xs" : "text-slate-600 hover:text-pink-600"
+                    }`}
+                  >
+                    <FaInstagram className="w-3.5 h-3.5" /> Insta ({(dailyImpact?.socialMediaPulse?.socialSignals || []).filter((s) => (s.platform || "").toLowerCase().includes("instagram")).length})
+                  </button>
+                  <button
+                    onClick={() => setSelectedPlatform("twitter")}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      selectedPlatform === "twitter" ? "bg-slate-900 text-white shadow-xs" : "text-slate-600 hover:text-sky-600"
+                    }`}
+                  >
+                    <FaTwitter className="w-3.5 h-3.5" /> X ({(dailyImpact?.socialMediaPulse?.socialSignals || []).filter((s) => (s.platform || "").toLowerCase().includes("twitter") || (s.platform || "").toLowerCase().includes("x")).length})
+                  </button>
+                  <button
+                    onClick={() => setSelectedPlatform("youtube")}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      selectedPlatform === "youtube" ? "bg-red-600 text-white shadow-xs" : "text-slate-600 hover:text-red-600"
+                    }`}
+                  >
+                    <FaYoutube className="w-3.5 h-3.5" /> YT ({(dailyImpact?.socialMediaPulse?.socialSignals || []).filter((s) => (s.platform || "").toLowerCase().includes("youtube")).length})
+                  </button>
+                  <button
+                    onClick={() => setSelectedPlatform("news")}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      selectedPlatform === "news" ? "bg-orange-600 text-white shadow-xs" : "text-slate-600 hover:text-orange-600"
+                    }`}
+                  >
+                    <HiNewspaper className="w-3.5 h-3.5" /> Press ({dailyImpact?.curatedTopHeadlines?.length || 0})
+                  </button>
+                </div>
+
+                {/* Sentiment Filter */}
+                <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl">
+                  <button
+                    onClick={() => setSelectedSentiment("all")}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                      selectedSentiment === "all" ? "bg-white text-slate-900 shadow-2xs" : "text-slate-500"
+                    }`}
+                  >
+                    All Sentiments
+                  </button>
+                  <button
+                    onClick={() => setSelectedSentiment("positive")}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                      selectedSentiment === "positive" ? "bg-emerald-600 text-white shadow-2xs" : "text-emerald-700"
+                    }`}
+                  >
+                    Positive
+                  </button>
+                  <button
+                    onClick={() => setSelectedSentiment("neutral")}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                      selectedSentiment === "neutral" ? "bg-amber-500 text-white shadow-2xs" : "text-amber-700"
+                    }`}
+                  >
+                    Neutral
+                  </button>
+                  <button
+                    onClick={() => setSelectedSentiment("negative")}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                      selectedSentiment === "negative" ? "bg-red-600 text-white shadow-2xs" : "text-red-700"
+                    }`}
+                  >
+                    Negative
+                  </button>
                 </div>
               </div>
 
@@ -1892,124 +1968,166 @@ export default function ElectionAnalyticsDashboard() {
               <div className="space-y-6">
                 {/* 1. SOCIAL POSTS */}
                 {selectedPlatform !== "news" && (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {(dailyImpact?.socialMediaPulse?.socialSignals || [])
-                      .filter((soc) => {
-                        const platMatch =
-                          selectedPlatform === "all" ||
-                          (selectedPlatform === "facebook" && soc.platform.toLowerCase().includes("facebook")) ||
-                          (selectedPlatform === "instagram" && soc.platform.toLowerCase().includes("instagram")) ||
-                          (selectedPlatform === "twitter" && (soc.platform.toLowerCase().includes("x") || soc.platform.toLowerCase().includes("twitter"))) ||
-                          (selectedPlatform === "youtube" && soc.platform.toLowerCase().includes("youtube"));
+                  <div>
+                    <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-100">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-blue-600" />
+                        <h4 className="text-sm font-extrabold text-slate-800 uppercase tracking-wide">
+                          सोशल मीडिया सिग्नल्स (Facebook, Instagram, X, YouTube)
+                        </h4>
+                      </div>
+                    </div>
 
-                        const sentMatch =
-                          selectedSentiment === "all" ||
-                          soc.sentiment.toLowerCase() === selectedSentiment.toLowerCase();
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {(dailyImpact?.socialMediaPulse?.socialSignals || [])
+                        .filter((soc) => {
+                          const p = (soc.platform || "").toLowerCase();
+                          const platMatch =
+                            selectedPlatform === "all" ||
+                            (selectedPlatform === "facebook" && p.includes("facebook")) ||
+                            (selectedPlatform === "instagram" && p.includes("instagram")) ||
+                            (selectedPlatform === "twitter" && (p.includes("x") || p.includes("twitter"))) ||
+                            (selectedPlatform === "youtube" && p.includes("youtube"));
 
-                        return platMatch && sentMatch;
-                      })
-                      .map((soc) => {
-                        const isFb = soc.platform.includes("Facebook");
-                        const isIg = soc.platform.includes("Instagram");
-                        const isTw = soc.platform.includes("X") || soc.platform.includes("Twitter");
-                        const isYt = soc.platform.includes("YouTube");
+                          const sentMatch =
+                            selectedSentiment === "all" ||
+                            (soc.sentiment || "").toLowerCase() === selectedSentiment.toLowerCase();
 
+                          const acMatch =
+                            feedSelectedAc === "all" ||
+                            (soc.mappedAc || "").toLowerCase().includes(feedSelectedAc.toLowerCase());
 
+                          const q = feedSearchQuery.trim().toLowerCase();
+                          const queryMatch =
+                            !q ||
+                            (soc.title || "").toLowerCase().includes(q) ||
+                            (soc.text || "").toLowerCase().includes(q) ||
+                            (soc.author || "").toLowerCase().includes(q) ||
+                            (soc.handle || "").toLowerCase().includes(q) ||
+                            (soc.mappedAc || "").toLowerCase().includes(q);
 
-  return (
-                          <div
-                            key={soc.id}
-                            className="p-5 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 hover:shadow-xs transition-all flex flex-col justify-between space-y-3"
-                          >
-                            <div className="space-y-2">
-                              <div className="flex items-center justify-between gap-2">
-                                <span className={`px-2.5 py-0.5 rounded-md text-[10px] font-bold flex items-center gap-1.5 ${
-                                  isFb
-                                    ? "bg-[#1877F2] text-white"
-                                    : isIg
-                                    ? "bg-gradient-to-r from-pink-500 to-purple-600 text-white"
-                                    : isTw
-                                    ? "bg-slate-900 text-white"
-                                    : "bg-red-600 text-white"
-                                }`}>
-                                  {isFb && <FaFacebook className="w-3 h-3 text-white" />}
-                                  {isIg && <FaInstagram className="w-3 h-3 text-white" />}
-                                  {isTw && <FaTwitter className="w-3 h-3 text-sky-400" />}
-                                  {isYt && <FaYoutube className="w-3 h-3 text-white" />}
-                                  {soc.platform}
-                                </span>
-                                <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-slate-100 text-slate-700">
-                                  {soc.mappedAc}
-                                </span>
-                              </div>
+                          return platMatch && sentMatch && acMatch && queryMatch;
+                        })
+                        .map((soc) => {
+                          const isFb = soc.platform.includes("Facebook");
+                          const isIg = soc.platform.includes("Instagram");
+                          const isTw = soc.platform.includes("X") || soc.platform.includes("Twitter");
+                          const isYt = soc.platform.includes("YouTube");
 
-                              <div className="pt-0.5">
-                                <p className="text-xs font-bold text-slate-900 flex items-center gap-1">
-                                  {soc.author}
-                                  {soc.handle && (
-                                    <span className="text-[11px] text-slate-400 font-normal">
-                                      {soc.handle}
+                          return (
+                            <div
+                              key={soc.id}
+                              className="p-5 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 hover:shadow-xs transition-all flex flex-col justify-between space-y-3"
+                            >
+                              <div className="space-y-2">
+                                <div className="flex items-center justify-between gap-2">
+                                  <span className={`px-2.5 py-0.5 rounded-md text-[10px] font-bold flex items-center gap-1.5 ${
+                                    isFb
+                                      ? "bg-[#1877F2] text-white"
+                                      : isIg
+                                      ? "bg-gradient-to-r from-pink-500 to-purple-600 text-white"
+                                      : isTw
+                                      ? "bg-slate-900 text-white"
+                                      : "bg-red-600 text-white"
+                                  }`}>
+                                    {isFb && <FaFacebook className="w-3 h-3 text-white" />}
+                                    {isIg && <FaInstagram className="w-3 h-3 text-white" />}
+                                    {isTw && <FaTwitter className="w-3 h-3 text-sky-400" />}
+                                    {isYt && <FaYoutube className="w-3 h-3 text-white" />}
+                                    {soc.platform}
+                                  </span>
+
+                                  <div className="flex items-center gap-1.5">
+                                    <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-100">
+                                      📅 {soc.dateLabel || soc.date || "२५ नोव्हेंबर"}
                                     </span>
-                                  )}
-                                </p>
-                                <h5 className="text-sm font-extrabold text-slate-800 mt-1 line-clamp-2">
-                                  {soc.title}
-                                </h5>
-                                <p className="text-xs text-slate-600 mt-1 leading-relaxed line-clamp-3">
-                                  "{soc.text}"
-                                </p>
-                              </div>
-                            </div>
+                                    <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-slate-100 text-slate-700">
+                                      {soc.mappedAc}
+                                    </span>
+                                  </div>
+                                </div>
 
-                            <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
-                              <div className="flex items-center gap-1.5">
-                                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md border ${
-                                  soc.sentiment === "Positive"
-                                    ? "bg-emerald-50 text-emerald-700 border-emerald-200"
-                                    : soc.sentiment === "Negative"
-                                    ? "bg-red-50 text-red-700 border-red-200"
-                                    : "bg-amber-50 text-amber-700 border-amber-200"
-                                }`}>
-                                  {soc.sentiment}
-                                </span>
-                                <span className="text-[10px] text-slate-400 font-medium">
-                                  {soc.engagement}
-                                </span>
+                                <div className="pt-0.5">
+                                  <p className="text-xs font-bold text-slate-900 flex items-center gap-1">
+                                    {soc.author}
+                                    {soc.handle && (
+                                      <span className="text-[11px] text-slate-400 font-normal">
+                                        {soc.handle}
+                                      </span>
+                                    )}
+                                  </p>
+                                  <h5 className="text-sm font-extrabold text-slate-800 mt-1">
+                                    {soc.title}
+                                  </h5>
+                                  <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                                    "{soc.text}"
+                                  </p>
+                                </div>
                               </div>
 
-                              {soc.link && (
-                                <a
-                                  href={soc.link}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="flex items-center gap-1 text-xs font-bold text-indigo-600 hover:text-indigo-800"
-                                >
-                                  {isFb ? "View FB Post" : isIg ? "Watch Reel" : isTw ? "Open on X" : "Watch Video"}{" "}
-                                  <HiExternalLink className="w-3.5 h-3.5" />
-                                </a>
-                              )}
+                              <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
+                                <div className="flex items-center gap-1.5">
+                                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md border ${
+                                    soc.sentiment === "Positive"
+                                      ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                                      : soc.sentiment === "Negative"
+                                      ? "bg-red-50 text-red-700 border-red-200"
+                                      : "bg-amber-50 text-amber-700 border-amber-200"
+                                  }`}>
+                                    {soc.sentiment}
+                                  </span>
+                                  <span className="text-[10px] text-slate-400 font-medium">
+                                    {soc.engagement}
+                                  </span>
+                                </div>
+
+                                {soc.link && (
+                                  <a
+                                    href={soc.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-1 text-xs font-bold text-indigo-600 hover:text-indigo-800"
+                                  >
+                                    {isFb ? "View FB Post" : isIg ? "Watch Reel" : isTw ? "Open on X" : "Watch Video"}{" "}
+                                    <HiExternalLink className="w-3.5 h-3.5" />
+                                  </a>
+                                )}
+                              </div>
                             </div>
-                          </div>
-                        );
-                      })}
+                          );
+                        })}
+                    </div>
                   </div>
                 )}
 
                 {/* 2. REGIONAL PRESS HEADLINES */}
                 {(selectedPlatform === "all" || selectedPlatform === "news") && (
-                  <div className="space-y-4 pt-4 border-t border-slate-100">
-                    <div className="flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 rounded-full bg-slate-700" />
-                      <h4 className="text-sm font-extrabold text-slate-800 uppercase tracking-wide">
-                        Regional Press & Vernacular News (पुढारी, ॲग्रोवन, सरकारनामा)
-                      </h4>
+                  <div className="pt-4 border-t border-slate-100">
+                    <div className="flex items-center justify-between pb-3 mb-4">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-orange-600" />
+                        <h4 className="text-sm font-extrabold text-slate-800 uppercase tracking-wide">
+                          Regional Press & Vernacular News (पुढारी, सकाळ, ॲग्रोवन, सरकारनामा, एबीपी माझा)
+                        </h4>
+                      </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {(dailyImpact?.curatedTopHeadlines || [])
                         .filter((head) => {
-                          if (selectedSentiment === "all") return true;
-                          return true;
+                          const acMatch =
+                            feedSelectedAc === "all" ||
+                            (head.mappedAc || "").toLowerCase().includes(feedSelectedAc.toLowerCase());
+
+                          const q = feedSearchQuery.trim().toLowerCase();
+                          const queryMatch =
+                            !q ||
+                            (head.title || "").toLowerCase().includes(q) ||
+                            (head.summary || "").toLowerCase().includes(q) ||
+                            (head.source || "").toLowerCase().includes(q) ||
+                            (head.mappedAc || "").toLowerCase().includes(q);
+
+                          return acMatch && queryMatch;
                         })
                         .map((head, idx) => (
                           <div
@@ -2022,14 +2140,19 @@ export default function ElectionAnalyticsDashboard() {
                                   <HiNewspaper className="w-3 h-3 text-slate-600" />
                                   {head.source}
                                 </span>
-                                <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-orange-100 text-orange-800">
-                                  {head.mappedAc}
-                                </span>
+                                <div className="flex items-center gap-1.5">
+                                  <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-orange-50 text-orange-700 border border-orange-100">
+                                    📅 {head.dateLabel || head.date || "२५ नोव्हेंबर"}
+                                  </span>
+                                  <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-orange-100 text-orange-800">
+                                    {head.mappedAc}
+                                  </span>
+                                </div>
                               </div>
-                              <h4 className="text-sm font-bold text-slate-900 line-clamp-2">
+                              <h4 className="text-sm font-bold text-slate-900 leading-snug">
                                 {head.title}
                               </h4>
-                              <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
+                              <p className="text-xs text-slate-600 leading-relaxed">
                                 {head.summary}
                               </p>
                             </div>
